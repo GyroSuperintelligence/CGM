@@ -12,8 +12,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 from typing import Dict, Any, Tuple, List
-from numpy.typing import NDArray
-from core.gyrovector_ops import GyroVectorSpace
+
+from ..core.gyrovector_ops import GyroVectorSpace
 
 
 class UNAStage:
@@ -55,7 +55,7 @@ class UNAStage:
             "governing_law": "a ⊕ b = gyr[a,b](b ⊕ a)",
         }
 
-    def gyrocommutativity_check(self, u: NDArray[Any], v: NDArray[Any]) -> float:
+    def gyrocommutativity_check(self, u: np.ndarray, v: np.ndarray) -> float:
         """
         Check gyrocommutativity: u ⊕ v ?= gyr[u,v](v ⊕ u)
 
@@ -68,7 +68,7 @@ class UNAStage:
         _, defect = self.gyrospace.gyrocommutativity_check(u, v)
         return defect
 
-    def orthogonal_spin_axes(self) -> NDArray[Any]:
+    def orthogonal_spin_axes(self) -> np.ndarray:
         """
         Generate the three orthogonal spin axes that emerge at UNA
 
@@ -89,7 +89,7 @@ class UNAStage:
 
         return axes
 
-    def su2_frame_generation(self) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
+    def su2_frame_generation(self) -> Tuple[List[np.ndarray], List[np.ndarray]]:
         """
         Generate the SU(2)_L frame for rotational degrees of freedom
 
@@ -108,7 +108,7 @@ class UNAStage:
 
         return left_generators, right_generators
 
-    def observable_distinction_measure(self, test_vectors: List[NDArray[Any]]) -> float:
+    def observable_distinction_measure(self, test_vectors: List[np.ndarray]) -> float:
         """
         Measure the observable distinction that emerges at UNA
 

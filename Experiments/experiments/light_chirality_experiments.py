@@ -19,8 +19,8 @@ from typing import Dict, Any, List, Tuple
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from core.gyrotriangle import GyroTriangle
+from ..core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from ..core.gyrotriangle import GyroTriangle
 from stages.cs_stage import CSStage
 from stages.una_stage import UNAStage
 from stages.bu_stage import BUStage

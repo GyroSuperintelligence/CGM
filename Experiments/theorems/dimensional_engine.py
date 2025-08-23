@@ -10,26 +10,9 @@ Proof: Uses invertibility of B matrix in core.dimensions.DimensionalCalibrator.
 
 import numpy as np
 from typing import Dict, Any, List, Tuple
-from dataclasses import dataclass
 
 # Import the core implementation
-try:
-    from core.dimensions import DimensionalCalibrator, DimVec
-except ImportError:
-    # Fallback if core.dimensions not available
-    @dataclass(frozen=True)
-    class DimVec:
-        """Dimension vector with M, L, T exponents."""
-        M: float
-        L: float
-        T: float
-        
-        def as_array(self) -> np.ndarray:
-            return np.array([self.M, self.L, self.T], dtype=float)
-        
-        def __add__(self, other: 'DimVec') -> 'DimVec':
-            """Add dimension vectors component-wise."""
-            return DimVec(self.M + other.M, self.L + other.L, self.T + other.T)
+from Experiments.core.dimensions import DimensionalCalibrator, DimVec
 
 
 class DimensionalEngineHomomorphism:

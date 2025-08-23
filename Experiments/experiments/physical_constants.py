@@ -33,8 +33,8 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from core.gyrotriangle import GyroTriangle
+from ..core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from ..core.gyrotriangle import GyroTriangle
 from stages.cs_stage import CSStage
 from stages.una_stage import UNAStage
 from stages.ona_stage import ONAStage
@@ -97,7 +97,7 @@ class PhysicalConstantsValidator:
         print("=" * 60)
 
         # Import the dimensional engine
-        from core.dimensions import DimensionalCalibrator, DimVec
+        from ..core.dimensions import DimensionalCalibrator, DimVec
 
         # 1) Pick a calibration mass that we do NOT plan to "predict"
         m_anchor = 9.1093837015e-31  # electron mass in kg (measured)

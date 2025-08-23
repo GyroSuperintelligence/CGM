@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from .core.gyrovector_ops import GyroVectorSpace, RecursivePath
 from stages.ona_stage import ONAStage
 import numpy as np
 

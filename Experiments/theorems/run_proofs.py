@@ -19,9 +19,9 @@ import os
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.dimensions import DimensionalCalibrator, DimVec
+from ..core.dimensions import DimensionalCalibrator, DimVec
 from theorems.gyrogeometry import GyroTriangleDefectTheorem
-from core.gyrovector_ops import GyroVectorSpace
+from ..core.gyrovector_ops import GyroVectorSpace
 
 
 def test_theorem_c_base_unit_identities():

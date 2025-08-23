@@ -26,13 +26,13 @@ experiments_dir = Path(__file__).parent
 sys.path.insert(0, str(experiments_dir))
 
 # Import experiment modules
-from experiments.core_experiments import CoreTheoremTester
-from experiments.physical_constants import PhysicalConstantsValidator
-from experiments.gravity_coupling import GravityCouplingAnalyzer
-from experiments.fine_structure_focus import FineStructureValidator
-from core.recursive_memory import RecursiveMemory
-from theorems.run_proofs import run_all_proofs
-from core.gyrovector_ops import GyroVectorSpace
+from Experiments.experiments.core_experiments import CoreTheoremTester
+from Experiments.experiments.physical_constants import PhysicalConstantsValidator
+from Experiments.experiments.gravity_coupling import GravityCouplingAnalyzer
+from Experiments.experiments.fine_structure_focus import FineStructureValidator
+from Experiments.core.recursive_memory import RecursiveMemory
+from Experiments.theorems.run_proofs import run_all_proofs
+from Experiments.core.gyrovector_ops import GyroVectorSpace
 
 
 

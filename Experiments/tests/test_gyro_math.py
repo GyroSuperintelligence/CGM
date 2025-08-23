@@ -12,9 +12,9 @@ import os
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
-from core.gyrotriangle import GyroTriangle
-from core.dimensions import DimensionalCalibrator, DimVec
+from ..core.gyrovector_ops import GyroVectorSpace
+from ..core.gyrotriangle import GyroTriangle
+from ..core.dimensions import DimensionalCalibrator, DimVec
 
 
 def test_thomas_wigner_small_angle():

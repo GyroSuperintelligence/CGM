@@ -19,7 +19,7 @@ Classes:
 import numpy as np
 import warnings
 from typing import Tuple, Optional, Union, List, Callable, Any
-from numpy.typing import NDArray
+
 
 try:
     from scipy.linalg import polar
@@ -45,7 +45,7 @@ class GyroVectorSpace:
         """
         self.c = c
 
-    def gamma(self, v: NDArray) -> float:
+    def gamma(self, v: np.ndarray) -> float:
         """
         Lorentz factor γ(v) = 1 / sqrt(1 - |v|^2 / c^2).
         Clamps speeds to strictly subluminal for numerical safety.
@@ -57,14 +57,14 @@ class GyroVectorSpace:
             beta2 = 1.0 - 1e-12
         return float(1.0 / np.sqrt(1.0 - beta2))
 
-    def _ensure_subluminal(self, v: NDArray) -> NDArray:
+    def _ensure_subluminal(self, v: np.ndarray) -> np.ndarray:
         v = np.asarray(v, dtype=float)
         speed = np.linalg.norm(v)
         if speed >= self.c:
             v = v * ((self.c - 1e-12) / (speed + 1e-12))
         return v
 
-    def gyroaddition(self, u: NDArray, v: NDArray) -> NDArray:
+    def gyroaddition(self, u: np.ndarray, v: np.ndarray) -> np.ndarray:
         """
         Einstein–Ungar gyroaddition via parallel/perpendicular decomposition.
 
@@ -99,7 +99,7 @@ class GyroVectorSpace:
         w = w_para + w_perp
         return self._ensure_subluminal(w)
 
-    def gyrosubtraction(self, u: NDArray, v: NDArray) -> NDArray:
+    def gyrosubtraction(self, u: np.ndarray, v: np.ndarray) -> np.ndarray:
         """
         Gyrosubtraction: u ⊖ v = u ⊕ (⊖v)
 
@@ -111,7 +111,7 @@ class GyroVectorSpace:
         """
         return self.gyroaddition(u, -v)
 
-    def _gyr_apply(self, a: NDArray, b: NDArray, w: NDArray) -> NDArray:
+    def _gyr_apply(self, a: np.ndarray, b: np.ndarray, w: np.ndarray) -> np.ndarray:
         """
         Apply the gyro-automorphism to w via the defining identity:
             gyr[a,b] w = (⊖(a ⊕ b)) ⊕ (a ⊕ (b ⊕ w))
@@ -121,7 +121,7 @@ class GyroVectorSpace:
             -self.gyroaddition(a, b), self.gyroaddition(a, self.gyroaddition(b, w))
         )
 
-    def gyr_apply(self, a: NDArray, b: NDArray, w: NDArray) -> NDArray:
+    def gyr_apply(self, a: np.ndarray, b: np.ndarray, w: np.ndarray) -> np.ndarray:
         """
         Apply gyr[a,b] directly to vector w using the defining identity
         without constructing/orthogonalizing a matrix.
@@ -131,7 +131,7 @@ class GyroVectorSpace:
         w = np.asarray(w, dtype=float)
         return self._gyr_apply(a, b, w)
 
-    def gyration(self, a: NDArray, b: NDArray) -> NDArray:
+    def gyration(self, a: np.ndarray, b: np.ndarray) -> np.ndarray:
         """
         Return a 3×3 linear approximation (Jacobian) of gyr[a,b] at the origin.
         We apply gyr[a,b] to ε e_i and divide by ε to form columns.
@@ -170,7 +170,7 @@ class GyroVectorSpace:
         
         return R
 
-    def coaddition(self, u: NDArray, v: NDArray) -> NDArray:
+    def coaddition(self, u: np.ndarray, v: np.ndarray) -> np.ndarray:
         """
         Einstein coaddition:
             u ⊞ v = u ⊕ gyr[u, ⊖v] v
@@ -180,7 +180,7 @@ class GyroVectorSpace:
         return self.gyroaddition(u, v_tilt)
 
     def gyroassociativity_check(
-        self, u: NDArray, v: NDArray, w: NDArray, tolerance: float = 1e-10
+        self, u: np.ndarray, v: np.ndarray, w: np.ndarray, tolerance: float = 1e-10
     ) -> Tuple[bool, float]:
         """
         Check gyroassociativity: (u ⊕ v) ⊕ w ?= u ⊕ (v ⊕ w)
@@ -204,7 +204,7 @@ class GyroVectorSpace:
         return bool(is_associative), float(defect)
 
     def gyrocommutativity_check(
-        self, u: NDArray, v: NDArray, tolerance: float = 1e-10
+        self, u: np.ndarray, v: np.ndarray, tolerance: float = 1e-10
     ) -> Tuple[bool, float]:
         """
         Check gyrocommutativity: u ⊕ v ?= gyr[u,v](v ⊕ u)
@@ -225,11 +225,11 @@ class GyroVectorSpace:
 
         return bool(is_commutative), float(defect)
 
-    def commutativity_defect(self, u: NDArray, v: NDArray) -> float:
+    def commutativity_defect(self, u: np.ndarray, v: np.ndarray) -> float:
         """|| (u ⊕ v) - (v ⊕ u) ||"""
         return float(np.linalg.norm(self.gyroaddition(u, v) - self.gyroaddition(v, u)))
 
-    def associator_defect(self, u: NDArray, v: NDArray, w: NDArray) -> float:
+    def associator_defect(self, u: np.ndarray, v: np.ndarray, w: np.ndarray) -> float:
         """|| (u ⊕ v) ⊕ w - u ⊕ (v ⊕ w) ||"""
         left = self.gyroaddition(self.gyroaddition(u, v), w)
         right = self.gyroaddition(u, self.gyroaddition(v, w))
@@ -247,7 +247,7 @@ class RecursivePath:
         self.gyration_memory = []
         self.coherence_field = []
 
-    def add_step(self, point: NDArray):
+    def add_step(self, point: np.ndarray):
         """Add a point to the recursive path"""
         self.path_points.append(point)
 
@@ -268,7 +268,7 @@ class RecursivePath:
             coherence = amp * np.exp(1j * theta)
             self.coherence_field.append(coherence)
 
-    def get_recursive_memory(self) -> NDArray:
+    def get_recursive_memory(self) -> np.ndarray:
         """
         Compute the accumulated recursive memory (monodromy)
 

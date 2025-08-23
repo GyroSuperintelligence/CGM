@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 from typing import Dict, Any, Tuple, List
-from core.gyrovector_ops import GyroVectorSpace
+from ..core.gyrovector_ops import GyroVectorSpace
 
 
 class ONAStage:
