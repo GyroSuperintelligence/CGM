@@ -1,4 +1,4 @@
-# CGM-RGF Technical Note Outline
+# CGM Technical Note Outline
 ## Dimensional Calibration & Gravity Coupling Analysis
 
 ### **Abstract**
@@ -157,7 +157,7 @@ We present a rigorous mathematical foundation for the Common Governance Model, e
 ## **7. Conclusions & Impact**
 
 ### **7.1 Mathematical Achievements**
-- **Rigorous Foundation**: CGM-RGF now has proven mathematical basis
+- **Rigorous Foundation**: CGM now has proven mathematical basis
 - **Non-Circular Analysis**: Dimensional calibration avoids circular reasoning
 - **Geometric Theorems**: Hyperbolic geometry properly implemented
 - **Validation Framework**: Self-checking system for all results

@@ -1,18 +1,32 @@
 """
-Core gyrovector operations for CGM-RGF
+Core gyrovector operations for CGM
 
-Implements Einstein-Ungar gyrovector space operations:
-- Gyroaddition (⊕)
-- Gyrosubtraction (⊖)
-- Gyration (gyr[a,b])
-- Coaddition (⊞) for BU stage
+This module implements the fundamental gyrovector space operations based on
+Einstein-Ungar formalism and the recursive principles of CGM.
 
-Based on the mathematical formalism presented in the CGM-RGF framework.
+The gyrovector space provides a non-Euclidean geometry where:
+- Addition is non-commutative and non-associative
+- Gyration matrices encode the non-associativity
+- Small velocities approach classical vector addition
+- Large velocities exhibit relativistic effects
+
+Based on the mathematical formalism presented in the CGM framework.
+
+Classes:
+    GyroVectorSpace: Main gyrovector space implementation
 """
 
 import numpy as np
-from typing import Union, Tuple, List, Callable, Any
+import warnings
+from typing import Tuple, Optional, Union, List, Callable, Any
 from numpy.typing import NDArray
+
+try:
+    from scipy.linalg import polar
+    SCIPY_AVAILABLE = True
+except ImportError:
+    SCIPY_AVAILABLE = False
+    polar = None
 
 
 class GyroVectorSpace:

@@ -1,14 +1,25 @@
 """
-Dimensional Calibration Engine for CGM-RGF
+Dimensional Calibration Engine for CGM
 
-This module provides a clean way to map between physical dimensions and
-measured constants, avoiding the underdetermined problem of trying to
-derive dimensions from only ħ.
+This module implements the dimensional calibration engine that maps dimension vectors
+to physical units using the basis {ħ, c, m⋆}. The engine provides a group homomorphism
+from (ℝ³, +) to (ℝ₊, ×) and enables non-circular dimensional analysis.
+
+Key Features:
+    - Dimensional matrix B with {ħ, c, m⋆} basis
+    - Unique exponent solutions via matrix inversion
+    - Base unit computation (M₀, L₀, T₀)
+    - c-invariance preservation (L₀/T₀ = c)
+    - Monomial solving for arbitrary dimensions
+
+Classes:
+    DimVec: Dimension vector with M, L, T exponents
+    DimensionalCalibrator: Main calibration engine
 """
 
 import numpy as np
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 
 # Exponents order: [M, L, T]
@@ -148,7 +159,7 @@ class DimensionalCalibrator:
 
 
 def audit_expression(calibrator: DimensionalCalibrator, expression_name: str, 
-                    dimensions: DimVec, value: float = None) -> Dict[str, Any]:
+                    dimensions: DimVec, value: Optional[float] = None) -> Dict[str, Any]:
     """
     Audit the dimensional analysis of an expression.
     

@@ -1,8 +1,8 @@
-# CGM-RGF Scorecard: What's Proven, What's Calibrated, What's Diagnostic
+# CGM Scorecard: What's Proven, What's Calibrated, What's Diagnostic
 
 ## **🎯 Overview**
 
-This document provides a clear breakdown of what has been **mathematically proven**, what is **calibrated from experiment**, and what remains **diagnostic** in the Common Governance Model - Recursive Gyrovector Formalism (CGM-RGF).
+This document provides a clear breakdown of what has been **mathematically proven**, what is **calibrated from experiment**, and what remains **diagnostic** in the Common Governance Model (CGM).
 
 ## **✅ What's Mathematically Proven (Axiomatic)**
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CGM-RGF Proof Runner
+CGM Proof Runner
 
 This module runs systematic proofs of the core CGM theorems:
 - Theorem A: Dimensional homomorphism (uniqueness of exponents)
@@ -9,7 +9,7 @@ This module runs systematic proofs of the core CGM theorems:
 - Theorem D: Gyrotriangle defect = hyperbolic area/c² (Gauss-Bonnet)
 - Theorem E: Thomas-Wigner small-velocity gyration is a rotation
 
-Run with: python -m CGM_Experiments.theorems.run_proofs
+Run with: python -m Experiments.theorems.run_proofs
 """
 
 import numpy as np

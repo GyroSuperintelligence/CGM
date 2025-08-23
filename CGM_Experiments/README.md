@@ -1,6 +1,6 @@
 # CGM-RGF Experimental Framework
 
-This directory contains experiments to test the predictions and theorems of the **Common Governance Model - Recursive Gyrovector Formalism (CGM-RGF)**.
+This directory contains experiments to test the predictions and theorems of the **Common Governance Model**.
 
 ## Setup
 
