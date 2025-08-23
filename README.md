@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="Assets/CGM_Cover.pngf" alt="CGM Cover" />
+  <img src="Assets/CGM_Cover.png" alt="CGM Cover" />
 
 <h1>Common Governance Model</h1>
 <h3>Deep Physics</h3>
