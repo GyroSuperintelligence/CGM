@@ -1,0 +1,120 @@
+{
+  "anchor_sweep": {
+    "individual_results": {
+      "electron": {
+        "alpha_G": 1.7518093950948948e-45,
+        "m_planck_inferred": 2.176434342051127e-08,
+        "scaling_factor": 4.185462214731958e-23,
+        "m_anchor": 9.1093837015e-31
+      },
+      "muon": {
+        "alpha_G": 7.489532227491161e-41,
+        "m_planck_inferred": 2.176434342051127e-08,
+        "scaling_factor": 8.654208356338066e-21,
+        "m_anchor": 1.883531627e-28
+      },
+      "proton": {
+        "alpha_G": 5.906149417423905e-39,
+        "m_planck_inferred": 2.1764343420511266e-08,
+        "scaling_factor": 7.685147635162193e-20,
+        "m_anchor": 1.67262192369e-27
+      },
+      "neutron": {
+        "alpha_G": 5.922442940096098e-39,
+        "m_planck_inferred": 2.1764343420511266e-08,
+        "scaling_factor": 7.695740991026202e-20,
+        "m_anchor": 1.67492749804e-27
+      },
+      "tau": {
+        "alpha_G": 2.1181322647677686e-38,
+        "m_planck_inferred": 2.176434342051127e-08,
+        "scaling_factor": 1.4553804536160875e-19,
+        "m_anchor": 3.16754e-27
+      },
+      "charm": {
+        "alpha_G": 3.4049936147432024e-39,
+        "m_planck_inferred": 2.176434342051127e-08,
+        "scaling_factor": 5.835232313064495e-20,
+        "m_anchor": 1.27e-27
+      },
+      "bottom": {
+        "alpha_G": 3.6885988241204744e-38,
+        "m_planck_inferred": 2.1764343420511266e-08,
+        "scaling_factor": 1.9205725250873692e-19,
+        "m_anchor": 4.18e-27
+      },
+      "top": {
+        "alpha_G": 6.318311978154213e-35,
+        "m_planck_inferred": 2.1764343420511266e-08,
+        "scaling_factor": 7.948781024883131e-18,
+        "m_anchor": 1.73e-25
+      }
+    },
+    "statistics": {
+      "m_planck_mean": 2.176434342051127e-08,
+      "m_planck_std": 2.3396200816091525e-24,
+      "m_planck_cv": 1.0749784803543557e-16,
+      "g_uncertainty_expected": 1.1e-05,
+      "spread_consistent": true
+    },
+    "alpha_G_values": [
+      1.7518093950948948e-45,
+      7.489532227491161e-41,
+      5.906149417423905e-39,
+      5.922442940096098e-39,
+      2.1181322647677686e-38,
+      3.4049936147432024e-39,
+      3.6885988241204744e-38,
+      6.318311978154213e-35
+    ],
+    "m_planck_inferred_values": [
+      2.176434342051127e-08,
+      2.176434342051127e-08,
+      2.1764343420511266e-08,
+      2.1764343420511266e-08,
+      2.176434342051127e-08,
+      2.176434342051127e-08,
+      2.1764343420511266e-08,
+      2.1764343420511266e-08
+    ],
+    "scaling_factors": [
+      4.185462214731958e-23,
+      8.654208356338066e-21,
+      7.685147635162193e-20,
+      7.695740991026202e-20,
+      1.4553804536160875e-19,
+      5.835232313064495e-20,
+      1.9205725250873692e-19,
+      7.948781024883131e-18
+    ]
+  },
+  "scaling_verification": {
+    "expected_slope": 2.0,
+    "fitted_slope": 2.0000000000000058,
+    "slope_consistent": true,
+    "r_squared": 1.0,
+    "intercept": 35.28598565831077
+  },
+  "kappa_one_case": {
+    "m_planck_anchor": 2.176434342051127e-08,
+    "g_monomial": {
+      "hbar": 1.0,
+      "c": 1.0,
+      "m_anchor": -2.0
+    },
+    "g_unit": 6.674299999999998e-11,
+    "g_expected": 6.674299999999998e-11,
+    "g_experimental": 6.6743e-11,
+    "g_match": true,
+    "note": "\u03ba = 1 case: G matched exactly by using m_Planck as anchor"
+  },
+  "uncertainty_analysis": {
+    "g_relative_uncertainty": 2.2e-05,
+    "alpha_g_relative_uncertainty": 2.2e-05,
+    "m_planck_relative_uncertainty": 1.1e-05
+  },
+  "summary": {
+    "all_experiments_passed": true,
+    "note": "Gravity coupling analysis complete - \u03b1_G scaling verified"
+  }
+}
