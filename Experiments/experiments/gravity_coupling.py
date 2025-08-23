@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Gravity Coupling Experiments for CGM-RGF
+Gravity Coupling Experiments for CGM
 
 This module analyzes gravitational coupling α_G across different anchor masses
 and verifies the scaling relationships predicted by dimensional analysis.
@@ -20,7 +20,7 @@ from typing import Dict, Any, List, Tuple
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.dimensions import DimensionalCalibrator, DimVec
+from core.dimensions import DimensionalCalibrator, DimVec
 
 
 class GravityCouplingAnalyzer:
@@ -52,8 +52,7 @@ class GravityCouplingAnalyzer:
             "top": 1.73e-25,
         }
         
-        # Planck mass (kg) - this is what we should infer
-        self.m_planck_theoretical = np.sqrt(self.hbar * self.c / self.G)
+        # Do not construct Planck measures; stay in α_G ≡ G m²/(ħ c)
         
         # CODATA uncertainties (relative)
         self.uncertainties = {
@@ -81,7 +80,8 @@ class GravityCouplingAnalyzer:
         m_planck_inferred = m_anchor / np.sqrt(alpha_G)
         
         # Scaling factor: how much this anchor differs from Planck mass
-        scaling_factor = m_anchor / self.m_planck_theoretical
+        m_planck_theoretical = np.sqrt(self.hbar * self.c / self.G)
+        scaling_factor = m_anchor / m_planck_theoretical
         
         return {
             "alpha_G": alpha_G,
@@ -105,7 +105,7 @@ class GravityCouplingAnalyzer:
         m_planck_inferred_values = []
         scaling_factors = []
         
-        print(f"Expected m_Planck = {self.m_planck_theoretical:.3e} kg")
+        print(f"Expected m_Planck = √(ħc/G) ≈ 2.176e-8 kg")
         print(f"CODATA G uncertainty: {self.uncertainties['G']*100:.3f}%")
         print()
         
@@ -198,54 +198,7 @@ class GravityCouplingAnalyzer:
             "intercept": intercept,
         }
     
-    def kappa_equals_one_experiment(self) -> Dict[str, Any]:
-        """
-        Demonstrate the κ = 1 case by using m_Planck as the anchor.
-        
-        This shows that when m_anchor = m_Planck, we get κ = 1 exactly,
-        and G is matched perfectly (trivially, since we used G to define m_Planck).
-        """
-        print("\nκ = 1 Experiment: Using m_Planck as Anchor")
-        print("=" * 45)
-        
-        # Use m_Planck as the anchor mass
-        m_planck_anchor = self.m_planck_theoretical
-        
-        # Create calibrator with m_Planck anchor
-        cal = DimensionalCalibrator(self.hbar, self.c, m_planck_anchor)
-        
-        # G dimensions: M⁻¹L³T⁻²
-        DIM_G = DimVec(M=-1, L=3, T=-2)
-        
-        # Get the monomial exponents
-        monoG = cal.monomial_for(DIM_G)
-        
-        # Get the unit value
-        g_unit = cal.get_unit(DIM_G)
-        
-        # With m_Planck anchor, κ = 1, so G = ħc/m_Planck² exactly
-        g_expected = (self.hbar * self.c) / (m_planck_anchor**2)
-        
-        # This should match the experimental G exactly
-        g_match = np.isclose(g_unit, self.G, rtol=1e-12)
-        
-        print(f"m_anchor = m_Planck = {m_planck_anchor:.3e} kg")
-        print(f"G monomial exponents: {monoG}")
-        print(f"G unit from calibrator: {g_unit:.3e} m³/(kg·s²)")
-        print(f"G expected (ħc/m_Planck²): {g_expected:.3e} m³/(kg·s²)")
-        print(f"G experimental: {self.G:.3e} m³/(kg·s²)")
-        print(f"G match: {'YES' if g_match else 'NO'}")
-        print(f"κ = 1 case: G is matched exactly (by construction)")
-        
-        return {
-            "m_planck_anchor": m_planck_anchor,
-            "g_monomial": monoG,
-            "g_unit": g_unit,
-            "g_expected": g_expected,
-            "g_experimental": self.G,
-            "g_match": g_match,
-            "note": "κ = 1 case: G matched exactly by using m_Planck as anchor",
-        }
+
     
     def uncertainty_propagation_analysis(self) -> Dict[str, Any]:
         """
@@ -272,7 +225,7 @@ class GravityCouplingAnalyzer:
         print()
         print("Expected spread in m_Planck across anchors:")
         print(f"  From G uncertainty: {m_planck_relative_uncertainty:.2e}")
-        print(f"  Observed CV: {self.anchor_sweep_experiment()['statistics']['m_planck_cv']:.2e}")
+        # Note: Observed CV will be printed in the main experiment summary
         
         return {
             "g_relative_uncertainty": g_relative_uncertainty,
@@ -287,14 +240,13 @@ class GravityCouplingAnalyzer:
         Returns:
             Comprehensive results from all experiments
         """
-        print("CGM-RGF Gravity Coupling Analysis")
+        print("CGM Gravity Coupling Analysis")
         print("=" * 40)
         print()
         
         # Run all experiments
         anchor_sweep = self.anchor_sweep_experiment()
         scaling_verification = self.verify_scaling_law(anchor_sweep)
-        kappa_one_case = self.kappa_equals_one_experiment()
         uncertainty_analysis = self.uncertainty_propagation_analysis()
         
         # Summary
@@ -310,8 +262,7 @@ class GravityCouplingAnalyzer:
         print(f"   Mean: {anchor_sweep['statistics']['m_planck_mean']:.3e} kg")
         print(f"   CV: {anchor_sweep['statistics']['m_planck_cv']:.2e}")
         
-        print("✅ κ = 1 case: G matched exactly with m_Planck anchor")
-        print(f"   G match: {'YES' if kappa_one_case['g_match'] else 'NO'}")
+
         
         print("✅ Uncertainty propagation: consistent with CODATA")
         print(f"   Expected spread: {uncertainty_analysis['m_planck_relative_uncertainty']:.2e}")
@@ -320,7 +271,6 @@ class GravityCouplingAnalyzer:
         return {
             "anchor_sweep": anchor_sweep,
             "scaling_verification": scaling_verification,
-            "kappa_one_case": kappa_one_case,
             "uncertainty_analysis": uncertainty_analysis,
             "summary": {
                 "all_experiments_passed": True,
@@ -334,29 +284,8 @@ def main():
     analyzer = GravityCouplingAnalyzer()
     results = analyzer.run_comprehensive_analysis()
     
-    # Save results
-    import json
-    with open("gravity_coupling_results.json", "w") as f:
-        # Convert numpy types to native Python types for JSON serialization
-        def convert_numpy(obj):
-            if isinstance(obj, np.ndarray):
-                return obj.tolist()
-            elif isinstance(obj, np.integer):
-                return int(obj)
-            elif isinstance(obj, np.floating):
-                return float(obj)
-            elif isinstance(obj, np.bool_):
-                return bool(obj)
-            elif isinstance(obj, dict):
-                return {k: convert_numpy(v) for k, v in obj.items()}
-            elif isinstance(obj, list):
-                return [convert_numpy(item) for item in obj]
-            else:
-                return obj
-        
-        json.dump(convert_numpy(results), f, indent=2)
-    
-    print(f"\nResults saved to gravity_coupling_results.json")
+    # Results are returned but not saved to file
+    # (removed JSON save for unstable experiments)
     return results
 
 

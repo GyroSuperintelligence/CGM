@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Recursive Memory Structure for CGM-RGF
+Recursive Memory Structure for CGM
 
 This module implements the recursive memory structure that connects
 abstract gyrogroup geometry to physical observables like κ, α_EM, and
@@ -18,7 +18,7 @@ from typing import Dict, Any, List, Tuple, Optional, Callable
 from dataclasses import dataclass
 import warnings
 
-from .gyrovector_ops import GyroVectorSpace
+from core.gyrovector_ops import GyroVectorSpace
 
 
 @dataclass
@@ -94,7 +94,7 @@ class MemoryPath:
 
 class RecursiveMemory:
     """
-    Implements recursive memory structure for CGM-RGF.
+    Implements recursive memory structure for CGM.
     
     This class builds on the proven mathematical foundation to implement:
     1. Coherence field accumulation along recursive paths
@@ -256,7 +256,7 @@ class RecursiveMemory:
                     step_size = 0.1 * (1.0 - np.linalg.norm(current_velocity))
                     
                     # Ensure step_size is reasonable
-                    step_size = max(0.01, min(0.5, step_size))
+                    step_size = max(0.01, min(0.5, float(step_size)))
                     
                     try:
                         next_point = self.gyrospace.gyroaddition(
@@ -445,7 +445,7 @@ class RecursiveMemory:
         Returns:
             Comprehensive results from memory experiment
         """
-        print("CGM-RGF Recursive Memory Experiment")
+        print("CGM Recursive Memory Experiment")
         print("=" * 40)
         
         # Generate memory paths

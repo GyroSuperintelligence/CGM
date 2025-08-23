@@ -1,5 +1,5 @@
 """
-Gyrotriangle implementation for CGM-RGF
+Gyrotriangle implementation for CGM
 
 Implements the gyrotriangle defect calculations and closure conditions
 that are fundamental to the CGM stage theorems.
@@ -7,7 +7,7 @@ that are fundamental to the CGM stage theorems.
 
 import numpy as np
 from typing import Tuple, List, Optional, Dict, Union
-from .gyrovector_ops import GyroVectorSpace, RecursivePath
+from core.gyrovector_ops import GyroVectorSpace, RecursivePath
 from numpy.typing import NDArray
 
 

@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 from typing import Dict, Any, Tuple, List
-from ..core.gyrovector_ops import GyroVectorSpace
+from core.gyrovector_ops import GyroVectorSpace
 
 
 class ONAStage:
@@ -212,7 +212,7 @@ class ONAStage:
         Returns:
             BUStage instance
         """
-        from .bu_stage import BUStage
+        from stages.bu_stage import BUStage
 
         return BUStage(self.gyrospace)
 
@@ -248,13 +248,9 @@ class ONAStage:
             # Gyration between consecutive points
             gyr = self.gyrospace.gyration(p1, p2)
 
-            # Ensure gyr is a matrix (3x3)
-            if np.isscalar(gyr) or gyr.ndim == 0:
-                # If scalar, convert to identity scaled by the value
-                gyr = np.eye(3) * float(gyr)
-            elif gyr.shape != (3, 3):
-                # If wrong shape, reshape or create identity
-                gyr = np.eye(3)
+            # Ensure gyr is a proper 3x3 matrix
+            if not (hasattr(gyr, "shape") and gyr.shape == (3, 3)):
+                raise TypeError("gyration must be a 3x3 matrix")
 
             monodromy = monodromy @ gyr
 
@@ -263,11 +259,9 @@ class ONAStage:
         p_first = loop_points[0]
         final_gyr = self.gyrospace.gyration(p_last, p_first)
 
-        # Ensure final_gyr is a matrix
-        if np.isscalar(final_gyr) or final_gyr.ndim == 0:
-            final_gyr = np.eye(3) * float(final_gyr)
-        elif final_gyr.shape != (3, 3):
-            final_gyr = np.eye(3)
+        # Ensure final_gyr is a proper 3x3 matrix
+        if not (hasattr(final_gyr, "shape") and final_gyr.shape == (3, 3)):
+            raise TypeError("gyration must be a 3x3 matrix")
 
         monodromy = monodromy @ final_gyr
 

@@ -1,5 +1,5 @@
 """
-Singularity and Infinity Validations for CGM-RGF
+Singularity and Infinity Validations for CGM
 
 This module validates CGM predictions for:
 - Recursive singularities (memory cannot store torsion)
@@ -15,7 +15,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from core.gyrovector_ops import GyroVectorSpace, RecursivePath
 from stages.bu_stage import BUStage
 from stages.ona_stage import ONAStage
 

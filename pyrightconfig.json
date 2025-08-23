@@ -12,6 +12,6 @@
   "useLibraryCodeForTypes": true,
   "reportMissingImports": true,
   "reportMissingTypeStubs": false,
-  "pythonVersion": "3.8",
+  "pythonVersion": "3.12.10",
   "pythonPlatform": "All"
 }

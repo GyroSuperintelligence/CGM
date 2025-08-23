@@ -1,5 +1,5 @@
 @echo off
-REM CGM-RGF Experimental Framework Launcher
+REM CGM Experimental Framework Launcher
 REM This script activates the virtual environment and runs the experiments
 
 echo Activating CGM virtual environment...
@@ -11,7 +11,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo Running CGM-RGF experiments...
+echo Running CGM experiments...
 python run_experiments.py
 
 echo.

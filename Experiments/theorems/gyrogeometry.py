@@ -1,5 +1,5 @@
 """
-Gyrogeometry Theorems for CGM-RGF
+Gyrogeometry Theorems for CGM
 
 This module contains mathematical proofs related to gyrovector geometry,
 including the Gauss-Bonnet theorem for constant curvature spaces.

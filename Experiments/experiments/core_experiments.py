@@ -7,7 +7,7 @@ This module tests the fundamental theorems of the Common Governance Model:
 - ONA Stage: Opposition Non-Absolute (both gyrations maximally non-identity)
 - BU Stage: Balance Universal (both gyrations return to identity)
 
-Based on the mathematical formalism presented in the CGM-RGF framework.
+Based on the mathematical formalism presented in the CGM framework.
 """
 
 import numpy as np
@@ -17,8 +17,8 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from ..core.gyrotriangle import GyroTriangle
+from core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from core.gyrotriangle import GyroTriangle
 from stages.cs_stage import CSStage
 from stages.una_stage import UNAStage
 from stages.ona_stage import ONAStage
@@ -439,12 +439,19 @@ class CoreTheoremTester:
 
         print(f"\nOverall result: {passed_tests}/{total_tests} TESTS PASSED")
 
-        if passed_tests == total_tests:
+        overall_success = passed_tests == total_tests
+        
+        if overall_success:
             print("🎯 All core CGM theorems validated!")
         else:
             print("⚠️  Some core theorems need attention")
 
-        return results
+        return {
+            **results,
+            "overall_success": overall_success,
+            "passed_tests": passed_tests,
+            "total_tests": total_tests
+        }
 
 
 # Alias for backward compatibility

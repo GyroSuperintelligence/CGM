@@ -1,5 +1,5 @@
 """
-Tests for CGM-RGF Gyro Math Theorems
+Tests for CGM Gyro Math Theorems
 
 This module tests the mathematical foundations and theorems
 that underpin the Common Governance Model.
@@ -12,9 +12,9 @@ import os
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.gyrovector_ops import GyroVectorSpace
-from ..core.gyrotriangle import GyroTriangle
-from ..core.dimensions import DimensionalCalibrator, DimVec
+from core.gyrovector_ops import GyroVectorSpace
+from core.gyrotriangle import GyroTriangle
+from core.dimensions import DimensionalCalibrator, DimVec
 
 
 def test_thomas_wigner_small_angle():
@@ -108,7 +108,7 @@ def test_gyrotriangle_defect_theorem():
 
 def run_all_tests():
     """Run all gyro math tests."""
-    print("Running CGM-RGF Gyro Math Tests")
+    print("Running CGM Gyro Math Tests")
     print("=" * 40)
     
     try:
@@ -118,6 +118,14 @@ def run_all_tests():
         test_gyration_proof_guard()
         test_bu_amplitude_identity()
         test_gyrotriangle_defect_theorem()
+        
+        # Add Thomas-Wigner precession test (minimal validation)
+        from tests.test_thomas_precession import test_tw_precession_small_angle
+        test_tw_precession_small_angle()
+        
+        # Add dimensional engine validation
+        from tests.test_dimensional_engine import run_all_dimensional_tests
+        run_all_dimensional_tests()
         
         print("\n🎉 All tests passed!")
         return True

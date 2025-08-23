@@ -19,9 +19,10 @@ import os
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.dimensions import DimensionalCalibrator, DimVec
+# Import the required modules
+from core.dimensions import DimensionalCalibrator, DimVec
 from theorems.gyrogeometry import GyroTriangleDefectTheorem
-from ..core.gyrovector_ops import GyroVectorSpace
+from core.gyrovector_ops import GyroVectorSpace
 
 
 def test_theorem_c_base_unit_identities():
@@ -283,7 +284,7 @@ def test_property_based_homomorphism():
 
 def run_all_proofs():
     """Run all CGM theorem proofs."""
-    print("CGM-RGF Theorem Proof Runner")
+    print("CGM Theorem Proof Runner")
     print("=" * 40)
     print()
     

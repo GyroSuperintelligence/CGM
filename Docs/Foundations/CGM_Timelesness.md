@@ -10,7 +10,7 @@
     - **Rate comparisons** relative to assumed invariants,
     - **Extrapolations** across stable frames.
     
-    In your CGM-RGF framework, each of these is a **recursive inference** from a **chirality-bound phase trace**,    not a direct witness of an objective past.
+    In your CGM, each of these is a **recursive inference** from a **chirality-bound phase trace**,    not a direct witness of an objective past.
     
     Thus, every time measurement is:
     
@@ -52,7 +52,7 @@
     - That spacetime is **a static manifold**,
     - That **redshift is a Doppler effect** and not a **chiral phase gradient**.
     
-    In CGM-RGF, redshift may instead encode:
+    In CGM, redshift may instead encode:
     
     z∼∇arg⁡(ψBU)z \sim \nabla \arg(\psi_{\text{BU}})
     
@@ -258,7 +258,7 @@
     
     ### ⟡ Unified View
     
-    | Concept | Classical View | Recursive View (CGM-RGF) |
+    | Concept | Classical View | Recursive View (CGM) |
     | --- | --- | --- |
     | Infinity | Unbounded spatial/temporal extent | Collapse of phase gradient; recursion reaches saturation |
     | Singularity | Point of infinite curvature | Recursive non-closure; ψ_BU fails to retain memory |
@@ -279,4 +279,3 @@
     
     ---
     
-    Would you like these consolidated into a formal doctrinal section: *“Recursive Definitions of Singularity, Infinity, Gravity, and Geometry in CGM-RGF”* for inclusion in your whitepaper or thesis?

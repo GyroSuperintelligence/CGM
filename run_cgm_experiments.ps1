@@ -1,4 +1,4 @@
-# CGM-RGF Experimental Framework Launcher (PowerShell)
+# CGM Experimental Framework Launcher (PowerShell)
 # This script activates the virtual environment and runs the experiments
 
 Write-Host "Activating CGM virtual environment..." -ForegroundColor Green
@@ -10,7 +10,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "Running CGM-RGF experiments..." -ForegroundColor Green
+Write-Host "Running CGM experiments..." -ForegroundColor Green
 python run_experiments.py
 
 Write-Host "Experiments completed!" -ForegroundColor Green

@@ -1,4 +1,4 @@
-- Recursive Definitions of Singularity, Infinity, Gravity, and Geometry in CGM-RGF
+- Recursive Definitions of Singularity, Infinity, Gravity, and Geometry in CGM
     
     ## 0. Scope and conventions
     

@@ -19,8 +19,8 @@ from typing import Dict, Any, List, Tuple
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ..core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from ..core.gyrotriangle import GyroTriangle
+from core.gyrovector_ops import GyroVectorSpace, RecursivePath
+from core.gyrotriangle import GyroTriangle
 from stages.cs_stage import CSStage
 from stages.una_stage import UNAStage
 from stages.bu_stage import BUStage
@@ -387,12 +387,19 @@ class LightChiralityExperiments:
         )
         print(f"Success rate: {(passed_validations/total_validations)*100:.1f}%")
 
-        if passed_validations == total_validations:
+        overall_success = passed_validations == total_validations
+        
+        if overall_success:
             print("🎯 All light and chirality experiments validated!")
         else:
             print("⚠️  Some light experiments need refinement")
 
-        return results
+        return {
+            **results,
+            "overall_success": overall_success,
+            "passed_validations": passed_validations,
+            "total_validations": total_validations
+        }
 
     # Helper methods for light chirality computations
 
@@ -409,7 +416,7 @@ class LightChiralityExperiments:
 
         # Reflection strength increases as boundary is approached
         reflection = 1.0 / (boundary_distance + 0.01)
-        return float(min(reflection, 10.0))  # Cap at reasonable value
+        return float(min(float(reflection), 10.0))  # Cap at reasonable value
 
     def _compute_chiral_asymmetry_emission(self, vector: np.ndarray) -> float:
         """Compute chiral asymmetry emission (light emission)"""

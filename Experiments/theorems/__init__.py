@@ -1,5 +1,5 @@
 """
-CGM-RGF Mathematical Theorems and Proofs
+CGM Mathematical Theorems and Proofs
 
 This module contains mathematical proofs and theorems that underpin
 the Common Governance Model - Recursive Gyrovector Formalism.

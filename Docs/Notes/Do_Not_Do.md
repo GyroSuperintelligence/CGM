@@ -1,4 +1,4 @@
-# Do Not Do - CGM-RGF Development Guidelines
+# Do Not Do - CGM Development Guidelines
 
 ## 🚫 PROHIBITED PRACTICES
 
@@ -41,6 +41,15 @@
 - ❌ **Do NOT** extrapolate beyond what's actually calculated
 - ✅ **ONLY** make claims that are directly supported by calculations
 - ✅ **ONLY** present results as theoretical predictions, not facts
+
+### 7. **Physics Textbook Experiments**
+- ❌ **Do NOT** write extensive code to "prove" already-established physics results
+- ❌ **Do NOT** implement verification tests for known mathematical theorems
+- ❌ **Do NOT** create experiments that just validate standard physics formulas
+- ❌ **Do NOT** add hundreds of lines of code to verify basic dimensional analysis
+- ✅ **ONLY** implement minimal tests needed to ensure your implementation works
+- ✅ **ONLY** focus on what CGM uniquely predicts, not what physics already knows
+- ✅ **ONLY** write code that advances CGM theory, not reproduces standard results
 
 ## 📋 CURRENT FOCUS AREAS
 

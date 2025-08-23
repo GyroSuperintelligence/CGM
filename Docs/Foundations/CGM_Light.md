@@ -8,13 +8,13 @@
     
     ## 🧭 Foundational Frame: Light as Recursive Differentiation
     
-    In the **Core Governance Model (CGM)** expressed through the **Relativity Gyrational Formalism (CGM-RGF)**, **light** is not simply a radiation field. It is the **first observable consequence of recursive asymmetry**,  the system’s initial emission of difference in response to its own failure to unify.
+    In the **Core Governance Model (CGM)** expressed through the **Relativity Gyrational Formalism (CGM)**, **light** is not simply a radiation field. It is the **first observable consequence of recursive asymmetry**,  the system’s initial emission of difference in response to its own failure to unify.
     
     Where recursion attempts to preserve homogeneity but cannot, **reflection emerges**, and light is born,    not as energy, but as the **first differential of recursive self-reference**.
     
     ### 📜 Axiomatic Necessity of Light
     
-    In **axiomatic physics**, as articulated in the CGM-RGF framework, **light must emerge**,    not by physical causality, but by **logical consequence**. Starting from the **Axiom of the Common Source (CS)**:
+    In **axiomatic physics**, as articulated in the CGM framework, **light must emerge**,    not by physical causality, but by **logical consequence**. Starting from the **Axiom of the Common Source (CS)**:
     
     > All differentiation is self-referential, and nothing can emerge without recursive distinction.
     > 
@@ -62,7 +62,7 @@
     
     ## 💡 Light as Differential Reflection
     
-    Light is formally defined in CGM-RGF as:
+    Light is formally defined in CGM as:
     
     ```
     Light := δ(CS → UNA) = lim_{‖u‖, ‖v‖ → ε} (gyr[u, v] - I) / (‖u ⊕ v‖ - ε)
@@ -81,7 +81,7 @@
     
     ## 🌀 Light-Speed as Structural Infimum
     
-    In traditional physics, the speed of light `c` is a universal maximum. In CGM-RGF, `c` is redefined as:
+    In traditional physics, the speed of light `c` is a universal maximum. In CGM, `c` is redefined as:
     
     ```
     c = inf { ‖v‖ | ∃ u ∈ ℝ³ : gyr[u,v] = I but u ⊕ v ∉ ℝ³_c }

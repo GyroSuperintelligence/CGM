@@ -10,7 +10,7 @@ Key Components:
 1. Dimensional Calibration Engine
 2. Geometric Theorem Validation  
 3. Gravity Coupling Analysis
-4. Recursive Memory Structure
+4. Helical Memory Structure
 5. Stage Transition Observables
 
 Run with: python run_experiments.py
@@ -27,15 +27,44 @@ sys.path.insert(0, str(experiments_dir))
 
 # Import experiment modules
 from Experiments.experiments.core_experiments import CoreTheoremTester
-from Experiments.experiments.physical_constants import PhysicalConstantsValidator
+from Experiments.experiments.physical_constants import ElectricCalibrationValidator
 from Experiments.experiments.gravity_coupling import GravityCouplingAnalyzer
-from Experiments.experiments.fine_structure_focus import FineStructureValidator
-from Experiments.core.recursive_memory import RecursiveMemory
+
 from Experiments.theorems.run_proofs import run_all_proofs
 from Experiments.core.gyrovector_ops import GyroVectorSpace
 
 
 
+
+
+
+
+def run_stable_experiment(name, func, *args, **kwargs):
+    """Run a stable experiment with minimal output"""
+    print(f"Running {name}...")
+    import io
+    import sys
+    from contextlib import redirect_stdout
+    
+    # Capture all output
+    captured = io.StringIO()
+    with redirect_stdout(captured):
+        result = func(*args, **kwargs)
+    
+    # Show only key results
+    if hasattr(result, 'get'):
+        if 'overall_success' in result:
+            status = "✅ PASS" if result['overall_success'] else "❌ FAIL"
+            print(f"   {name}: {status}")
+        elif 'validation_passed' in result:
+            status = "✅ PASS" if result['validation_passed'] else "❌ FAIL"
+            print(f"   {name}: {status}")
+        else:
+            print(f"   {name}: Completed")
+    else:
+        print(f"   {name}: Completed")
+    
+    return result
 
 
 def main():
@@ -49,31 +78,73 @@ def main():
         # Initialize gyrovector space
         gyrospace = GyroVectorSpace(c=1.0)
         
-        # Run theorem proofs
-        print("Running CGM Theorem Proofs...")
+        # Run stable experiments with minimal output
+        print("Running Stable Experiments (streamlined)...")
         print("=" * 40)
-        theorems_passed = run_all_proofs()
-        print()
         
-        # Run core experiments
-        print("Running Core CGM Experiments...")
-        print("=" * 40)
+        theorems_passed = run_stable_experiment("CGM Theorem Proofs", run_all_proofs)
+        
         core_tester = CoreTheoremTester(gyrospace)
-        core_results = core_tester.run_all_core_tests()
-        print()
+        core_results = run_stable_experiment("Core CGM Experiments", core_tester.run_all_core_tests)
         
-        # Run physical constants validation
-        print("Running Physical Constants Validation...")
-        print("=" * 40)
-        constants_validator = PhysicalConstantsValidator(gyrospace)
-        constants_results = constants_validator.run_comprehensive_physical_dimensions_experiment()
-        print()
+        constants_validator = ElectricCalibrationValidator(gyrospace)
+        constants_results = run_stable_experiment("Electric Calibration", constants_validator.run_electric_calibration_experiment, alpha_input=1/137.035999084)
         
-        # Run gravity coupling experiments
-        print("Running Gravity Coupling Experiments...")
-        print("=" * 40)
         gravity_analyzer = GravityCouplingAnalyzer()
-        gravity_results = gravity_analyzer.run_comprehensive_analysis()
+        gravity_results = run_stable_experiment("Gravity Coupling", gravity_analyzer.run_comprehensive_analysis)
+        
+        from Experiments.experiments.tw_precession import test_tw_precession_small_angle
+        tw_results = run_stable_experiment("Thomas-Wigner Precession", test_tw_precession_small_angle)
+        
+        from Experiments.experiments.tw_closure_test import TWClosureTester
+        tw_closure_tester = TWClosureTester(gyrospace)
+        tw_closure_results = run_stable_experiment("TW Consistency Band", tw_closure_tester.run_tw_closure_tests)
+        
+        print()
+        
+        # Solve for emergent N* (streamlined - stable)
+        print("Solving for Emergent Cosmogenesis Scale...")
+        print("=" * 40)
+        target_L_star = 1.337e-4  # m (target from CMB temperature)
+        
+        # Use the helical analyzer to find N*
+        from Experiments.experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
+        helical_analyzer = HelicalMemoryAnalyzer(gyrospace)
+        
+        # Use the new CMB N-solver with actual psi_bu data
+        N_star, final_result = helical_analyzer.solve_min_N_for_CMB(Nmax=100)
+        
+        if N_star is not None:
+            print(f"🎯 N* = {N_star}, L* = {final_result['L_star_N']:.2e} m, Π = {final_result['pitch_loop']:.3f}, Ξ = {final_result['Xi_loop']:.3f}")
+        else:
+            print("⚠️  No N* found in range [1, 100]")
+        
+        print()
+        
+        # Run light chirality experiments (streamlined - stable)
+        from Experiments.experiments.light_chirality_experiments import LightChiralityExperiments
+        light_experiments = LightChiralityExperiments(gyrospace)
+        light_results = run_stable_experiment("Light Chirality", light_experiments.run_complete_light_chirality_experiments)
+        
+        print()
+        
+        # Run singularity and infinity experiments (streamlined - stable)
+        from Experiments.experiments.singularity_infinity import SingularityInfinityValidator
+        singularity_validator = SingularityInfinityValidator(gyrospace)
+        singularity_results = run_stable_experiment("Singularity & Infinity", singularity_validator.run_all_validations)
+        
+        # Run gravitational field experiments (streamlined - stable)
+        from Experiments.experiments.gravitational_field_experiments import estimate_kappa_from_geometry
+        kappa_results = estimate_kappa_from_geometry(gyrospace)
+        print(f"   Gravitational Field: κ(geo)={kappa_results['kappa_estimate']:.3e}, κ(hol)={kappa_results['kappa_holonomy']:.3e}")
+        
+        print()
+        
+        # Run unified cosmogenesis analysis (DETAILED - still working on this)
+        print("Running Unified Cosmogenesis Analysis...")
+        print("=" * 40)
+        memory_analyzer = HelicalMemoryAnalyzer(gyrospace)
+        memory_results = memory_analyzer.run_comprehensive_analysis()
         print()
         
         # Print final summary
@@ -98,8 +169,57 @@ def main():
             
         print("Gravity Coupling: ✅ ANALYZED")
         
+        if tw_results.get('validation_passed', False):
+            print("Thomas-Wigner Precession: ✅ VALIDATED")
+        else:
+            print("Thomas-Wigner Precession: ❌ FAILED")
+            
+        if tw_closure_results.get('overall_success', False):
+            print("TW-Consistency Band: ✅ VALIDATED")
+        else:
+            print("TW-Consistency Band: ❌ FAILED")
+            
+        if light_results.get('overall_success', False):
+            print("Light Chirality (UNA/light): ✅ VALIDATED")
+        else:
+            print("Light Chirality (UNA/light): ❌ FAILED")
+            
+        if singularity_results.get('recursive_singularity', {}).get('validation_passed', False):
+            print("Recursive Singularity: ✅ VALIDATED")
+        else:
+            print("Recursive Singularity: ❌ FAILED")
+            
+        if kappa_results.get('curvature_proxy_median', 0) > 0:
+            print("Geometric Invariants: ✅ COMPUTED")
+        else:
+            print("Geometric Invariants: ❌ FAILED")
+            
+        if memory_results.get('hypothesis_tests', {}):
+            passed_memory_tests = sum(1 for test in memory_results['hypothesis_tests'].values() if test['passed'])
+            total_memory_tests = len(memory_results['hypothesis_tests'])
+            print(f"Cosmogenesis Analysis: {passed_memory_tests}/{total_memory_tests} hypotheses validated")
+        else:
+            print("Cosmogenesis Analysis: ⚠️ NEEDS REFINEMENT")
+            
+
+        
         print("\n🎯 CGM Framework Status: FOUNDATION COMPLETE")
-        print("Next milestone: κ prediction from recursive memory structure")
+        
+        # Brief diagnostic summary
+        print("\n🔍 KEY INSIGHTS:")
+        print("=" * 60)
+        
+        if 'toroidal_holonomy' in tw_closure_results:
+            holonomy = tw_closure_results['toroidal_holonomy']
+            print(f"   Toroidal Holonomy: {holonomy['total_holonomy']:.3f} rad (deficit: {holonomy['deviation']:.3f})")
+        
+        if 'anatomical_tw_ratio' in tw_closure_results:
+            chi = tw_closure_results['anatomical_tw_ratio']
+            print(f"   TW Ratio χ: {chi['chi_mean']:.3f} ± {chi['chi_std']:.3f}")
+        
+        if 'psi_bu_field' in memory_results:
+            psi = memory_results['psi_bu_field']
+            print(f"   ψ_BU: {psi['magnitude']:.3f}, coherence: {psi['spin_translation_coherence']:.3f}")
         
     except Exception as e:
         print(f"❌ Error running experiments: {e}")

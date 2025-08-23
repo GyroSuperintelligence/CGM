@@ -31,7 +31,7 @@ except ImportError:
 
 class GyroVectorSpace:
     """
-    Einstein-Ungar gyrovector space implementation for CGM-RGF
+    Einstein-Ungar gyrovector space implementation for CGM
 
     A gyrovector space (V, ⊕, ⊖, gyr) with speed parameter c.
     """
@@ -139,7 +139,7 @@ class GyroVectorSpace:
         Implements Thomas-Wigner rotation for small velocities via BCH formula.
         """
         # Adaptive epsilon based on vector magnitudes for better numerical stability
-        eps = max(1e-8, 1e-8 * (np.linalg.norm(a) + np.linalg.norm(b) + 1))
+        eps = max(1e-8, 1e-8 * (float(np.linalg.norm(a)) + float(np.linalg.norm(b)) + 1))
         E = np.eye(3)
         cols = []
         for i in range(3):
@@ -157,15 +157,18 @@ class GyroVectorSpace:
         # Proof-guard: check orthogonality and fall back to BCH if needed
         orthogonality_error = np.linalg.norm(R.T @ R - np.eye(3))
         if orthogonality_error > 1e-10:
-            # Fall back to BCH linearized rotation: R ≈ I + ε²(u×v)/c²
+            # BCH rotation: θ ≈ ||u×v||/(2c²), independent of eps
             u_cross_v = np.cross(a, b)
-            angle = eps**2 * np.linalg.norm(u_cross_v) / (2 * self.c**2)
-            if angle > 1e-12:
-                axis = u_cross_v / np.linalg.norm(u_cross_v)
-                # Rodrigues' rotation formula for small angles
-                K = np.array([[0, -axis[2], axis[1]], 
-                             [axis[2], 0, -axis[0]], 
-                             [-axis[1], axis[0], 0]])
+            cross = float(np.linalg.norm(u_cross_v))
+            if cross < 1e-15:
+                R = np.eye(3)
+            else:
+                angle = cross / (2.0 * self.c**2)
+                angle = float(np.clip(angle, 0.0, np.pi))  # keep in-range
+                axis = u_cross_v / cross
+                K = np.array([[0, -axis[2], axis[1]],
+                              [axis[2], 0, -axis[0]],
+                              [-axis[1], axis[0], 0]])
                 R = np.eye(3) + np.sin(angle) * K + (1 - np.cos(angle)) * (K @ K)
         
         return R
@@ -235,6 +238,31 @@ class GyroVectorSpace:
         right = self.gyroaddition(u, self.gyroaddition(v, w))
         return float(np.linalg.norm(left - right))
 
+    def holonomy_triangle(self, u: np.ndarray, v: np.ndarray, w: np.ndarray | None = None):
+        """
+        Rotation holonomy around a closed triangle in velocity space.
+        If w is None, close with w = -(u ⊕ v). Returns (angle, matrix).
+        """
+        u = np.asarray(u, float)
+        v = np.asarray(v, float)
+        if w is None:
+            w = -self.gyroaddition(u, v)
+
+        R1 = self.gyration(u, v)
+        R2 = self.gyration(v, w)
+        R3 = self.gyration(w, u)
+        R = R3 @ R2 @ R1
+
+        tr = float(np.trace(R))
+        tr = np.clip(tr, -1.0, 3.0)
+        angle = float(np.arccos((tr - 1.0)/2.0))
+        return angle, R
+
+    def rotation_angle_from_matrix(self, R: np.ndarray) -> float:
+        """Principal rotation angle from an SO(3) matrix."""
+        tr = float(np.clip(np.trace(R), -1.0, 3.0))
+        return float(np.arccos((tr - 1.0)/2.0))
+
 
 class RecursivePath:
     """
@@ -282,11 +310,9 @@ class RecursivePath:
         memory = np.eye(3)  # Start with identity
 
         for gyr in self.gyration_memory:
-            # Ensure gyr is a proper matrix
-            if np.isscalar(gyr) or gyr.ndim == 0:
-                gyr = np.eye(3) * gyr
-            elif gyr.shape != (3, 3):
-                gyr = np.eye(3)
+            # Ensure gyr is a proper 3x3 matrix
+            if not (hasattr(gyr, "shape") and gyr.shape == (3, 3)):
+                raise TypeError("gyration memory element must be a 3x3 matrix")
 
             memory = memory @ gyr
 

@@ -1,5 +1,5 @@
 """
-Dimensional Engine Theorems for CGM-RGF
+Dimensional Engine Theorems for CGM
 
 This module contains mathematical proofs related to the dimensional
 calibration engine, including the group homomorphism property.
@@ -12,7 +12,14 @@ import numpy as np
 from typing import Dict, Any, List, Tuple
 
 # Import the core implementation
-from Experiments.core.dimensions import DimensionalCalibrator, DimVec
+try:
+    from Experiments.core.dimensions import DimensionalCalibrator, DimVec
+except ImportError:
+    # Fallback for direct execution
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from core.dimensions import DimensionalCalibrator, DimVec
 
 
 class DimensionalEngineHomomorphism:
