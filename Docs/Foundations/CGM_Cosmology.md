@@ -4,7 +4,7 @@
     
     ## 🧭 Foundational Premise
     
-    In the **Core Governance Model (CGM)** expressed through the **Relativity Gyrational Formalism (CGM)**, cosmology emerges not from a singular past event, but from a continuous, recursive field dynamic. This dynamic is structured by algebraic chirality, non-associative recursion, and reflective closure. The observable universe is the projection of a self-referential memory field.
+    In the **Core Governance Model (CGM)**, cosmology emerges not from a singular past event, but from a continuous, recursive field dynamic. This dynamic is structured by algebraic chirality, non-associative recursion, and reflective closure. The observable universe is the projection of a self-referential memory field.
     
     At the boundary of this recursion lies the **Source Boson (𝒮ᴮ)**,  not a particle, but a **phase closure operator**. It encodes the logical completion of recursion through the formation of a coherent boundary, measurable as total invariant mass. The Source Boson is not an origin in space or time, but the topological surface where emergence becomes observable as mass, coherence, and gravity.
     

@@ -33,6 +33,9 @@ from Experiments.experiments.gravity_coupling import GravityCouplingAnalyzer
 from Experiments.theorems.run_proofs import run_all_proofs
 from Experiments.core.gyrovector_ops import GyroVectorSpace
 
+# Triad source index analysis
+from Experiments.experiments.triad_index_analyzer import TriadIndexAnalyzer
+
 
 
 
@@ -69,9 +72,9 @@ def run_stable_experiment(name, func, *args, **kwargs):
 
 def main():
     """Main entry point for CGM Experimental Framework"""
-    print("CGM Experimental Framework")
+    print("Common Governance Model - Experiments")
     print("=" * 30)
-    print("Testing the Common Governance Model")
+    print("Thesis and Hypotheses Testing")
     print()
 
     try:
@@ -147,6 +150,36 @@ def main():
         memory_results = memory_analyzer.run_comprehensive_analysis()
         print()
         
+        # Run triad source index analysis
+        print("Running Triad Source Index Analysis...")
+        print("=" * 50)
+        
+        triad_analyzer = TriadIndexAnalyzer(gyrospace)
+        triad_results = run_stable_experiment("Triad Source Index Analysis", triad_analyzer.run)
+        
+        print()
+        
+        # Run new validation modules (integrating your assistant's insights)
+        print("Running Advanced CGM Validations...")
+        print("=" * 50)
+        
+        # Kompaneets distortion analysis
+        from Experiments.experiments.kompaneets_analyzer import KompaneetsAnalyzer
+        kompaneets_analyzer = KompaneetsAnalyzer(gyrospace)
+        kompaneets_results = run_stable_experiment("Kompaneets Distortions", kompaneets_analyzer.run_comprehensive_analysis)
+        
+        # Etherington relation validation
+        from Experiments.experiments.etherington_validator import EtheringtonValidator
+        etherington_validator = EtheringtonValidator(gyrospace)
+        etherington_results = run_stable_experiment("Etherington Relation", etherington_validator.run_comprehensive_validation)
+        
+        # Acoustic coherence analysis
+        from Experiments.experiments.acoustic_coherence_analyzer import AcousticCoherenceAnalyzer
+        acoustic_analyzer = AcousticCoherenceAnalyzer(gyrospace)
+        acoustic_results = run_stable_experiment("Acoustic Coherence", acoustic_analyzer.run_comprehensive_analysis)
+        
+        print()
+        
         # Print final summary
         print("=" * 60)
         print("FINAL CGM VALIDATION SUMMARY")
@@ -179,6 +212,18 @@ def main():
         else:
             print("TW-Consistency Band: ❌ FAILED")
             
+        # Triad source index analysis results
+        if triad_results.get('triads'):
+            successful_triads = sum(1 for triad in triad_results['triads'] if 'error' not in triad)
+            total_triads = len(triad_results['triads'])
+            print(f"Triad Source Index Analysis: ✅ {successful_triads}/{total_triads} triads successful")
+            
+            if triad_results.get('domain_penalties'):
+                xi_mean = np.mean(triad_results['domain_penalties'])
+                print(f"   Domain penalties: mean = {xi_mean:.3f}")
+        else:
+            print("Triad Source Index Analysis: ❌ FAILED")
+            
         if light_results.get('overall_success', False):
             print("Light Chirality (UNA/light): ✅ VALIDATED")
         else:
@@ -200,6 +245,22 @@ def main():
             print(f"Cosmogenesis Analysis: {passed_memory_tests}/{total_memory_tests} hypotheses validated")
         else:
             print("Cosmogenesis Analysis: ⚠️ NEEDS REFINEMENT")
+            
+        # New validation results
+        if kompaneets_results.get('overall_viable', False):
+            print("Kompaneets Distortions: ✅ VALIDATED")
+        else:
+            print("Kompaneets Distortions: ❌ FAILED")
+            
+        if etherington_results.get('overall_passed', False):
+            print("Etherington Relation: ✅ VALIDATED")
+        else:
+            print("Etherington Relation: ❌ FAILED")
+            
+        if acoustic_results.get('overall_passed', False):
+            print("Acoustic Coherence: ✅ VALIDATED")
+        else:
+            print("Acoustic Coherence: ❌ FAILED")
             
 
         

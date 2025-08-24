@@ -579,10 +579,10 @@ class SingularityInfinityValidator:
 
         # Fit exponential decay: g(d) = g0 * exp(-r * d)
         log_gradients = np.log(np.array(gradients) + 1e-10)
-        depths = np.array(depths)
+        depths_array = np.array(depths)
 
         try:
-            slope, intercept = np.polyfit(depths, log_gradients, 1)
+            slope, intercept = np.polyfit(depths_array, log_gradients, 1)
             convergence_rate = -slope  # Make positive for decay rate
             return max(0, convergence_rate)  # Ensure non-negative
         except:

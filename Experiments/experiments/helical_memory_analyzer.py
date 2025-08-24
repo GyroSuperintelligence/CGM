@@ -735,7 +735,7 @@ class HelicalMemoryAnalyzer:
         This tests if the bio-bridge has genuine predictive power beyond the training set.
         """
         print("\n" + "=" * 60)
-        print("🧬 BIO-BRIDGE OUT-OF-SAMPLE TEST (KILL-SHOT #2)")
+        print("🧬 BIO-BRIDGE OUT-OF-SAMPLE TEST")
         print("=" * 60)
         print("Testing: Can the same Ξ_bio predict additional biological scales?")
         print(f"Using: Ξ_bio = {Xi_bio:.4f} (from training set)")
@@ -1144,9 +1144,9 @@ class HelicalMemoryAnalyzer:
         chirality_results = self.test_chirality_selection(results['psi_bu_field'])
         results['chirality_selection'] = chirality_results
         
-        # Add kill-shot tests
+        # Add validation tests
         print("\n" + "=" * 60)
-        print("🔮 KILL-SHOT VALIDATION TESTS")
+        print("🔮 VALIDATION TESTS")
         print("=" * 60)
         print("Testing framework's true predictive power beyond anchored quantities")
         
@@ -1176,8 +1176,8 @@ class HelicalMemoryAnalyzer:
         print(f"Success rate: {passed_tests/total_tests*100:.1f}%")
         print()
         
-        # Kill-shot summary
-        print("🔮 KILL-SHOT VALIDATION:")
+        # Validation summary
+        print("🔮 VALIDATION SUMMARY:")
         print("-" * 30)
         
         # CMB prediction
@@ -1256,11 +1256,11 @@ class HelicalMemoryAnalyzer:
     
     def test_cmb_prediction(self) -> Dict[str, Any]:
         """
-        Test the kill-shot: Can we predict CMB temperature without anchoring to it?
+        Test the prediction: Can we predict CMB temperature without anchoring to it?
         This uses only loop parameters and principled Xi (no hand tuning).
         """
         print("\n" + "=" * 60)
-        print("🔮 CMB PREDICTION TEST (KILL-SHOT #1)")
+        print("🔮 CMB PREDICTION TEST")
         print("=" * 60)
         print("Testing: Can loop parameters predict CMB without anchoring?")
         print("Framework: Use only Π_loop and principled Ξ from holonomy/coherence")

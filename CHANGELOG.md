@@ -5,11 +5,23 @@ All notable changes to the CGM Experimental Framework will be documented in this
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+---
 
-## [1.0.3] - 2025-08-23
+## [1.0.4] - 2025-08-24
 
 ### Added
-- **🔮 Kill-Shot Validation Framework**
+- **🎯 Ladder Validation Framework**
+  - **Anchor Length Sweep**: Systematic testing of different L_S candidates (λ_C,e, ℓ_P, 1/Λ_QCD, 1/v, λ_C,p, a_0)
+  - **QCD Sector Corrections**: Sector-like corrections for hadronic scales while preserving cosmic and biological fits
+  - **Two-Pitch Hypothesis Testing**: N=37 = 32 (geometric) + 5 (sector/monodromy) validation
+  - **Cross-Domain Joint Fitting**: Minimizes total log-error across cosmic, biological, and hadronic domains
+  - **Sector Factorization**: Ξ_total = Ξ_topological × Ξ_QED × Ξ_QCD × Ξ_EW with scale-dependent activation
+
+---
+
+## [1.0.4] - 2025-08-23
+
+- **🔮 Validation Framework**
   - **CMB Prediction Test**: Un-anchored CMB temperature prediction using only loop parameters
   - **Bio-Bridge Out-of-Sample Testing**: Validation of Ξ_bio on additional biological scales
   - **Cross-Domain Predictive Power**: Testing framework's ability to predict beyond training data
