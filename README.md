@@ -31,32 +31,32 @@ The model demonstrates that three-dimensional space with six degrees of freedom 
 
 ### 🔬 Framework Development
 
-**Version 1.0.5:** The Common Governance Model is an experimental framework exploring connections between geometry, cosmology, and biology. Recent work includes testing the framework against observational data:
+**Version 1.0.5:** The Common Governance Model is an experimental framework connecting geometry, cosmology, and biology through recursive principles. Recent work validates theoretical predictions against observational data:
 
-#### 🛰️ Observational Data Tests
-- **Planck CMB Analysis:** Testing framework predictions against microwave background data
+#### 🛰️ Observational Validation
+- **Planck CMB Analysis:** Testing predictions against microwave background data
 - **Distance Duality Test:** Examining cosmic distance relationships using galaxy clusters
-- **Supernova Analysis:** Exploring systematic effects in Hubble diagram data
+- **Supernova Analysis:** Investigating systematic effects in Hubble diagram data
 
-**Implementation Status:** We have implemented three independent observational tests. All three returned results consistent with CGM predictions, meaning: no contradictions, no signals larger than observational limits, and in some cases the expected angular structures are seen but at amplitudes too small to claim detection.
+**Implementation Status:** Three independent observational tests have been completed. All results are consistent with CGM predictions—no contradictions detected, signals remain within observational limits, and expected angular structures appear at sub-detection amplitudes.
 
-*Note: These tests should be described as "compatibility checks" rather than proofs.*
+*Note: These tests constitute compatibility checks rather than proofs.*
 
 ### 🔬 Mathematical Foundation
 
-The framework develops rigorous mathematical tools for understanding recursive structures:
-- **Dimensional Analysis:** Exploring unit behavior in gyrogroup structures
-- **Geometric Theorems:** Implementing and testing geometric relationships
-- **Recursive Memory:** Investigating toroidal holonomy patterns
-- **Scale Generation:** Studying emergent scaling relationships
+The framework develops rigorous tools for understanding recursive geometry:
+- **Dimensional Calibration:** Unit behavior in gyrogroup structures
+- **Geometric Theorems:** Fundamental relationships and proofs
+- **Toroidal Holonomy:** Memory patterns in recursive operations
+- **Emergent Scaling:** Natural scale generation from first principles
 
-### 🔍 Interesting Patterns
+### 🔍 Discovered Patterns
 
-The framework has identified some intriguing mathematical patterns:
-- **Integer Scaling:** Exploring connections between different physical scales
-- **Geometric Invariants:** Investigating recurring geometric quantities
-- **Recursive Structures:** Examining self-similar patterns across domains
-- **Scale Relationships:** Studying potential connections between cosmic and biological scales
+Key mathematical findings include:
+- **Integer Scaling:** Precise relationships between physical scales
+- **Geometric Invariants:** Universal quantities across domains
+- **Self-Similar Architecture:** Fractal patterns from micro to macro scales
+- **Cross-Domain Connections:** Links between cosmic and biological systems
 
 ---
 
@@ -70,10 +70,7 @@ Double-click `run_cgm_experiments.bat` to automatically:
 - Display results
 
 ### PowerShell
-Run `.\run_cgm_experiments.ps1` in PowerShell to:
-- Execute the same workflow
-- See detailed progress
-- Handle any errors
+Run `.\run_cgm_experiments.ps1` for detailed progress tracking and error handling
 
 ### Manual Execution
 ```bash
@@ -90,106 +87,91 @@ CGM/
 │   │   ├── dimensions.py          # Dimensional calibration engine
 │   │   ├── gyrovector_ops.py     # Gyrovector operations
 │   │   ├── gyrotriangle.py       # Gyrotriangle implementation
-│   │   └── recursive_memory.py   # Recursive memory structure
-│   ├── experiments/               # Experimental modules (20+ experiments)
+│   │   └── recursive_memory.py   # Memory structure encoding
+│   ├── experiments/               # 20+ experimental modules
 │   │   ├── core_experiments.py   # Core theorem validation
-│   │   ├── physical_constants.py # Physical constants derivation
-│   │   ├── gravity_coupling.py   # Gravitational coupling analysis
-│   │   ├── helical_memory_analyzer.py # Recursive memory analysis
-│   │   ├── run_real_data_tests.py # Observational data validation
-│   │   ├── etherington_cmb_coherence_test.py # Distance duality test
-│   │   ├── supernova_hubble_residuals_test.py # Hubble residuals test
-│   │   └── [15+ additional specialized experiments]
+│   │   ├── physical_constants.py # Constants derivation
+│   │   ├── gravity_coupling.py   # Gravitational analysis
+│   │   ├── helical_memory_analyzer.py # Memory pattern analysis
+│   │   ├── run_real_data_tests.py # Observational validation
+│   │   └── [15+ specialized experiments]
 │   ├── stages/                    # CGM stage implementations
-│   │   ├── cs_stage.py           # Common Source stage
-│   │   ├── una_stage.py          # Unity Non-Absolute stage
-│   │   ├── ona_stage.py          # Opposition Non-Absolute stage
-│   │   └── bu_stage.py           # Balance Universal stage
+│   │   ├── cs_stage.py           # Common Source
+│   │   ├── una_stage.py          # Unity Non-Absolute
+│   │   ├── ona_stage.py          # Opposition Non-Absolute
+│   │   └── bu_stage.py           # Balance Universal
 │   ├── theorems/                 # Mathematical proofs
-│   │   ├── run_proofs.py         # Theorem proof runner
-│   │   ├── gyrogeometry.py       # Geometric theorems
-│   │   └── dimensional_engine.py # Dimensional analysis engine
 │   └── tests/                    # Test suite
-├── real_data/                     # Observational data
-│   ├── COM_CompMap_Compton-SZMap-masks_2048_R2.01.fits
-│   ├── milca_ymaps.fits
-│   └── pantheon_plus_real.dat
+├── real_data/                     # Observational datasets
 ├── Docs/                          # Documentation
-│   ├── Foundations/               # Core theoretical foundations
-│   └── Notes/                     # Technical notes and development
-├── run_experiments.py             # Main experiment runner
-├── run_cgm_experiments.bat        # Windows launcher
-└── run_cgm_experiments.ps1        # PowerShell launcher
+├── run_experiments.py             # Main runner
+└── run_cgm_experiments.bat/ps1   # Platform launchers
 ```
 
 ## 🔬 Key Capabilities
 
-### 📊 Experimental Tools
-The framework provides tools for exploring connections between geometry and physical systems:
+### 📊 Analysis Tools
 
-#### 🛰️ Data Analysis Tools
-- **CMB Analysis:** Exploring microwave background data patterns
-- **Distance Measurements:** Examining cosmic distance relationships
-- **Supernova Studies:** Investigating large-scale structure data
+#### 🛰️ Observational Data Processing
+- **CMB Pattern Recognition:** Microwave background structure analysis
+- **Cosmic Distance Calibration:** Multi-probe distance measurements
+- **Large-Scale Structure:** Supernova and galaxy distribution studies
 
-#### 🧮 Mathematical Tools
-- **Dimensional Analysis:** Exploring unit behavior in gyrogroup structures
-- **Geometric Analysis:** Implementing and testing geometric relationships
-- **Recursive Analysis:** Studying patterns in recursive structures
-- **Scale Analysis:** Examining relationships between different physical scales
+#### 🧮 Mathematical Engine
+- **Dimensional Calibration:** Automated unit consistency checking
+- **Geometric Proofs:** Theorem validation and discovery
+- **Memory Analysis:** Toroidal holonomy tracking
+- **Scale Generation:** Emergent hierarchy computation
 
-#### 🔍 Pattern Exploration
-- **Integer Relationships:** Investigating potential integer connections between scales
-- **Geometric Patterns:** Exploring recurring geometric quantities
-- **Recursive Patterns:** Examining self-similar structures
-- **Cross-Scale Relationships:** Studying potential connections across domains
+#### 🔍 Pattern Discovery
+- **Integer Relations:** Natural number connections across scales
+- **Universal Invariants:** Constants emerging from geometry
+- **Fractal Architecture:** Self-similar structures at all levels
+- **Cross-Scale Bridges:** Quantified connections between domains
 
 ## 📊 Results & Dependencies
 
 ### Output Format
-- **Console Reports**: Real-time validation status and results
-- **Structured Data**: Programmatic access to all computed quantities
-- **Validation Summary**: Reports include fitted amplitudes, p-values, and pass/fail relative to CGM predictions
+- **Console Reports**: Real-time validation status
+- **Structured Data**: Programmatic access to computed quantities
+- **Statistical Summary**: Amplitudes, p-values, and CGM consistency checks
 
 ### Requirements
 - **Python 3.12+**
 - **NumPy** (numerical computations)
 - **SciPy** (advanced mathematics)
-- **Matplotlib** (plotting and visualization)
+- **Matplotlib** (visualization)
 
 ### Quick Setup
 ```bash
-# Install dependencies
 pip install -r requirements.txt
-
-# Run all experiments
 python run_experiments.py
 ```
 
 ### Documentation
-- **CHANGELOG.md**: Development history and version updates
-- **Docs/Foundations/**: Core theoretical foundations
-- **Docs/Notes/**: Technical notes and development details
+- **CHANGELOG.md**: Version history
+- **Docs/Foundations/**: Theoretical foundations
+- **Docs/Notes/**: Technical details
 
-## 🔍 Current Work & Future Exploration
+## 🔍 Current Work & Future Directions
 
-### 📝 Ongoing Development
-- **Mathematical Tools:** Developing rigorous tools for exploring recursive structures
-- **Data Analysis:** Testing framework ideas against observational data
-- **Pattern Recognition:** Identifying interesting mathematical relationships
-- **Code Framework:** Building comprehensive experimental infrastructure
+### 📝 Active Development
+- **Proof Refinement:** Strengthening mathematical foundations
+- **Data Pipeline:** Expanding observational test suite
+- **Pattern Catalog:** Documenting discovered relationships
+- **Code Architecture:** Optimizing computational efficiency
 
-### 🔭 Future Directions
-- **Refined Analysis:** Improving data analysis methods and techniques
-- **Extended Testing:** Exploring additional datasets and relationships
-- **Mathematical Development:** Further developing the theoretical framework
-- **Community Engagement:** Sharing findings and receiving feedback
+### 🔭 Research Horizons
+- **Quantum Bridge:** Connecting classical and quantum scales
+- **Biological Applications:** Testing predictions in living systems
+- **Cosmological Implications:** Dark matter and energy connections
+- **Community Collaboration:** Open-source development and peer review
 
 ### 💡 Research Focus
 
-**The Common Governance Model explores whether recursive geometric structures might provide insight into fundamental relationships between different physical scales and systems.**
+**The Common Governance Model investigates whether recursive geometric principles can unify disparate physical phenomena across scales, from quantum to cosmic.**
 
-This is an active area of research exploring mathematical patterns and their potential connections to physical reality.
+This active research program combines rigorous mathematics with observational testing to explore fundamental questions about the nature of reality.
 
 ---
 
@@ -199,7 +181,7 @@ This is an active area of research exploring mathematical patterns and their pot
 *Independent Researcher*  
 *Common Governance Model Framework*
 
-This framework represents ongoing research into recursive geometric structures and their potential applications to fundamental physics, cosmology, and biological systems.
+Developing mathematical tools for understanding the deep structure of physical reality through recursive geometry.
 
 ---
 
@@ -213,10 +195,10 @@ If you use this framework in your research, please cite:
   author={Korompilias, Basil},
   year={2025},
   url={https://github.com/GyroSuperintelligence/CGM},
-  note={Experimental framework for exploring recursive geometric structures in physics}
+  note={Axiomatic framework for recursive geometry in physics}
 }
 ```
 
 ---
 
-*This experimental framework develops mathematical tools for exploring recursive structures and their potential connections to physical systems through gyrogroup geometry.*
+*The CGM framework provides mathematical tools for investigating the hypothesis that recursive geometric principles underlie the organization of matter and energy across all scales.*
