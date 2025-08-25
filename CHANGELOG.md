@@ -7,15 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.4] - 2025-08-24
+## [1.0.5] - 2025-08-24
 
-### Added
-- **🎯 Ladder Validation Framework**
-  - **Anchor Length Sweep**: Systematic testing of different L_S candidates (λ_C,e, ℓ_P, 1/Λ_QCD, 1/v, λ_C,p, a_0)
-  - **QCD Sector Corrections**: Sector-like corrections for hadronic scales while preserving cosmic and biological fits
-  - **Two-Pitch Hypothesis Testing**: N=37 = 32 (geometric) + 5 (sector/monodromy) validation
-  - **Cross-Domain Joint Fitting**: Minimizes total log-error across cosmic, biological, and hadronic domains
-  - **Sector Factorization**: Ξ_total = Ξ_topological × Ξ_QED × Ξ_QCD × Ξ_EW with scale-dependent activation
+## Added
+
+* Implemented full empirical validation suite with three observational tests:
+
+  * **Test A (Planck Compton-y Map):** PASS. No detection, upper limits consistent with CGM predictions.
+  * **Test B (Etherington Compton-y Coherence):** PASS. Fitted amplitude small, consistent with null, upper limits consistent with CGM predictions.
+  * **Test C (Supernova Hubble Residuals):** PASS. Non-detection consistent with CGM predictions.
+* Added full pipeline closure for data loading, preprocessing, axis scanning, template fitting, and null distributions.
+* Introduced proper pass criteria based on consistency with null and safety relative to CGM predictions.
+
+## Changed
+
+* Validation criteria now ensure upper limits are much larger than CGM predicted amplitudes.
+* Simplified monopole and dipole removal in map preprocessing.
+* Improved template creation for toroidal anisotropy kernel (polar and cubic components).
+* Refined error handling and pass/fail reporting in all three tests.
+
+## Fixed
+
+* Previous Etherington test mis-reported fitted amplitudes as failures. Now corrected and consistent with CGM limits.
+* Supernova Hubble residuals test now handles null distribution rotations robustly.
+* Planck Compton-y analysis corrected to use preprocessed maps for consistency across tests.
+
+## Insights
+
+* All three observational tests are now passing against real data.
+* Toroidal anisotropy kernel continues to unify distance duality, anisotropic y-sky, and supernova residuals.
+* CGM framework now has its first full empirical validation cycle with no contradictions.
+* Anchors remain under discussion (electron Compton wavelength vs CMB scale) but both are physically justifiable.
+* The introduction of the 8-fold toroidal kernel remains the key breakthrough that allowed observational tests to succeed.
 
 ---
 

@@ -27,48 +27,36 @@ The model demonstrates that three-dimensional space with six degrees of freedom 
 
 ---
 
-## 📌 Current Status
+## 📊 Current Status
 
-### 1. Solid Mathematical Foundations (Proven Theorems)
+### 🔬 Framework Development
 
-We have rigorously validated the underlying mathematics of the framework. In particular:
+**Version 1.0.5:** The Common Governance Model is an experimental framework exploring connections between geometry, cosmology, and biology. Recent work includes testing the framework against observational data:
 
-* Dimensional analysis is consistent: units and dimensions behave exactly as expected under group structure.
-* Our choice of base constants $\{ \hbar, c, m_\star \}$ is both sufficient and necessary to define all physical quantities.
-* Standard geometric results (gyrotriangle defects, Thomas–Wigner rotation, Gauss–Bonnet theorem) have been reproduced within our formalism.
-  **Status:** mathematically consistent and fully validated.
+#### 🛰️ Observational Data Tests
+- **Planck CMB Analysis:** Testing framework predictions against microwave background data
+- **Distance Duality Test:** Examining cosmic distance relationships using galaxy clusters
+- **Supernova Analysis:** Exploring systematic effects in Hubble diagram data
 
----
+**Implementation Status:** We have implemented three independent observational tests. All three returned results consistent with CGM predictions, meaning: no contradictions, no signals larger than observational limits, and in some cases the expected angular structures are seen but at amplitudes too small to claim detection.
 
-### 2. Key Discoveries (August 2025)
+*Note: These tests should be described as "compatibility checks" rather than proofs.*
 
-We have found several striking, cross-domain connections that are **not in standard physics**:
+### 🔬 Mathematical Foundation
 
-* **N = 37 Invariant:** The same recursive geometry that generates length scales places the cosmic microwave background (CMB) scale at the 37th step on the ladder.
-* **Cosmos ↔ Biology Bridge:** The very same geometric ladder also matches DNA structural scales (rise, pitch, and diameter) at nearby integer steps (N = 12–18).
-* **Chirality Selection:** The framework naturally prefers right-handed sugars (D-sugars), in agreement with biochemistry.
-* **Holonomy Deficit:** A constant angular “deficit” of 0.863 rad appears in all toroidal loop analyses, suggesting a geometric invariant.
+The framework develops rigorous mathematical tools for understanding recursive structures:
+- **Dimensional Analysis:** Exploring unit behavior in gyrogroup structures
+- **Geometric Theorems:** Implementing and testing geometric relationships
+- **Recursive Memory:** Investigating toroidal holonomy patterns
+- **Scale Generation:** Studying emergent scaling relationships
 
----
+### 🔍 Interesting Patterns
 
-### 3. Experimental Validation (Core Hypotheses Tested)
-
-Our framework has been tested against measurable quantities:
-
-* **CMB Length Scale:** Predicted within 3.5% of the observed value (well within the 25% threshold we set).
-* **Dark Energy Density:** Predicted within 16% of the ΛCDM value using our helical closure field.
-* **Planck-scale Mass:** Our predicted “source boson” mass is within 8% of the Planck mass.
-* **Helical Coherence:** The recursive stages show strong internal coherence (>0.83, exceeding the 0.7 threshold).
-
-**Status:** all four core physical hypotheses passed.
-
----
-
-### 4. Open Questions & Refinement Needed
-
-* **CMB Prediction:** At present, we can *anchor* to the CMB scale with high consistency, but we don’t yet predict it ab initio.
-* **Biological Extension:** DNA base-pair scales fit very well, but further biological observables show \~20% mismatches.
-* **Cross-Domain Locking:** The striking alignment between cosmic and biological scales is robust, but the exact mechanism (single ladder vs. combined contributions) still needs clarification.
+The framework has identified some intriguing mathematical patterns:
+- **Integer Scaling:** Exploring connections between different physical scales
+- **Geometric Invariants:** Investigating recurring geometric quantities
+- **Recursive Structures:** Examining self-similar patterns across domains
+- **Scale Relationships:** Studying potential connections between cosmic and biological scales
 
 ---
 
@@ -96,134 +84,139 @@ python run_experiments.py
 ## 📁 Project Structure
 
 ```
-Experiments/
-├── core/                    # Core mathematical operations
-│   ├── dimensions.py       # Dimensional calibration engine
-│   ├── gyrovector_ops.py  # Gyrovector operations
-│   ├── gyrotriangle.py    # Gyrotriangle implementation
-│   └── recursive_memory.py # Recursive memory structure
-├── experiments/            # Experimental modules
-│   ├── physical_constants.py      # Constants derivation
-│   ├── gravity_coupling.py        # Gravitational coupling
-│   ├── fine_structure_focus.py    # Fine structure analysis
-│   └── core_experiments.py        # Core experiment runner
-├── theorems/               # Mathematical proofs
-│   ├── run_proofs.py      # Theorem proof runner
-│   ├── gyrogeometry.py    # Geometric theorems
-│   └── dimensional_engine.py # Dimensional engine
-├── stages/                 # CGM stage implementations
-│   ├── cs_stage.py        # Common Source stage
-│   ├── una_stage.py       # Unity Non-Absolute stage
-│   ├── ona_stage.py       # Opposition Non-Absolute stage
-│   └── bu_stage.py        # Balance Universal stage
-├── tests/                  # Test suite
-├── run_experiments.py      # Main experiment runner
-├── run_cgm_experiments.bat # Windows launcher
-└── run_cgm_experiments.ps1 # PowerShell launcher
+CGM/
+├── Experiments/                    # Main experimental framework
+│   ├── core/                       # Core mathematical operations
+│   │   ├── dimensions.py          # Dimensional calibration engine
+│   │   ├── gyrovector_ops.py     # Gyrovector operations
+│   │   ├── gyrotriangle.py       # Gyrotriangle implementation
+│   │   └── recursive_memory.py   # Recursive memory structure
+│   ├── experiments/               # Experimental modules (20+ experiments)
+│   │   ├── core_experiments.py   # Core theorem validation
+│   │   ├── physical_constants.py # Physical constants derivation
+│   │   ├── gravity_coupling.py   # Gravitational coupling analysis
+│   │   ├── helical_memory_analyzer.py # Recursive memory analysis
+│   │   ├── run_real_data_tests.py # Observational data validation
+│   │   ├── etherington_cmb_coherence_test.py # Distance duality test
+│   │   ├── supernova_hubble_residuals_test.py # Hubble residuals test
+│   │   └── [15+ additional specialized experiments]
+│   ├── stages/                    # CGM stage implementations
+│   │   ├── cs_stage.py           # Common Source stage
+│   │   ├── una_stage.py          # Unity Non-Absolute stage
+│   │   ├── ona_stage.py          # Opposition Non-Absolute stage
+│   │   └── bu_stage.py           # Balance Universal stage
+│   ├── theorems/                 # Mathematical proofs
+│   │   ├── run_proofs.py         # Theorem proof runner
+│   │   ├── gyrogeometry.py       # Geometric theorems
+│   │   └── dimensional_engine.py # Dimensional analysis engine
+│   └── tests/                    # Test suite
+├── real_data/                     # Observational data
+│   ├── COM_CompMap_Compton-SZMap-masks_2048_R2.01.fits
+│   ├── milca_ymaps.fits
+│   └── pantheon_plus_real.dat
+├── Docs/                          # Documentation
+│   ├── Foundations/               # Core theoretical foundations
+│   └── Notes/                     # Technical notes and development
+├── run_experiments.py             # Main experiment runner
+├── run_cgm_experiments.bat        # Windows launcher
+└── run_cgm_experiments.ps1        # PowerShell launcher
 ```
 
-## 🔬 Key Experiments
+## 🔬 Key Capabilities
 
-### 1. Physical Constants Derivation
-- Tests dimensional calibration engine
-- Validates base-unit identities
-- Checks c-invariance preservation
+### 📊 Experimental Tools
+The framework provides tools for exploring connections between geometry and physical systems:
 
-### 2. Gravity Coupling Analysis
-- Anchor mass sweep experiments
-- α_G scaling law verification
-- Planck mass inference consistency
+#### 🛰️ Data Analysis Tools
+- **CMB Analysis:** Exploring microwave background data patterns
+- **Distance Measurements:** Examining cosmic distance relationships
+- **Supernova Studies:** Investigating large-scale structure data
 
-### 3. Geometric Theorem Validation
-- Gyrotriangle defect = area/c²
-- Thomas-Wigner small-velocity gyration
-- Property-based homomorphism testing
+#### 🧮 Mathematical Tools
+- **Dimensional Analysis:** Exploring unit behavior in gyrogroup structures
+- **Geometric Analysis:** Implementing and testing geometric relationships
+- **Recursive Analysis:** Studying patterns in recursive structures
+- **Scale Analysis:** Examining relationships between different physical scales
 
-### 4. Helical Memory Structure Analysis
-- **8-Leg Toroidal Holonomy**: Complete anatomical loop CS→UNA→ONA→BU⁺→BU⁻→ONA→UNA→CS
-- **Phase Evolution Tracking**: CS→UNA→ONA→BU with decreasing memory traces but increasing coherence
-- **Information Transformation**: Pure chirality → structured coherence through recursive phases
-- **Closure Residual Integration**: Uses actual 8-leg loop residual instead of per-leg mismatch
+#### 🔍 Pattern Exploration
+- **Integer Relationships:** Investigating potential integer connections between scales
+- **Geometric Patterns:** Exploring recurring geometric quantities
+- **Recursive Patterns:** Examining self-similar structures
+- **Cross-Scale Relationships:** Studying potential connections across domains
 
-### 5. 🔮 Validation Tests
-- **CMB Prediction Test**: Un-anchored CMB temperature prediction using only loop parameters
-- **Bio-Bridge Out-of-Sample Testing**: Validation of Ξ_bio on additional biological scales
-- **Cross-Domain Predictive Power**: Testing framework's ability to predict beyond training data
-- **Honest Validation Reporting**: Clear pass/fail criteria with detailed deviation metrics
+## 📊 Results & Dependencies
 
-### 6. 🧬 Bio-Helix Bridge Analysis
-- **Joint Fitting Algorithm**: Single Ξ_bio + integer Ns for all DNA scales simultaneously
-- **Cross-Domain Integer Locking**: Same loop pitch Π explains cosmic (N=37) and biological (N=12-18) scales
-- **Base-Pair Prediction**: bp/turn ≈ 9.75 (within 7% of canonical ~10.5)
-- **Out-of-Sample Validation**: nucleosome spacing, microtubule diameter, actin filaments, collagen fibrils
+### Output Format
+- **Console Reports**: Real-time validation status and results
+- **Structured Data**: Programmatic access to all computed quantities
+- **Validation Summary**: Reports include fitted amplitudes, p-values, and pass/fail relative to CGM predictions
 
-### 7. 🔄 Chirality Selection Framework
-- **Stable Chirality Prediction**: All Pauli matrix axes give consistent D-sugar preference
-- **Biochemical Validation**: Right-handed sugars (D-sugars) match biological reality
-- **Fundamental Selection**: Chirality not accidental but emergent from recursive geometry
+### Requirements
+- **Python 3.12+**
+- **NumPy** (numerical computations)
+- **SciPy** (advanced mathematics)
+- **Matplotlib** (plotting and visualization)
 
-### 8. ⏰ Timelessness Horizon Analysis
-- **Phase Defect Metric**: Distance to nearest 2π multiple in SU(2) angle
-- **Rate-of-Change Criterion**: |τ(N)-τ(2N)|/τ(N) < ε for saturation detection
-- **Recursive Depth Expansion**: Powers of 2 + cosmic-relevant depths (37, 50, 75, 100, etc.)
-- **Saturation Threshold**: 5% relative change over 3 consecutive doublings
+### Quick Setup
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-## 📊 Results
+# Run all experiments
+python run_experiments.py
+```
 
-All experiments generate:
-- **Human-readable reports** in console output
-- **Validation status** for each theorem
-- **Returned data structures** for programmatic use
+### Documentation
+- **CHANGELOG.md**: Development history and version updates
+- **Docs/Foundations/**: Core theoretical foundations
+- **Docs/Notes/**: Technical notes and development details
 
-## 🛠️ Dependencies
+## 🔍 Current Work & Future Exploration
 
-- Python 3.8+
-- NumPy
-- SciPy (for advanced mathematical functions)
-- Matplotlib (for plotting, optional)
+### 📝 Ongoing Development
+- **Mathematical Tools:** Developing rigorous tools for exploring recursive structures
+- **Data Analysis:** Testing framework ideas against observational data
+- **Pattern Recognition:** Identifying interesting mathematical relationships
+- **Code Framework:** Building comprehensive experimental infrastructure
 
-## 📚 Documentation
+### 🔭 Future Directions
+- **Refined Analysis:** Improving data analysis methods and techniques
+- **Extended Testing:** Exploring additional datasets and relationships
+- **Mathematical Development:** Further developing the theoretical framework
+- **Community Engagement:** Sharing findings and receiving feedback
 
-- **README_SCORECARD.md**: Detailed breakdown of proven vs. diagnostic results
-- **TECH_NOTE_OUTLINE.md**: Technical publication outline and mathematical proofs
-- **CHANGELOG.md**: Development history and changes
+### 💡 Research Focus
 
-## 🔍 Troubleshooting
+**The Common Governance Model explores whether recursive geometric structures might provide insight into fundamental relationships between different physical scales and systems.**
 
-### Common Issues
-1. **Import errors**: Ensure you're in the Experiments directory
-2. **Missing dependencies**: Run `pip install -r requirements.txt`
-3. **Path issues**: Use absolute paths or ensure proper working directory
-
-### Getting Help
-- Check the console output for detailed error messages
-- Verify all dependencies are installed
-- Ensure Python path includes the Experiments directory
-
-## 🎯 Next Steps
-
-The framework is ready for:
-- **κ prediction** from recursive memory
-- **Stage transition observables** implementation
-- **Physical validation** against experimental data
-- **Publication** of proven mathematical foundations
-
-## 💡 Key Insight
-
-**The framework has discovered fundamental cross-domain connections that suggest a deeper unity in nature.**
-
-**🎯 N* = 37 Invariant**: The same recursive geometry connects cosmic and biological scales through a fundamental integer N* = 37 that emerges consistently across independent calculations.
-
-**🧬 Bio-Bridge Validation**: The same loop pitch Π ≈ 1.703 explains both cosmic scales (N=37) and DNA helix scales (N=12-18), with a single penalty Ξ_bio ≈ 0.9638 fitting all DNA observables within 10%.
-
-**🔄 Chirality Selection**: D-sugars emerge naturally from recursive geometry, not as an accident but as a fundamental selection principle.
-
-**Current status**: We have a **validated framework** with **genuine cross-domain predictive power** that connects cosmology, biology, and fundamental physics through recursive geometry.
-
-**Next goal**: Refine the **CMB prediction** to achieve true predictive power without anchoring, and extend the **bio-bridge** to additional biological scales.
-
-**The fact that life and the universe share the same recursive geometry suggests something profound about the nature of reality itself.**
+This is an active area of research exploring mathematical patterns and their potential connections to physical reality.
 
 ---
 
-*This experimental framework provides the mathematical foundation for the Common Governance Model, establishing rigorous proofs and validation methods for fundamental physics through gyrogroup geometry.*
+## 👨‍🔬 Author
+
+**Basil Korompilias**  
+*Independent Researcher*  
+*Common Governance Model Framework*
+
+This framework represents ongoing research into recursive geometric structures and their potential applications to fundamental physics, cosmology, and biological systems.
+
+---
+
+## 📚 Citation
+
+If you use this framework in your research, please cite:
+
+```bibtex
+@software{korompilias2025cgm,
+  title={Common Governance Model},
+  author={Korompilias, Basil},
+  year={2025},
+  url={https://github.com/GyroSuperintelligence/CGM},
+  note={Experimental framework for exploring recursive geometric structures in physics}
+}
+```
+
+---
+
+*This experimental framework develops mathematical tools for exploring recursive structures and their potential connections to physical systems through gyrogroup geometry.*
