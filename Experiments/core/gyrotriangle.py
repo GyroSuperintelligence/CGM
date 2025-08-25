@@ -88,7 +88,7 @@ class GyroTriangle:
         defect = self.compute_defect(alpha, beta, gamma)
         tan_half_defect = np.tan(defect / 2)
         if abs(tan_half_defect) < 1e-12:
-            return float("inf")  # or np.nan, depending on how you want to flag closure
+            return float("inf")  # or np.nan, depending on how we want to flag closure
 
         numerator = a_s * b_s * np.sin(gamma)
         denominator = 1 - a_s * b_s * np.cos(gamma)

@@ -546,7 +546,7 @@ class HelicalMemoryAnalyzer:
         """
         SU(2) operator for the anatomical 8-leg loop:
         CS→UNA→ONA→BU+→BU-→ONA→UNA→CS
-        using your stage exponents (σ3, σ1, σ2, σ3) with the same angles you use per stage.
+        using your stage exponents (σ3, σ1, σ2, σ3) with the same angles we use per stage.
         """
         α = np.pi/4         # CS
         β = np.pi/8         # UNA
@@ -560,10 +560,10 @@ class HelicalMemoryAnalyzer:
         U_BU  = np.cos(δ/2)*self.identity + 1j*np.sin(δ/2)*self.sigma_3
 
         # BU dual-pole flip: rotate by π around an orthogonal axis to flip σ3-sign
-        # (you can choose σ1 or σ2; σ1 used here)
+        # (we can choose σ1 or σ2; σ1 used here)
         U_flip = np.cos(np.pi/2)*self.identity + 1j*np.sin(np.pi/2)*self.sigma_1  # = i σ1
 
-        # Path product (order matters: right-multiply as you progress)
+        # Path product (order matters: right-multiply as we progress)
         U = self.identity
         # CS→UNA→ONA→BU+ 
         U = U @ U_CS @ U_UNA @ U_ONA @ U_BU

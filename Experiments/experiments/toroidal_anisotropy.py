@@ -311,7 +311,7 @@ def find_best_axis(data_alm, lmax=4, n_theta=10, n_phi=20):
     # Create template alm for reference axis (z)
     template_alm = np.zeros_like(data_alm)
     
-    # Set P2 and C4 components (simplified - you may want to use proper alm construction)
+    # Set P2 and C4 components (simplified - we may want to use proper alm construction)
     if len(template_alm) > 4:  # Ensure we have enough alm coefficients
         # P2 component (m=0)
         template_alm[2] = DEFAULT_A_POLAR

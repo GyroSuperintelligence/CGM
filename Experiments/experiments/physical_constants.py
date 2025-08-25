@@ -5,7 +5,7 @@ This module rigorously derives physical constants and dimensions from CGM mathem
 integrating with existing passing experiments to validate the theoretical framework.
 
 IMPORTANT: NO PHYSICAL CONSTANTS ARE PREDICTED by this module.
-Only dimensionless diagnostics are computed unless/until you supply 
+Only dimensionless diagnostics are computed unless/until we supply 
 CGM-derived dimensionless couplings (κ, etc.).
 
 The constants section is strictly diagnostic and should not be used
@@ -391,7 +391,7 @@ class ElectricCalibrationValidator:
         c_predicted_ensemble = np.average(predictions, weights=weights)
 
         # Keep this prediction strictly dimensionless here.
-        # (If you want physical units, scale by a length/time such as L0/T0 from the
+        # (If we want physical units, scale by a length/time such as L0/T0 from the
         # dimensional calibrator; multiplying by √ħ is dimensionally invalid.)
 
         # Comprehensive validation metrics

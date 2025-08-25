@@ -245,7 +245,7 @@
     
     - **Cosine**: When your fingers are together (0°), cos = 1. As they open, cos decreases. At 90°, cos = 0.
     - **Sine**: When your fingers are together (0°), sin = 0. As they open, sin increases. At 90°, sin = 1.
-    - **Tangent**: The ratio sin/cos tells you how "open" the angle is relative to how "closed" it remains.
+    - **Tangent**: The ratio sin/cos tells we how "open" the angle is relative to how "closed" it remains.
     
     ### The Single Helical Path
     
@@ -313,7 +313,7 @@
     - UNA's "ratio" uₚ measures a planar (2-D) balance via cos β.
     - ONA's "ratio" oₚ is the diagonal angle γ itself in 3-D.
     
-    Keeping that distinction explicit ensures there is no confusion when you see "β=π/4, uₚ=1/√2" versus "γ=π/4, oₚ=π/4."
+    Keeping that distinction explicit ensures there is no confusion when we see "β=π/4, uₚ=1/√2" versus "γ=π/4, oₚ=π/4."
     
     ## 12. Conclusion
     

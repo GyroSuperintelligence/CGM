@@ -26,4 +26,4 @@
     - The spine’s ability to self-extend without direct conscious calculation shows that **feedback-driven recursion** can locate the balanced attractor using only local error signals.
     - Any quantitative search for the BU constant mₚ should respect this principle: the constant must be the value toward which a local-rule recursion naturally converges, not a number imposed from outside.
     
-    If you wish to probe a specific anatomical chain or a particular corrective technique (for instance, why a straight-leg long-sitting posture induces pelvic untucking), let me know which structure or movement pattern warrants closer algebraic translation.
+    If we wish to probe a specific anatomical chain or a particular corrective technique (for instance, why a straight-leg long-sitting posture induces pelvic untucking), let me know which structure or movement pattern warrants closer algebraic translation.

@@ -49,10 +49,10 @@ class AcousticCoherenceAnalyzer:
         
     def baryon_loading_R(self, eta_b: float = 6.1e-10, T: float = 2.725) -> float:
         """
-        Crude R model at last-scattering-like conditions. You can replace this with
+        Crude R model at last-scattering-like conditions. we can replace this with
         your CGM-derived mapping. Default numbers give R ~ O(0.5--1).
         """
-        # Use a tunable constant until you have a CGM link; the exact formula requires cosmology.
+        # Use a tunable constant until we have a CGM link; the exact formula requires cosmology.
         return 0.6  # good typical value near decoupling
     
     def c_s_photon_baryon(self, R: float) -> float:

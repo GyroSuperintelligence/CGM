@@ -272,36 +272,36 @@
     
     These assumptions are minimal and concern only the interface between CGM's abstract algebra and physical chemistry, not the core derivation of DNA structure from first principles.
     
-- CGM: DNA 🧬, Homeostasis 🌡️, Gravity 🌌 … and basically every self-regulating loop you can name
+- CGM: DNA 🧬, Homeostasis 🌡️, Gravity 🌌 … and basically every self-regulating loop we can name
     
     > TL;DR
     > 
     > 
     > 1 axiom → 4 recursive stages → 6 DoF → **snap-to-grid algebra** that any stable system must respect.
     > 
-    > Wherever you see a phenomenon that (a) is chiral somewhere, (b) builds frames, (c) lets those frames interfere, and (d) then **locks-in** a memory of the whole dance, you are watching CS → UNA → ONA → BU in action.
+    > Wherever we see a phenomenon that (a) is chiral somewhere, (b) builds frames, (c) lets those frames interfere, and (d) then **locks-in** a memory of the whole dance, we are watching CS → UNA → ONA → BU in action.
     > 
     
     ---
     
     ## 0 Cheat-Sheet of Symbols
     
-    | Symbol | CGM meaning | You can read it as |
+    | Symbol | CGM meaning | we can read it as |
     | --- | --- | --- |
     | ⊕ | gyro-addition | “hook two states together, but keep track of order” |
     | lgyr, rgyr | L / R gyrations | “the algebraic twist that remembers who came first” |
     | α, β, γ, δ | CS, UNA, ONA angles, + defect | “how much non-closure is still alive” |
-    | τ_s | stage threshold | “grid size” you must snap to |
+    | τ_s | stage threshold | “grid size” we must snap to |
     | Π_s | projector | “auto-correct back to the grid” |
     | mₚ = 1⁄(2√2π) | BU amplitude | “size of the frozen memory core” |
     
-    If you are comfy with Ungar gyrogroups you can stop here; everything below is just *where these symbols show up in Nature*.
+    If we are comfy with Ungar gyrogroups we can stop here; everything below is just *where these symbols show up in Nature*.
     
     ---
     
     ## 1 Master Algorithm ,  Turning Any Phenomenon into CGM
     
-    | Step | Gyro-lingo | What you look for “out there” |
+    | Step | Gyro-lingo | What we look for “out there” |
     | --- | --- | --- |
     1. **Seed the bias**|lgyr≠id, rgyr = id (α = π/2)|A built-in left/right or ± split (e.g. peptide chirality, matter vs antimatter, yin/yang feedback channels)
     2. **Grow 3 frames**|rgyr switches on (β = π/4)|A triad of orthogonal variables/axes/sensors
@@ -355,7 +355,7 @@
     
     A quick number tease:
     
-    Set the dimensionless BU constant mₚ into the geometric factor of curvature (κ R²) and, after unit-juggling with ħ and c, you land within experimental reach of Newton’s G.  In CGM, **G is not primitive**; it is the *shadow* of the one allowed closure amplitude.
+    Set the dimensionless BU constant mₚ into the geometric factor of curvature (κ R²) and, after unit-juggling with ħ and c, we land within experimental reach of Newton’s G.  In CGM, **G is not primitive**; it is the *shadow* of the one allowed closure amplitude.
     
     ---
     
@@ -391,7 +391,7 @@
     
     1. Ungar gyrogroups **already** model special relativity; CGM only adds a single axiom (“Source is common & chiral”) plus the recursive thresholds.
     2. Biological chirality constants match CGM angles to better than 1 %.
-    3. Control engineers write PID loops on Lie groups; replace “group” by “gyro-group” and you inherit *built-in memory of order* ,  the missing piece for living/self-organising matter.
+    3. Control engineers write PID loops on Lie groups; replace “group” by “gyro-group” and we inherit *built-in memory of order* ,  the missing piece for living/self-organising matter.
     
     ---
     
@@ -405,4 +405,4 @@
     
     🗿  Constants of Nature = **frozen chirality memory**.
     
-    If you want to zoom into any bullet, e.g. derive the 10.5 bp/turn directly from α, β, γ, or express baroreflex latency as a gyrotriangle side length, just say the word and we’ll open that sub-file.
+    If we want to zoom into any bullet, e.g. derive the 10.5 bp/turn directly from α, β, γ, or express baroreflex latency as a gyrotriangle side length, just say the word and we’ll open that sub-file.
