@@ -456,3 +456,43 @@ class CoreTheoremTester:
 
 # Alias for backward compatibility
 run_all_tests = CoreTheoremTester.run_all_core_tests
+
+
+def main():
+    """
+    Standalone main function to run core CGM experiments
+    """
+    print("CGM Core Experiments - Standalone Test")
+    print("=" * 40)
+    
+    try:
+        # Initialize gyrovector space
+        gyrospace = GyroVectorSpace(c=1.0)
+        
+        # Create tester and run all tests
+        tester = CoreTheoremTester(gyrospace)
+        results = tester.run_all_core_tests()
+        
+        # Print final summary
+        print("\n" + "=" * 50)
+        print("STANDALONE TEST COMPLETED")
+        print("=" * 50)
+        
+        if results.get('overall_success', False):
+            print("✅ All core CGM theorems validated successfully!")
+            return 0
+        else:
+            print("❌ Some core theorems failed validation")
+            return 1
+            
+    except Exception as e:
+        print(f"❌ Error running core experiments: {e}")
+        import traceback
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    import sys
+    exit_code = main()
+    sys.exit(exit_code)

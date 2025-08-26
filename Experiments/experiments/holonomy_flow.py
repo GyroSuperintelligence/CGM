@@ -39,12 +39,14 @@ def run_holonomy_flow(depths: List[int] = [20, 40, 80, 160]) -> List[Dict[str, A
         
         # χ from canonical configs, but re-seed the RNG by N for reproducibility
         np.random.seed(N)
-        chi = tw.compute_anatomical_tw_ratio()
-        hol = tw.test_toroidal_holonomy()
+        
+        # Get results without verbose output
+        chi = tw.compute_anatomical_tw_ratio(verbose=False)
+        hol = tw.test_toroidal_holonomy(verbose=False)
 
         # BU/ψ from helical analyzer (now SU(2)-based)
         ana = HelicalMemoryAnalyzer(gs)
-        res = ana.analyze_helical_memory_structure()
+        res = ana.analyze_helical_memory_structure(verbose=False)
         psi = res["psi_bu_field"]
 
         result = {

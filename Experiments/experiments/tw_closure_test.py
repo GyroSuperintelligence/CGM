@@ -141,30 +141,32 @@ class TWClosureTester:
         else:
             return self.u_p, theta_star
     
-    def test_tw_consistency_band(self) -> Dict[str, Any]:
+    def test_tw_consistency_band(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Test TW-consistency band: how close ω(u_p, o_p) is to m_p
         
         This probes the kinematic relationship between CGM thresholds
         without suggesting any changes to the validated topological invariants
         """
-        print("Testing Thomas-Wigner Consistency Band")
-        print("=" * 45)
-        print(f"UNA threshold (u_p): {self.u_p:.6f} (light speed related)")
-        print(f"ONA threshold (o_p): {self.o_p:.6f} (π/4, sound speed related)")
-        print(f"BU threshold (m_p): {self.m_p:.6f}")
-        print()
+        if verbose:
+            print("Testing Thomas-Wigner Consistency Band")
+            print("=" * 45)
+            print(f"UNA threshold (u_p): {self.u_p:.6f} (light speed related)")
+            print(f"ONA threshold (o_p): {self.o_p:.6f} (π/4, sound speed related)")
+            print(f"BU threshold (m_p): {self.m_p:.6f}")
+            print()
         
         # Test the canonical configuration: (β = u_p, θ = o_p)
         wigner_angle = self.wigner_angle_exact(self.u_p, self.o_p)
         deviation = abs(wigner_angle - self.m_p)
         relative_deviation = deviation / self.m_p
         
-        print(f"Wigner angle ω(u_p, o_p): {wigner_angle:.6f}")
-        print(f"BU threshold m_p:         {self.m_p:.6f}")
-        print(f"Absolute deviation:       {deviation:.6f}")
-        print(f"Relative deviation:       {relative_deviation:.1%}")
-        print()
+        if verbose:
+            print(f"Wigner angle ω(u_p, o_p): {wigner_angle:.6f}")
+            print(f"BU threshold m_p:         {self.m_p:.6f}")
+            print(f"Absolute deviation:       {deviation:.6f}")
+            print(f"Relative deviation:       {relative_deviation:.1%}")
+            print()
         
         # Find nearest (β*, θ*) that makes ω = m_p exactly
         nearest_beta, nearest_theta = self._find_nearest_omega_equals_mp()
@@ -172,19 +174,20 @@ class TWClosureTester:
         # Solve for the anatomical sound speed ratio
         beta_sound = self.solve_beta_for_mp()
         
-        print(f"Nearest (β*, θ*) for ω = m_p:")
-        print(f"  β* = {nearest_beta:.6f} (vs u_p = {self.u_p:.6f})")
-        print(f"  θ* = {nearest_theta:.6f} (vs o_p = {self.o_p:.6f})")
-        print()
-        print(f"Derived sound-speed ratio: β_sound = {beta_sound:.6f}  (c_s/c)")
-        print(f"Anatomical speed ratio: β_sound/u_p = {beta_sound/self.u_p:.6f}")
-        print()
-        
-        # This is now a consistency check, not a failure
-        print("✅ TW-CONSISTENCY BAND: CGM thresholds are validated topological invariants")
-        print("   The small deviation shows the kinematic relationship between")
-        print("   light/sound speeds (UNA/ONA) and closure amplitude (BU)")
-        print(f"   Derived sound speed: c_s = {beta_sound:.6f} × c")
+        if verbose:
+            print(f"Nearest (β*, θ*) for ω = m_p:")
+            print(f"  β* = {nearest_beta:.6f} (vs u_p = {self.u_p:.6f})")
+            print(f"  θ* = {nearest_theta:.6f} (vs o_p = {self.o_p:.6f})")
+            print()
+            print(f"Derived sound-speed ratio: β_sound = {beta_sound:.6f}  (c_s/c)")
+            print(f"Anatomical speed ratio: β_sound/u_p = {beta_sound/self.u_p:.6f}")
+            print()
+            
+            # This is now a consistency check, not a failure
+            print("✅ TW-CONSISTENCY BAND: CGM thresholds are validated topological invariants")
+            print("   The small deviation shows the kinematic relationship between")
+            print("   light/sound speeds (UNA/ONA) and closure amplitude (BU)")
+            print(f"   Derived sound speed: c_s = {beta_sound:.6f} × c")
         
         return {
             "wigner_angle": wigner_angle,
@@ -204,14 +207,15 @@ class TWClosureTester:
     
 
     
-    def test_toroidal_holonomy_fullpath(self) -> Dict[str, Any]:
+    def test_toroidal_holonomy_fullpath(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Full anatomical loop:
         CS → UNA → ONA → BU⁺ (egress) → BU⁻ (ingress) → ONA → UNA → CS.
         Computes per-leg TW rotation and the net holonomy.
         """
-        print("\nTesting Full Toroidal Holonomy (CS→…→CS, 8 legs)")
-        print("=" * 65)
+        if verbose:
+            print("\nTesting Full Toroidal Holonomy (CS→…→CS, 8 legs)")
+            print("=" * 65)
 
         v = {
             "CS":  np.array([0, 0, self.s_p]),
@@ -237,18 +241,20 @@ class TWClosureTester:
             leg_angles.append(ang)
             signed_leg_angles.append(signed_ang)
             leg_names.append(f"{a}→{b}")
-            print(f"{a:>3} → {b:<3} gyration: {ang:.6f} rad (signed: {signed_ang:+.6f})")
+            if verbose:
+                print(f"{a:>3} → {b:<3} gyration: {ang:.6f} rad (signed: {signed_ang:+.6f})")
 
         total_rotation = float(self.gyrospace.rotation_angle_from_matrix(R))
         signed_total = self._signed_rotation_angle(R)
         deviation = abs(total_rotation - 0.0)
         signed_deviation = abs(signed_total - 0.0)
 
-        print(f"\nTotal holonomy (8-leg loop): {total_rotation:.6f} rad")
-        print(f"Signed total holonomy:       {signed_total:+.6f} rad")
-        print(f"Expected (closure):          0.000000 rad")
-        print(f"Deviation (unsigned):        {deviation:.6e}")
-        print(f"Deviation (signed):          {signed_deviation:.6e}")
+        if verbose:
+            print(f"\nTotal holonomy (8-leg loop): {total_rotation:.6f} rad")
+            print(f"Signed total holonomy:       {signed_total:+.6f} rad")
+            print(f"Expected (closure):          0.000000 rad")
+            print(f"Deviation (unsigned):        {deviation:.6e}")
+            print(f"Deviation (signed):          {signed_deviation:.6e}")
 
         # BU dual-pole "flip" slice (the middle three legs)
         # ONA→BU+ → BU+→BU- → BU-→ONA
@@ -258,7 +264,8 @@ class TWClosureTester:
         G_ingr = self.gyrospace.gyration(v["BU-"], v["ONA"])
         R_pole = G_egr @ G_flip @ G_ingr
         pole_angle = float(self.gyrospace.rotation_angle_from_matrix(R_pole))
-        print(f"\nBU dual-pole slice angle (ONA→BU+→BU-→ONA): {pole_angle:.6f} rad")
+        if verbose:
+            print(f"\nBU dual-pole slice angle (ONA→BU+→BU-→ONA): {pole_angle:.6f} rad")
 
         return {
             "leg_names": leg_names,
@@ -318,7 +325,7 @@ class TWClosureTester:
             "pole_asymmetry": asym,
         }
 
-    def compute_bu_dual_pole_monodromy(self) -> Dict[str, float]:
+    def compute_bu_dual_pole_monodromy(self, verbose: bool = True) -> Dict[str, float]:
         """
         Compute the BU dual-pole monodromy constant:
         δ_BU := 2·ω(ONA ↔ BU) ≈ 0.98·m_p
@@ -346,16 +353,17 @@ class TWClosureTester:
         ratio_to_mp = delta_bu / self.m_p
         deviation_from_mp = abs(ratio_to_mp - 1.0)
         
-        print(f"\nBU Dual-Pole Monodromy Constant:")
-        print(f"  δ_BU = 2·ω(ONA ↔ BU) = {delta_bu:.6f} rad")
-        print(f"  BU threshold m_p = {self.m_p:.6f} rad")
-        print(f"  Ratio δ_BU/m_p = {ratio_to_mp:.6f}")
-        print(f"  Deviation from 1.0: {deviation_from_mp:.1%}")
-        
-        if deviation_from_mp < 0.05:  # Within 5%
-            print(f"  ✅ δ_BU is STABLE: Candidate CGM constant")
-        else:
-            print(f"  ⚠️  δ_BU needs refinement")
+        if verbose:
+            print(f"\nBU Dual-Pole Monodromy Constant:")
+            print(f"  δ_BU = 2·ω(ONA ↔ BU) = {delta_bu:.6f} rad")
+            print(f"  BU threshold m_p = {self.m_p:.6f} rad")
+            print(f"  Ratio δ_BU/m_p = {ratio_to_mp:.6f}")
+            print(f"  Deviation from 1.0: {deviation_from_mp:.1%}")
+            
+            if deviation_from_mp < 0.05:  # Within 5%
+                print(f"  ✅ δ_BU is STABLE: Candidate CGM constant")
+            else:
+                print(f"  ⚠️  δ_BU needs refinement")
         
         return {
             "delta_bu": delta_bu,
@@ -366,23 +374,26 @@ class TWClosureTester:
             "is_stable": deviation_from_mp < 0.05
         }
 
-    def test_canonical_configurations(self) -> Dict[str, Any]:
+    def test_canonical_configurations(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Test the three canonical configurations mentioned in the analysis
         """
-        print("\nTesting Canonical TW Configurations")
-        print("=" * 40)
+        if verbose:
+            print("\nTesting Canonical TW Configurations")
+            print("=" * 40)
         
         results = {}
         
         # Configuration 1: UNA speed (β = 1/√2) with orthogonal boosts (θ = π/2)
-        print("1. UNA orthogonal configuration:")
-        print(f"   β = 1/√2 = {1/np.sqrt(2):.6f}, θ = π/2")
+        if verbose:
+            print("1. UNA orthogonal configuration:")
+            print(f"   β = 1/√2 = {1/np.sqrt(2):.6f}, θ = π/2")
         wigner_1 = self.wigner_angle_exact(1/np.sqrt(2), np.pi/2)
         expected_1 = 2 * np.arctan((np.sqrt(2) - 1)**2)
-        print(f"   Wigner angle: {wigner_1:.6f}")
-        print(f"   Expected:     {expected_1:.6f}")
-        print(f"   Match:        {'✅' if abs(wigner_1 - expected_1) < 1e-6 else '❌'}")
+        if verbose:
+            print(f"   Wigner angle: {wigner_1:.6f}")
+            print(f"   Expected:     {expected_1:.6f}")
+            print(f"   Match:        {'✅' if abs(wigner_1 - expected_1) < 1e-6 else '❌'}")
         results["una_orthogonal"] = {
             "wigner_angle": wigner_1,
             "expected": expected_1,
@@ -390,8 +401,9 @@ class TWClosureTester:
         }
         
         # Configuration 2: Hold UNA, find θ for ω = m_p
-        print("\n2. UNA-fixed, θ for ω = m_p:")
-        print(f"   β = {self.u_p:.6f}, solve for θ")
+        if verbose:
+            print("\n2. UNA-fixed, θ for ω = m_p:")
+            print(f"   β = {self.u_p:.6f}, solve for θ")
         # Use the correction method to find θ
         theta_guess = self.o_p
         for _ in range(10):
@@ -408,9 +420,10 @@ class TWClosureTester:
             theta_guess = np.clip(theta_guess, 0, np.pi/2)
         
         theta_for_m_p = theta_guess
-        print(f"   θ = {theta_for_m_p:.6f} radians = {np.degrees(theta_for_m_p):.2f}°")
-        print(f"   ONA threshold: {self.o_p:.6f} radians = {np.degrees(self.o_p):.2f}°")
-        print(f"   Difference:    {abs(theta_for_m_p - self.o_p):.6f} radians")
+        if verbose:
+            print(f"   θ = {theta_for_m_p:.6f} radians = {np.degrees(theta_for_m_p):.2f}°")
+            print(f"   ONA threshold: {self.o_p:.6f} radians = {np.degrees(self.o_p):.2f}°")
+            print(f"   Difference:    {abs(theta_for_m_p - self.o_p):.6f} radians")
         results["una_fixed_theta"] = {
             "theta": theta_for_m_p,
             "ona_threshold": self.o_p,
@@ -418,8 +431,9 @@ class TWClosureTester:
         }
         
         # Configuration 3: Hold ONA, find β for ω = m_p
-        print("\n3. ONA-fixed, β for ω = m_p:")
-        print(f"   θ = {self.o_p:.6f}, solve for β")
+        if verbose:
+            print("\n3. ONA-fixed, β for ω = m_p:")
+            print(f"   θ = {self.o_p:.6f}, solve for β")
         beta_guess = self.u_p
         for _ in range(10):
             current_omega = self.wigner_angle_exact(beta_guess, self.o_p)
@@ -435,9 +449,10 @@ class TWClosureTester:
             beta_guess = np.clip(beta_guess, 0.1, 0.9)
         
         beta_for_m_p = beta_guess
-        print(f"   β = {beta_for_m_p:.6f}")
-        print(f"   UNA threshold: {self.u_p:.6f}")
-        print(f"   Difference:    {abs(beta_for_m_p - self.u_p):.6f}")
+        if verbose:
+            print(f"   β = {beta_for_m_p:.6f}")
+            print(f"   UNA threshold: {self.u_p:.6f}")
+            print(f"   Difference:    {abs(beta_for_m_p - self.u_p):.6f}")
         results["ona_fixed_beta"] = {
             "beta": beta_for_m_p,
             "una_threshold": self.u_p,
@@ -446,15 +461,16 @@ class TWClosureTester:
         
         return results
 
-    def test_toroidal_holonomy(self) -> Dict[str, Any]:
+    def test_toroidal_holonomy(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Test the closed CS→UNA→ONA→BU loop holonomy.
         
         This walks the canonical toroidal path and verifies the net holonomy
         matches the predicted defect (zero for canonical α=π/2, β=γ=π/4 triangle).
         """
-        print("\nTesting Toroidal Holonomy (CS→UNA→ONA→BU Loop)")
-        print("=" * 55)
+        if verbose:
+            print("\nTesting Toroidal Holonomy (CS→UNA→ONA→BU Loop)")
+            print("=" * 55)
         
         # Canonical loop: CS → UNA → ONA → BU → CS
         # Each stage contributes a gyration based on its threshold
@@ -498,35 +514,37 @@ class TWClosureTester:
         expected_rotation = 0.0
         rotation_deviation = abs(total_rotation - expected_rotation)
         
-        print(f"CS → UNA gyration: {self.gyrospace.rotation_angle_from_matrix(cs_to_una_gyr):.6f} rad")
-        print(f"UNA → ONA gyration: {self.gyrospace.rotation_angle_from_matrix(una_to_ona_gyr):.6f} rad")
-        print(f"ONA → BU gyration: {self.gyrospace.rotation_angle_from_matrix(ona_to_bu_gyr):.6f} rad")
-        print(f"BU → CS gyration: {self.gyrospace.rotation_angle_from_matrix(bu_to_cs_gyr):.6f} rad")
-        print()
-        print(f"Total toroidal holonomy: {total_rotation:.6f} rad")
-        print(f"Expected (canonical closure): {expected_rotation:.6f} rad")
-        print(f"Deviation: {rotation_deviation:.6e}")
-        print()
+        if verbose:
+            print(f"CS → UNA gyration: {self.gyrospace.rotation_angle_from_matrix(cs_to_una_gyr):.6f} rad")
+            print(f"UNA → ONA gyration: {self.gyrospace.rotation_angle_from_matrix(una_to_ona_gyr):.6f} rad")
+            print(f"ONA → BU gyration: {self.gyrospace.rotation_angle_from_matrix(ona_to_bu_gyr):.6f} rad")
+            print(f"BU → CS gyration: {self.gyrospace.rotation_angle_from_matrix(bu_to_cs_gyr):.6f} rad")
+            print()
+            print(f"Total toroidal holonomy: {total_rotation:.6f} rad")
+            print(f"Expected (canonical closure): {expected_rotation:.6f} rad")
+            print(f"Deviation: {rotation_deviation:.6e}")
+            print()
         
         # Check if the loop closes properly (within numerical tolerance)
         tolerance = 1e-6
         loop_closes = rotation_deviation < tolerance
         
-        if loop_closes:
-            print("✅ TOROIDAL LOOP CLOSES: CGM anatomy forms a consistent toroid")
-            print("   The emergence thresholds create a closed geometric structure")
-        else:
-            print("⚠️  TOROIDAL LOOP OPEN: Some geometric inconsistency detected")
-            print("   This may indicate the need for additional closure conditions")
-        
-        # DIAGNOSTIC: Analyze the closure pattern
-        print("\n🔍 TOROIDAL CLOSURE DIAGNOSTIC:")
-        print(f"   Expected closure: {expected_rotation:.6f} rad (perfect toroid)")
-        print(f"   Actual closure: {total_rotation:.6f} rad (with memory accumulation)")
-        print(f"   Closure deficit: {rotation_deviation:.6f} rad")
-        print(f"   This deficit represents accumulated recursive memory")
-        print(f"   Hypothesis: The loop doesn't close because memory is still accumulating")
-        print(f"   When BU stage reaches full closure, the loop should close")
+        if verbose:
+            if loop_closes:
+                print("✅ TOROIDAL LOOP CLOSES: CGM anatomy forms a consistent toroid")
+                print("   The emergence thresholds create a closed geometric structure")
+            else:
+                print("⚠️  TOROIDAL LOOP OPEN: Some geometric inconsistency detected")
+                print("   This may indicate the need for additional closure conditions")
+            
+            # DIAGNOSTIC: Analyze the closure pattern
+            print("\n🔍 TOROIDAL CLOSURE DIAGNOSTIC:")
+            print(f"   Expected closure: {expected_rotation:.6f} rad (perfect toroid)")
+            print(f"   Actual closure: {total_rotation:.6f} rad (with memory accumulation)")
+            print(f"   Closure deficit: {rotation_deviation:.6f} rad")
+            print(f"   This deficit represents accumulated recursive memory")
+            print(f"   Hypothesis: The loop doesn't close because memory is still accumulating")
+            print(f"   When BU stage reaches full closure, the loop should close")
         
         return {
             "stage_gyrations": [
@@ -542,76 +560,79 @@ class TWClosureTester:
             "tolerance": tolerance
         }
     
-    def run_tw_closure_tests(self) -> Dict[str, Any]:
+    def run_tw_closure_tests(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Run all TW-closure tests
         """
-        print("THOMAS-WIGNER CLOSURE TEST SUITE")
-        print("=" * 50)
-        print("Testing kinematic consistency of CGM thresholds")
-        print()
+        if verbose:
+            print("THOMAS-WIGNER CLOSURE TEST SUITE")
+            print("=" * 50)
+            print("Testing kinematic consistency of CGM thresholds")
+            print()
         
         results = {}
         
         # Test the main consistency band
-        results["consistency_band"] = self.test_tw_consistency_band()
+        results["consistency_band"] = self.test_tw_consistency_band(verbose=verbose)
         
         # Test canonical configurations
-        results["canonical_configs"] = self.test_canonical_configurations()
+        results["canonical_configs"] = self.test_canonical_configurations(verbose=verbose)
         
         # Test toroidal holonomy (closed loop)
-        results["toroidal_holonomy"] = self.test_toroidal_holonomy()
+        results["toroidal_holonomy"] = self.test_toroidal_holonomy(verbose=verbose)
         
         # Test full 8-leg toroidal holonomy
-        results["toroidal_holonomy_full"] = self.test_toroidal_holonomy_fullpath()
+        results["toroidal_holonomy_full"] = self.test_toroidal_holonomy_fullpath(verbose=verbose)
         
         # Test BU pole asymmetry and cancelation
         results["bu_pole_asymmetry"] = self.bu_pole_asymmetry()
         
         # Compute BU dual-pole monodromy constant
-        results["bu_dual_pole_monodromy"] = self.compute_bu_dual_pole_monodromy()
+        results["bu_dual_pole_monodromy"] = self.compute_bu_dual_pole_monodromy(verbose=verbose)
         
         # Compute anatomical TW ratio χ
-        results["anatomical_tw_ratio"] = self.compute_anatomical_tw_ratio()
+        results["anatomical_tw_ratio"] = self.compute_anatomical_tw_ratio(verbose=verbose)
         
         # Estimate Thomas curvature around (u_p, o_p)
         curvature_result = self.estimate_thomas_curvature()
         results["thomas_curvature"] = curvature_result
-        print(f"\nThomas Curvature F_{{βθ}} around (u_p, o_p):")
-        print(f"  Mean: {curvature_result['F_mean']:.6f}")
-        print(f"  Std:  {curvature_result['F_std']:.6f}")
-        print(f"  Median: {curvature_result['F_median']:.6f}")
-        print(f"  Samples: {curvature_result['samples']}")
-        
-        # Print BU pole asymmetry results
-        bu_asym = results["bu_pole_asymmetry"]
-        print(f"\nBU Dual-Pole Analysis:")
-        print(f"  Egress +: {bu_asym['egress_plus']:.6f} rad, Ingress +: {bu_asym['ingress_plus']:.6f} rad")
-        print(f"  Egress -: {bu_asym['egress_minus']:.6f} rad, Ingress -: {bu_asym['ingress_minus']:.6f} rad")
-        print(f"  Cancelation +: {bu_asym['cancelation_plus']:.6e} (signed: {bu_asym['cancelation_plus_signed']:.6e})")
-        print(f"  Cancelation -: {bu_asym['cancelation_minus']:.6e} (signed: {bu_asym['cancelation_minus_signed']:.6e})")
-        print(f"  Pole asymmetry: {bu_asym['pole_asymmetry']:.6f}")
+        if verbose:
+            print(f"\nThomas Curvature F_{{βθ}} around (u_p, o_p):")
+            print(f"  Mean: {curvature_result['F_mean']:.6f}")
+            print(f"  Std:  {curvature_result['F_std']:.6f}")
+            print(f"  Median: {curvature_result['F_median']:.6f}")
+            print(f"  Samples: {curvature_result['samples']}")
+            
+            # Print BU pole asymmetry results
+            bu_asym = results["bu_pole_asymmetry"]
+            print(f"\nBU Dual-Pole Analysis:")
+            print(f"  Egress +: {bu_asym['egress_plus']:.6f} rad, Ingress +: {bu_asym['ingress_plus']:.6f} rad")
+            print(f"  Egress -: {bu_asym['egress_minus']:.6f} rad, Ingress -: {bu_asym['ingress_minus']:.6f} rad")
+            print(f"  Cancelation +: {bu_asym['cancelation_plus']:.6e} (signed: {bu_asym['cancelation_plus_signed']:.6e})")
+            print(f"  Cancelation -: {bu_asym['cancelation_minus']:.6e} (signed: {bu_asym['cancelation_minus_signed']:.6e})")
+            print(f"  Pole asymmetry: {bu_asym['pole_asymmetry']:.6f}")
         
         # Overall success - this is now always True since it's a consistency check
         overall_success = results["consistency_band"]["consistency_achieved"]
         
-        print("\n" + "=" * 50)
-        print("TW-CLOSURE TEST SUMMARY")
-        print("=" * 50)
-        
-        if overall_success:
-            print("🎯 ALL TESTS PASSED: CGM thresholds are validated topological invariants!")
-            print("   The TW-consistency band shows the kinematic relationship")
-            print("   between light/sound speeds and closure amplitude.")
-        else:
-            print("⚠️  UNEXPECTED: This should always be True for consistency checks.")
+        if verbose:
+            print("\n" + "=" * 50)
+            print("TW-CLOSURE TEST SUMMARY")
+            print("=" * 50)
+            
+            if overall_success:
+                print("🎯 ALL TESTS PASSED: CGM thresholds are validated topological invariants!")
+                print("   The TW-consistency band shows the kinematic relationship")
+                print("   between light/sound speeds and closure amplitude.")
+            else:
+                print("⚠️  UNEXPECTED: This should always be True for consistency checks.")
         
         return {
             **results,
             "overall_success": overall_success
         }
     
-    def compute_anatomical_tw_ratio(self) -> Dict[str, Any]:
+    def compute_anatomical_tw_ratio(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Compute the anatomical TW ratio χ as a dimensionless CGM constant.
         
@@ -621,8 +642,9 @@ class TWClosureTester:
         If χ is stable across seeds/parametrizations, it's a bona-fide
         dimensionless CGM constant that can be used in κ prediction.
         """
-        print("\nComputing Anatomical TW Ratio χ")
-        print("=" * 35)
+        if verbose:
+            print("\nComputing Anatomical TW Ratio χ")
+            print("=" * 35)
         
         # Sample canonical paths on the torus
         n_samples = 100
@@ -652,30 +674,32 @@ class TWClosureTester:
         chi_std = float(np.std(chi_values))
         chi_median = float(np.median(chi_values))
         
-        print(f"Anatomical TW ratio χ: {chi_mean:.6f} ± {chi_std:.6f}")
-        print(f"Median χ: {chi_median:.6f}")
-        print(f"Sample size: {n_samples}")
-        print()
+        if verbose:
+            print(f"Anatomical TW ratio χ: {chi_mean:.6f} ± {chi_std:.6f}")
+            print(f"Median χ: {chi_median:.6f}")
+            print(f"Sample size: {n_samples}")
+            print()
         
         # Check stability (low coefficient of variation)
         cv = chi_std / chi_mean if chi_mean > 0 else float('inf')
         stability = cv < 0.1  # Less than 10% variation
         
-        if stability:
-            print("✅ χ is STABLE: Candidate dimensionless CGM constant")
-            print("   This can be used in κ prediction without fitting")
-        else:
-            print("⚠️  χ is VARIABLE: May need additional constraints")
-            print("   Consider averaging over more canonical paths")
-        
-        # DIAGNOSTIC: Analyze the χ variation pattern
-        print("\n🔍 ANATOMICAL TW RATIO DIAGNOSTIC:")
-        print(f"   χ variation: {cv:.1%} (coefficient of variation)")
-        print(f"   χ range: [{chi_mean - chi_std:.6f}, {chi_mean + chi_std:.6f}]")
-        print(f"   Hypothesis: χ variation indicates incomplete toroidal closure")
-        print(f"   When the toroid closes perfectly, χ should stabilize")
-        print(f"   Current variation suggests the system is still in emergence phase")
-        print(f"   This connects to the toroidal holonomy deficit we observed")
+        if verbose:
+            if stability:
+                print("✅ χ is STABLE: Candidate dimensionless CGM constant")
+                print("   This can be used in κ prediction without fitting")
+            else:
+                print("⚠️  χ is VARIABLE: May need additional constraints")
+                print("   Consider averaging over more canonical paths")
+            
+            # DIAGNOSTIC: Analyze the χ variation pattern
+            print("\n🔍 ANATOMICAL TW RATIO DIAGNOSTIC:")
+            print(f"   χ variation: {cv:.1%} (coefficient of variation)")
+            print(f"   χ range: [{chi_mean - chi_std:.6f}, {chi_mean + chi_std:.6f}]")
+            print(f"   Hypothesis: χ variation indicates incomplete toroidal closure")
+            print(f"   When the toroid closes perfectly, χ should stabilize")
+            print(f"   Current variation suggests the system is still in emergence phase")
+            print(f"   This connects to the toroidal holonomy deficit we observed")
         
         return {
             "chi_mean": chi_mean,
@@ -719,4 +743,4 @@ if __name__ == "__main__":
     gyrospace = GyroVectorSpace(c=1.0)
     tester = TWClosureTester(gyrospace)
     results = tester.run_tw_closure_tests()
-    print(f"\nFinal results: {results}")
+    # Removed verbose final results print

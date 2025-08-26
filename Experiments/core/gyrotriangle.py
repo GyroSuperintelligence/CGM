@@ -7,7 +7,14 @@ that are fundamental to the CGM stage theorems.
 
 import numpy as np
 from typing import Tuple, List, Optional, Dict, Union
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
+try:
+    from .gyrovector_ops import GyroVectorSpace, RecursivePath
+except ImportError:
+    # Fallback for direct execution
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from core.gyrovector_ops import GyroVectorSpace, RecursivePath
 from numpy.typing import NDArray
 
 
@@ -286,3 +293,6 @@ class GyroTriangle:
         )
 
         return rotation
+
+
+

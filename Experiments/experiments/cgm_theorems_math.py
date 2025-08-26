@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the required modules
 from core.dimensions import DimensionalCalibrator, DimVec
-from theorems.gyrogeometry import GyroTriangleDefectTheorem
+from core.gyrogeometry import GyroTriangleDefectTheorem
 from core.gyrovector_ops import GyroVectorSpace
 
 

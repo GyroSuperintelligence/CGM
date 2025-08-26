@@ -220,3 +220,6 @@ class BUAmplitudeIdentity:
             "relative_error": abs(lhs - rhs) / rhs,
             "note": "A² × (2π)² = π/2 should hold exactly"
         }
+
+
+

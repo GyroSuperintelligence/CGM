@@ -18,7 +18,7 @@ from typing import Dict, Any, List, Tuple, Optional, Callable
 from dataclasses import dataclass
 import warnings
 
-from core.gyrovector_ops import GyroVectorSpace
+from .gyrovector_ops import GyroVectorSpace
 
 
 @dataclass
@@ -513,29 +513,4 @@ class RecursiveMemory:
         }
 
 
-def main():
-    """Test the recursive memory system."""
-    try:
-        # Create gyrovector space
-        gs = GyroVectorSpace(c=1.0)
-        
-        # Create recursive memory system
-        memory = RecursiveMemory(gs, memory_depth=200)
-        
-        # Run memory experiment
-        results = memory.run_memory_experiment(n_paths=10, path_length=50)
-        
-        print(f"\nExperiment completed successfully!")
-        print(f"Generated {len(results['paths'])} memory paths")
-        print(f"κ estimate: {results['kappa_estimate']:.6f}")
-        
-        return results
-        
-    except Exception as e:
-        print(f"Error in recursive memory test: {e}")
-        print("This may be due to missing dependencies or implementation issues.")
-        return None
 
-
-if __name__ == "__main__":
-    main()

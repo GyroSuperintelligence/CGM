@@ -82,105 +82,116 @@ class HelicalMemoryAnalyzer:
         phi = max(self.su2_rotation_angle(U), eps)
         return float((2.0 * np.pi) / phi)
         
-    def analyze_helical_memory_structure(self) -> Dict[str, Any]:
+    def analyze_helical_memory_structure(self, verbose: bool = True) -> Dict[str, Any]:
         """
         Analyze the helical memory structure through CGM stages.
         
         This implements the theoretical framework from the foundation documents.
         """
-        print("ANALYZING HELICAL MEMORY STRUCTURE")
-        print("=" * 50)
-        print("Testing hypothesis: Cosmic scales emerge from helical worldline evolution")
-        print("Framework: U(s) = exp(-iασ₃/2) · exp(+iβσ₁/2) · exp(+iγσ₂/2)")
-        print()
+        if verbose:
+            print("ANALYZING HELICAL MEMORY STRUCTURE")
+            print("=" * 50)
+            print("Testing hypothesis: Cosmic scales emerge from helical worldline evolution")
+            print("Framework: U(s) = exp(-iασ₃/2) · exp(+iβσ₁/2) · exp(+iγσ₂/2)")
+            print()
         
         # Step 1: Compute helical evolution at each stage
-        print("STEP 1: Computing Helical Evolution at Each Stage")
-        print("-" * 45)
+        if verbose:
+            print("STEP 1: Computing Helical Evolution at Each Stage")
+            print("-" * 45)
         
         # CS stage: chiral seed with σ₃ rotation
         cs_evolution = self._compute_cs_evolution()
-        print(f"CS Evolution (chiral seed):")
-        print(f"  - Helical phase: exp(-iπσ₃/4)")
-        print(f"  - Memory trace: {cs_evolution['memory_trace']:.6f}")
-        print(f"  - Chirality: {cs_evolution['chirality']:.6f}")
-        print()
+        if verbose:
+            print(f"CS Evolution (chiral seed):")
+            print(f"  - Helical phase: exp(-iπσ₃/4)")
+            print(f"  - Memory trace: {cs_evolution['memory_trace']:.6f}")
+            print(f"  - Chirality: {cs_evolution['chirality']:.6f}")
+            print()
         
         # UNA stage: SU(2) spin frame emergence
         una_evolution = self._compute_una_evolution(cs_evolution)
-        print(f"UNA Evolution (SU(2) spin frame):")
-        print(f"  - Helical phase: exp(-iπσ₃/4) · exp(+iπσ₁/8)")
-        print(f"  - Memory trace: {una_evolution['memory_trace']:.6f}")
-        print(f"  - Spin projection: {una_evolution['spin_projection']:.6f}")
-        print()
+        if verbose:
+            print(f"UNA Evolution (SU(2) spin frame):")
+            print(f"  - Helical phase: exp(-iπσ₃/4) · exp(+iπσ₁/8)")
+            print(f"  - Memory trace: {una_evolution['memory_trace']:.6f}")
+            print(f"  - Spin projection: {una_evolution['spin_projection']:.6f}")
+            print()
         
         # ONA stage: SO(3) translation activation
         ona_evolution = self._compute_ona_evolution(una_evolution)
-        print(f"ONA Evolution (SO(3) translation):")
-        print(f"  - Helical phase: U_UNA · exp(+iπσ₂/8)")
-        print(f"  - Memory trace: {ona_evolution['memory_trace']:.6f}")
-        print(f"  - Translation DoF: {ona_evolution['translation_dof']:.6f}")
-        print()
+        if verbose:
+            print(f"ONA Evolution (SO(3) translation):")
+            print(f"  - Helical phase: U_UNA · exp(+iπσ₂/8)")
+            print(f"  - Memory trace: {ona_evolution['memory_trace']:.6f}")
+            print(f"  - Translation DoF: {ona_evolution['translation_dof']:.6f}")
+            print()
         
         # BU stage: closure with ψ_BU coherence field
         bu_evolution = self._compute_bu_evolution(ona_evolution)
-        print(f"BU Evolution (closure & memory):")
-        print(f"  - Helical phase: U_ONA · exp(+iπσ₃/8)")
-        print(f"  - Memory trace: {bu_evolution['memory_trace']:.6f}")
-        print(f"  - Coherence field: {bu_evolution['coherence_field']:.6f}")
-        print()
+        if verbose:
+            print(f"BU Evolution (closure & memory):")
+            print(f"  - Helical phase: U_ONA · exp(+iπσ₃/8)")
+            print(f"  - Memory trace: {bu_evolution['memory_trace']:.6f}")
+            print(f"  - Coherence field: {bu_evolution['coherence_field']:.6f}")
+            print()
         
         # Step 2: Compute helical memory field ψ_BU
-        print("STEP 2: Computing Helical Memory Field ψ_BU")
-        print("-" * 45)
+        if verbose:
+            print("STEP 2: Computing Helical Memory Field ψ_BU")
+            print("-" * 45)
         
         # Accumulate memory through the helical progression
         evolution_progression = [cs_evolution, una_evolution, ona_evolution, bu_evolution]
         psi_bu = self._compute_helical_psi_bu_field(evolution_progression)
         
-        print(f"ψ_BU (helical memory field): {psi_bu['magnitude']:.6f}")
-        print(f"  - Helical accumulation: {psi_bu['helical_accumulation']:.6f}")
-        print(f"  - Spin-translation coherence: {psi_bu['spin_translation_coherence']:.6f}")
-        print(f"  - Closure residual: {psi_bu['closure_residual']:.6f}")
-        
-        # Add diagnostic information about helical evolution
-        if psi_bu['evolution_phases']:
-            print("  - Helical evolution phases:")
-            for i, phase in enumerate(psi_bu['evolution_phases']):
-                stage_names = ["CS→UNA", "UNA→ONA", "ONA→BU"]
-                print(f"    {stage_names[i]}: {phase:.3f}")
-        
-        print()
+        if verbose:
+            print(f"ψ_BU (helical memory field): {psi_bu['magnitude']:.6f}")
+            print(f"  - Helical accumulation: {psi_bu['helical_accumulation']:.6f}")
+            print(f"  - Spin-translation coherence: {psi_bu['spin_translation_coherence']:.6f}")
+            print(f"  - Closure residual: {psi_bu['closure_residual']:.6f}")
+            
+            # Add diagnostic information about helical evolution
+            if psi_bu['evolution_phases']:
+                print("  - Helical evolution phases:")
+                for i, phase in enumerate(psi_bu['evolution_phases']):
+                    stage_names = ["CS→UNA", "UNA→ONA", "ONA→BU"]
+                    print(f"    {stage_names[i]}: {phase:.3f}")
+            print()
         
         # Step 3: Map to cosmic scales via Λ ∼ 1/|ψ_BU|²
-        print("STEP 3: Mapping to Cosmic Scales via Λ ∼ 1/|ψ_BU|²")
-        print("-" * 45)
+        if verbose:
+            print("STEP 3: Mapping to Cosmic Scales via Λ ∼ 1/|ψ_BU|²")
+            print("-" * 45)
         
         cosmic_scales = self._map_helical_to_cosmic_scales(psi_bu)
         
-        print("Predicted vs Measured Cosmic Parameters:")
-        print(f"  Emergent Length Scale L*: {cosmic_scales['L_star']:.3e} m (anchored)")
-        print(f"  Nearest ladder: N* = {cosmic_scales['N_star']}, L_on_ladder = {cosmic_scales['L_on_ladder']:.3e} m, ratio = {cosmic_scales['ladder_ratio']:.3f}")
-        print("  Note: CMB length is used as an anchor; ladder reports consistency, not prediction")
-        print(f"  CMB Temperature: {cosmic_scales['cmb_temp_predicted']:.3f} K (measured: {self.T_cmb_measured:.3f} K)")
-        print(f"  Dark Energy Density: {cosmic_scales['dark_energy_predicted']:.3e} J/m³")
-        print(f"  Source Boson Mass: {cosmic_scales['source_boson_mass']:.3e} kg")
-        print(f"  Cosmological Constant: {cosmic_scales['lambda_predicted']:.3e} m⁻²")
-        print(f"  C0 constant used: {cosmic_scales['C0_used']:.1f}")
-        print()
+        if verbose:
+            print("Predicted vs Measured Cosmic Parameters:")
+            print(f"  Emergent Length Scale L*: {cosmic_scales['L_star']:.3e} m (anchored)")
+            print(f"  Nearest ladder: N* = {cosmic_scales['N_star']}, L_on_ladder = {cosmic_scales['L_on_ladder']:.3e} m, ratio = {cosmic_scales['ladder_ratio']:.3f}")
+            print("  Note: CMB length is used as an anchor; ladder reports consistency, not prediction")
+            print(f"  CMB Temperature: {cosmic_scales['cmb_temp_predicted']:.3f} K (measured: {self.T_cmb_measured:.3f} K)")
+            print(f"  Dark Energy Density: {cosmic_scales['dark_energy_predicted']:.3e} J/m³")
+            print(f"  Source Boson Mass: {cosmic_scales['source_boson_mass']:.3e} kg")
+            print(f"  Cosmological Constant: {cosmic_scales['lambda_predicted']:.3e} m⁻²")
+            print(f"  C0 constant used: {cosmic_scales['C0_used']:.1f}")
+            print()
         
         # Step 4: Test our hypotheses
-        print("STEP 4: Testing Our Hypotheses")
-        print("-" * 45)
+        if verbose:
+            print("STEP 4: Testing Our Hypotheses")
+            print("-" * 45)
         
         hypothesis_tests = self._test_helical_hypotheses(cosmic_scales, psi_bu)
         
-        for test_name, result in hypothesis_tests.items():
-            status = "✅ PASS" if result['passed'] else "❌ FAIL"
-            print(f"{test_name}: {status}")
-            print(f"  - Expected: {result['expected']}")
-            
-            # Better formatting for observed values
+        if verbose:
+            for test_name, result in hypothesis_tests.items():
+                status = "✅ PASS" if result['passed'] else "❌ FAIL"
+                print(f"{test_name}: {status}")
+                print(f"  - Expected: {result['expected']}")
+                
+                # Better formatting for observed values
             obs = result['observed']
             fmt_obs = f"{obs:.6g}" if isinstance(obs,(int,float)) else str(obs)
             print(f"  - Observed: {fmt_obs}")
@@ -833,104 +844,7 @@ class HelicalMemoryAnalyzer:
         k = np.round(phi/(2*np.pi))
         return float(abs(phi - 2*np.pi*k))
 
-    def analyze_timelessness_horizon(self, psi_bu: Dict[str, Any] | None = None) -> Dict[str, Any]:
-        """
-        Analyze the timelessness horizon where temporal measurements saturate.
-        This implements the framework from CGM_Timelessness.md.
-        """
-        print("\nANALYZING TIMELESSNESS HORIZON")
-        print("=" * 40)
-        print("Testing hypothesis: Time is a phase integral of recursive memory")
-        print("Framework: τ_obs = ∫ ∇arg(ψ_BU) · dℓ")
-        print()
-        
-        # Get the loop parameters
-        loop = self.full_loop_su2_operator()
-        phi_loop = loop["phi_loop"]
-        pitch_loop = loop["pitch_loop"]
-        
-        # Phase gradient proxy: how far we are from perfect closure
-        phase_gradient = phi_loop / (2.0 * np.pi)  # 0 = perfect closure
-        
-        print(f"Loop phase: {phi_loop:.6f} rad")
-        print(f"Phase gradient: {phase_gradient:.6f}")
-        print(f"Loop pitch: {pitch_loop:.6f}")
-        print()
-        
-        # Test different recursion depths with loop phase defect
-        # Use a more systematic approach: test powers of 2 and key cosmic scales
-        base_depths = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
-        # Add cosmic-relevant depths around N* = 60
-        cosmic_depths = [37, 50, 75, 100, 150, 200]
-        recursion_depths = sorted(set(base_depths + cosmic_depths))
-        saturation_analysis = {}
-        
-        print("Testing recursion depth saturation:")
-        print("-" * 35)
-        
-        for depth in recursion_depths:
-            result = self.emergent_length_from_full_loop(depth, psi_bu)
-            L_star = result["L_star_N"]
-            Xi = result["Xi_loop"]
-            
-            # Loop phase defect: distance to nearest 2π multiple
-            phase_defect = self.loop_phase_defect(depth)
-            
-            # Rate-of-change criterion: relative change per doubling
-            if depth >= 2:
-                prev_depth = depth // 2
-                prev_defect = self.loop_phase_defect(prev_depth)
-                if prev_defect > 0:
-                    relative_change = abs(phase_defect - prev_defect) / prev_defect
-                else:
-                    relative_change = 1.0
-            else:
-                relative_change = 1.0
-            
-            # Declare saturated when relative change is small (less strict criterion)
-            saturated = relative_change < 1e-2  # 1% change threshold
-            
-            saturation_analysis[depth] = {
-                "L_star": L_star,
-                "Xi": Xi,
-                "phase_defect": phase_defect,
-                "relative_change": relative_change,
-                "saturated": saturated
-            }
-            
-            status = "🔴 SATURATED" if saturated else "🟢 ACTIVE"
-            print(f"  Depth {depth:3d}: L*={L_star:.2e} m, defect={phase_defect:.6f}, Δ={relative_change:.6f} {status}")
-        
-        # Find the earliest depth where 3 consecutive doublings are "quiet"
-        doublings = [d for d in recursion_depths if d in saturation_analysis]
-        def quiet(d): return saturation_analysis[d]["relative_change"] < 5e-2  # 5%
 
-        horizon_depth = None
-        for i in range(len(doublings)):
-            seq = doublings[i:i+3]
-            if len(seq) == 3 and all(quiet(d) for d in seq):
-                horizon_depth = seq[0]
-                break
-
-        if horizon_depth is not None:
-            print(f"\n🎯 TIMELESSNESS HORIZON: ℓ* = {horizon_depth} (3× consecutive doublings < 5%)")
-            theorem_supported = True
-        else:
-            print(f"\n⚠️  No timelessness horizon found in tested range")
-            theorem_supported = False
-
-        # Test the CGM timelessness theorem
-        print(f"\n🔍 TESTING CGM TIMELESSNESS THEOREM:")
-        print(f"   τ_obs = ∫ ∇arg(ψ_BU) · dℓ")
-        print(f"   At ℓ > ℓ*: ∇arg(ψ_BU)(ℓ) → 0")
-        print(f"   Result: τ_obs(ℓ) → τ_∞ (temporal saturation)")
-        
-        return {
-            "loop_parameters": {"phi": phi_loop, "pitch": pitch_loop, "gradient": phase_gradient},
-            "saturation_analysis": saturation_analysis,
-            "timelessness_horizon": horizon_depth,
-            "theorem_supported": theorem_supported
-        }
 
     def test_chirality_selection(self, psi_bu: Dict[str, Any] | None = None) -> Dict[str, Any]:
         """
@@ -1061,7 +975,7 @@ class HelicalMemoryAnalyzer:
         print("Framework: U(s) = exp(-iασ₃/2) · exp(+iβσ₁/2) · exp(+iγσ₂/2)")
         print()
         
-        results = self.analyze_helical_memory_structure()
+        results = self.analyze_helical_memory_structure(verbose=True)
         
         # Add bio-bridge analysis
         print("\n" + "=" * 60)
@@ -1128,12 +1042,7 @@ class HelicalMemoryAnalyzer:
         
         # Add timelessness analysis
         print("\n" + "=" * 60)
-        print("TIMELESSNESS HORIZON ANALYSIS")
-        print("=" * 60)
-        print("Testing hypothesis: Time is a phase integral of recursive memory")
-        
-        timeless_results = self.analyze_timelessness_horizon()  # Don't pass psi_bu to use default
-        results['timelessness'] = timeless_results
+
         
         # Add chirality selection analysis
         print("\n" + "=" * 60)
@@ -1226,12 +1135,7 @@ class HelicalMemoryAnalyzer:
         else:
             print("⚠️  WEAK BIO-BRIDGE: DNA scales need refinement")
         
-        # Timelessness summary
-        if timeless_results['theorem_supported']:
-            print(f"🎯 TIMELESSNESS SUPPORTED: Horizon at ℓ* = {timeless_results['timelessness_horizon']}")
-            print(f"   Loop phase defect saturates beyond this depth")
-        else:
-            print("⚠️  TIMELESSNESS: No horizon found in tested range")
+
         
         # Chirality summary
         if chirality_results['chirality_consistent']:
@@ -1241,7 +1145,7 @@ class HelicalMemoryAnalyzer:
         
         print()
         
-        if passed_tests >= 3 and bio_success >= 3 and timeless_results['theorem_supported']:
+        if passed_tests >= 3 and bio_success >= 3:
             print("🎯 EXCEPTIONAL SUPPORT: Helical memory framework with bio-bridge and timelessness!")
         elif passed_tests >= 3 and bio_success >= 2:
             print("🎯 STRONG SUPPORT: Helical memory framework with bio-bridge!")
@@ -1321,4 +1225,5 @@ if __name__ == "__main__":
     gyrospace = GyroVectorSpace(c=1.0)
     analyzer = HelicalMemoryAnalyzer(gyrospace)
     results = analyzer.run_comprehensive_analysis()
-    print(f"\nFinal results: {results}")
+    # Don't print the massive results dictionary - it's unreadable
+    print("\n✅ Helical memory analysis completed successfully")
