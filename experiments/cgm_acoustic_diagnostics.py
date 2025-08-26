@@ -20,8 +20,8 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
-from experiments.toroidal_anisotropy import tau_from_template, unit
+from experiments.functions.gyrovector_ops import GyroVectorSpace
+from experiments.functions.torus import tau_from_template, unit
 
 
 class CGMAcousticDiagnostics:

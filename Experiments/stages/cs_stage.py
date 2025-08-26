@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 from typing import Dict, Any
-from core.gyrovector_ops import GyroVectorSpace
+from functions.gyrovector_ops import GyroVectorSpace
 
 
 class CSStage:
@@ -119,7 +119,7 @@ class CSStage:
         Returns:
             UNAStage instance
         """
-        from stages.una_stage import UNAStage
+        from una_stage import UNAStage
 
         return UNAStage(self.gyrospace)
 

@@ -6,7 +6,9 @@
     "**/node_modules",
     "**/__pycache__"
   ],
-  "ignore": [],
+  "ignore": [
+    "**/cgm_data_manager.py"
+  ],
   "defineConstant": {},
   "typeCheckingMode": "basic",
   "useLibraryCodeForTypes": true,

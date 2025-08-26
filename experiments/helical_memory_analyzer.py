@@ -12,13 +12,13 @@ This replaces the incorrect "recursive memory analyzer" with the proper implemen
 """
 
 import numpy as np
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 import sys
 import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 
 class HelicalMemoryAnalyzer:
@@ -650,7 +650,7 @@ class HelicalMemoryAnalyzer:
             "dna_pitch_m": 3.57e-9,  # ~3.57 nm per turn
             "dna_diam_m": 2.0e-9,    # ~2.0 nm diameter
         }
-        out = {}
+        out: Dict[str, Any] = {}
         for k, L in targets.items():
             # Always use None for consistency with cosmic mapping
             N, res = self.solve_N_for_target_length(L, None)
@@ -681,7 +681,7 @@ class HelicalMemoryAnalyzer:
         # closed-form in log-space: argmin_Xi sum_i (log L_model - log L_target)^2
         # do a simple 1D search (robust and tiny)
         Xi_grid = np.linspace(0.95, 1.12, 4001)
-        best = None
+        best: Optional[Dict[str, Any]] = None
         for Xi in Xi_grid:
             errs = []
             for key, L_tar in targets.items():

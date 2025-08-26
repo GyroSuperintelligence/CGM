@@ -19,11 +19,11 @@ from typing import Dict, Any, List, Tuple
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from core.gyrotriangle import GyroTriangle
-from stages.cs_stage import CSStage
-from stages.una_stage import UNAStage
-from stages.bu_stage import BUStage
+from experiments.functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from experiments.functions.gyrotriangle import GyroTriangle
+from experiments.stages.cs_stage import CSStage
+from experiments.stages.una_stage import UNAStage
+from experiments.stages.bu_stage import BUStage
 
 
 class LightChiralityExperiments:

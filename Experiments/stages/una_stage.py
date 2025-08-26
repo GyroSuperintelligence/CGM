@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 from typing import Dict, Any, Tuple, List
 
-from core.gyrovector_ops import GyroVectorSpace
+from functions.gyrovector_ops import GyroVectorSpace
 
 
 class UNAStage:
@@ -163,7 +163,7 @@ class UNAStage:
         Returns:
             ONAStage instance
         """
-        from stages.ona_stage import ONAStage
+        from ona_stage import ONAStage
 
         return ONAStage(self.gyrospace)
 

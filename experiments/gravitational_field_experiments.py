@@ -15,9 +15,9 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
-from stages.bu_stage import BUStage
-from stages.ona_stage import ONAStage
+from experiments.functions.gyrovector_ops import GyroVectorSpace
+from experiments.stages.bu_stage import BUStage
+from experiments.stages.ona_stage import ONAStage
 
 
 def estimate_kappa_from_geometry(gs: GyroVectorSpace, n: int = 200) -> Dict[str, Any]:

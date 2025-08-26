@@ -18,7 +18,7 @@ from fractions import Fraction
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 
 def continued_fraction_approximation(x: float, max_denominator: int = 12) -> Tuple[int, int]:
@@ -191,7 +191,7 @@ class TriadIndexAnalyzer:
         self.helix = HelicalMemoryAnalyzer(gyrospace)
         
         # Domain calibration factors: (k, theta_dom, gamma_dom) for TW predictions
-        self.domain_factors = {}
+        self.domain_factors: Dict[str, Any] = {}
     
     def lambda_compton(self, mass_kg: float) -> float:
         """Compute reduced Compton wavelength λ̄ = ħ/(mc)."""
@@ -744,7 +744,7 @@ class TriadIndexAnalyzer:
         print()
         
         # Analyze domain deviations by domain
-        domain_groups = {}
+        domain_groups: Dict[str, List[float]] = {}
         for report in reports:
             if "error" not in report and "delta_dom" in report:
                 domain = report.get("domain", "unknown")

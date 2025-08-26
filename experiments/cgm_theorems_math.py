@@ -20,9 +20,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the required modules
-from core.dimensions import DimensionalCalibrator, DimVec
-from core.gyrogeometry import GyroTriangleDefectTheorem
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.dimensions import DimensionalCalibrator, DimVec
+from experiments.functions.gyrogeometry import GyroTriangleDefectTheorem
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 
 def test_theorem_c_base_unit_identities():

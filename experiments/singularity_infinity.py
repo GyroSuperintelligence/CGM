@@ -15,9 +15,9 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from stages.bu_stage import BUStage
-from stages.ona_stage import ONAStage
+from experiments.functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from experiments.stages.bu_stage import BUStage
+from experiments.stages.ona_stage import ONAStage
 
 
 class SingularityInfinityValidator:
@@ -647,7 +647,7 @@ class SingularityInfinityValidator:
         # Analyze field properties
         field_magnitudes = [f["field_magnitude"] for f in gravitational_fields]
         avg_field_magnitude = np.mean(field_magnitudes)
-        max_field_magnitude = np.max(field_magnitudes)
+        max_field_magnitude: float = np.max(field_magnitudes)
 
         # Check if field vanishes where expected (at origin for symmetric setup)
         origin_field = gravitational_fields[0][

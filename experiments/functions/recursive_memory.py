@@ -18,7 +18,11 @@ from typing import Dict, Any, List, Tuple, Optional, Callable
 from dataclasses import dataclass
 import warnings
 
-from .gyrovector_ops import GyroVectorSpace
+try:
+    from .gyrovector_ops import GyroVectorSpace
+except ImportError:
+    # Fallback for direct execution
+    from gyrovector_ops import GyroVectorSpace
 
 
 @dataclass

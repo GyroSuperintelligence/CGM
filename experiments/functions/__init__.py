@@ -15,10 +15,10 @@ __version__ = "1.0.0"
 __author__ = "CGM Framework"
 __description__ = "Core mathematical operations for Common Governance Model"
 
-from . import dimensions
-from . import gyrovector_ops
-from . import gyrotriangle
-from . import recursive_memory
+from .dimensions import DimensionalCalibrator, DimVec
+from .gyrovector_ops import GyroVectorSpace, RecursivePath
+from .gyrotriangle import GyroTriangle
+from .recursive_memory import RecursiveMemory
 
 __all__ = [
     "dimensions",

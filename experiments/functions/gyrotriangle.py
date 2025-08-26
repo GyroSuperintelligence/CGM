@@ -11,10 +11,7 @@ try:
     from .gyrovector_ops import GyroVectorSpace, RecursivePath
 except ImportError:
     # Fallback for direct execution
-    import sys
-    import os
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from core.gyrovector_ops import GyroVectorSpace, RecursivePath
+    from gyrovector_ops import GyroVectorSpace, RecursivePath
 from numpy.typing import NDArray
 
 

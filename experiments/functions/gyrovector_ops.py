@@ -271,9 +271,9 @@ class RecursivePath:
 
     def __init__(self, gyrospace: GyroVectorSpace):
         self.gyrospace = gyrospace
-        self.path_points = []
-        self.gyration_memory = []
-        self.coherence_field = []
+        self.path_points: List[np.ndarray] = []
+        self.gyration_memory: List[np.ndarray] = []
+        self.coherence_field: List[complex] = []
 
     def add_step(self, point: np.ndarray):
         """Add a point to the recursive path"""

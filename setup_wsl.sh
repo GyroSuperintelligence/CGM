@@ -28,4 +28,4 @@ pip install -r requirements.txt
 python3 -c "import healpy; print(f'healpy version: {healpy.__version__}')"
 
 echo "Setup complete! Activate the environment with: source .venv/bin/activate"
-echo "Then run the tests with: python run_real_data_tests.py"
+echo "Then run the tests with: python run_data_tests.py"

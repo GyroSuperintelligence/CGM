@@ -12,13 +12,13 @@ where ω(β, θ) is the Wigner angle for boosts of speed β separated by angle �
 """
 
 import numpy as np
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, List
 import sys
 import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 
 class TWClosureTester:
@@ -720,16 +720,16 @@ class TWClosureTester:
 
         betas  = beta0  + dβ * (np.arange(grid, dtype=float) - (grid-1)/2)
         thetas = theta0 + dθ * (np.arange(grid, dtype=float) - (grid-1)/2)
-        vals = []
+        vals_list: List[float] = []
         for b in betas:
             for t in thetas:
                 # Finite differences
                 dω_dθ = (self.wigner_angle_exact(b, t + dθ) - self.wigner_angle_exact(b, t - dθ)) / (2*dθ)
                 dω_dβ = (self.wigner_angle_exact(b + dβ, t) - self.wigner_angle_exact(b - dβ, t)) / (2*dβ)
                 F = dω_dθ - dω_dβ
-                vals.append(F)
+                vals_list.append(F)
 
-        vals = np.array(vals)
+        vals = np.array(vals_list)
         return {
             "F_mean": float(np.mean(vals)),
             "F_std": float(np.std(vals)),

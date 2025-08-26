@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Toroidal Anisotropy Kernel for CGM
+Torus Module for CGM
 
 Provides reusable functions for encoding toroidal geometry:
 - 2 polar caps (reduced absorption/opacity along torus axis)
 - 6 cardinal lobes (±x, ±y, ±z cubic symmetry around the ring)
 
-This kernel can be imported by all three validators to ensure
+This module can be imported by all validators to ensure
 consistent anisotropic patterns across the framework.
 """
 

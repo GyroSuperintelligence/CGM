@@ -22,7 +22,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 
 def tw_angle_from_gyration(gs: GyroVectorSpace, u: np.ndarray, v: np.ndarray) -> float:
@@ -74,7 +74,7 @@ def batch_check(n: int = 200, beta_max: float = 0.1, seed: int = 0, c: float = 1
     """
     rng = np.random.default_rng(seed)
     gs = GyroVectorSpace(c=c)
-    residuals = []
+    residuals_list: List[float] = []
     
     for _ in range(n):
         # Generate random unit vectors
@@ -88,9 +88,9 @@ def batch_check(n: int = 200, beta_max: float = 0.1, seed: int = 0, c: float = 1
         theta_num = tw_angle_from_gyration(gs, u, v)
         theta_th = tw_small_angle_theory(u, v, c)
         
-        residuals.append(theta_num - theta_th)
+        residuals_list.append(theta_num - theta_th)
     
-    residuals = np.array(residuals)
+    residuals = np.array(residuals_list)
     
     return {
         "mean_residual": float(np.mean(residuals)),
@@ -112,18 +112,18 @@ def slope_check(n: int = 400, beta_max_list: tuple = (0.02, 0.03, 0.05, 0.08, 0.
     rows = []
     
     for beta_max in beta_max_list:
-        X = []
-        Y = []
+        X_list: List[float] = []
+        Y_list: List[float] = []
         for _ in range(n):
             u = rng.normal(0, 1, 3)
             u = u / np.linalg.norm(u) * (beta_max * c * rng.random())
             v = rng.normal(0, 1, 3)
             v = v / np.linalg.norm(v) * (beta_max * c * rng.random())
-            Y.append(tw_angle_from_gyration(gs, u, v))
-            X.append(tw_small_angle_theory(u, v, c))
+            Y_list.append(tw_angle_from_gyration(gs, u, v))
+            X_list.append(tw_small_angle_theory(u, v, c))
         
-        X = np.array(X)
-        Y = np.array(Y)
+        X = np.array(X_list)
+        Y = np.array(Y_list)
         # slope with intercept forced to 0 (theory is homogeneous)
         slope = float(np.dot(X, Y) / np.dot(X, X))
         resid = Y - slope * X

@@ -13,7 +13,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 from experiments.tw_closure_test import TWClosureTester
 from experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
 

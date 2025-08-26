@@ -60,54 +60,6 @@ Key mathematical findings include:
 
 ---
 
-## 🚀 Quick Start
-
-### Windows
-Double-click `run_cgm_experiments.bat` to automatically:
-- Set up the Python environment
-- Install dependencies
-- Run all experiments
-- Display results
-
-### PowerShell
-Run `.\run_cgm_experiments.ps1` for detailed progress tracking and error handling
-
-### Manual Execution
-```bash
-cd Experiments
-python run_experiments.py
-```
-
-## 📁 Project Structure
-
-```
-CGM/
-├── Experiments/                    # Main experimental framework
-│   ├── core/                       # Core mathematical operations
-│   │   ├── dimensions.py          # Dimensional calibration engine
-│   │   ├── gyrovector_ops.py     # Gyrovector operations
-│   │   ├── gyrotriangle.py       # Gyrotriangle implementation
-│   │   └── recursive_memory.py   # Memory structure encoding
-│   ├── experiments/               # 20+ experimental modules
-│   │   ├── core_experiments.py   # Core theorem validation
-│   │   ├── physical_constants.py # Constants derivation
-│   │   ├── gravity_coupling.py   # Gravitational analysis
-│   │   ├── helical_memory_analyzer.py # Memory pattern analysis
-│   │   ├── run_real_data_tests.py # Observational validation
-│   │   └── [15+ specialized experiments]
-│   ├── stages/                    # CGM stage implementations
-│   │   ├── cs_stage.py           # Common Source
-│   │   ├── una_stage.py          # Unity Non-Absolute
-│   │   ├── ona_stage.py          # Opposition Non-Absolute
-│   │   └── bu_stage.py           # Balance Universal
-│   ├── theorems/                 # Mathematical proofs
-│   └── tests/                    # Test suite
-├── real_data/                     # Observational datasets
-├── Docs/                          # Documentation
-├── run_experiments.py             # Main runner
-└── run_cgm_experiments.bat/ps1   # Platform launchers
-```
-
 ## 🔬 Key Capabilities
 
 ### 📊 Analysis Tools

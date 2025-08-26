@@ -33,12 +33,12 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.gyrovector_ops import GyroVectorSpace, RecursivePath
-from core.gyrotriangle import GyroTriangle
-from stages.cs_stage import CSStage
-from stages.una_stage import UNAStage
-from stages.ona_stage import ONAStage
-from stages.bu_stage import BUStage
+from experiments.functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from experiments.functions.gyrotriangle import GyroTriangle
+from experiments.stages.cs_stage import CSStage
+from experiments.stages.una_stage import UNAStage
+from experiments.stages.ona_stage import ONAStage
+from experiments.stages.bu_stage import BUStage
 
 # Enable physical constants validation - now rigorously derived from CGM
 ENABLE_EXPERIMENTAL_CONSTANTS = True
@@ -97,7 +97,7 @@ class ElectricCalibrationValidator:
         print("=" * 60)
 
         # Import the dimensional engine
-        from core.dimensions import DimensionalCalibrator, DimVec
+        from functions.dimensions import DimensionalCalibrator, DimVec
 
         # 1) Pick a calibration mass that we do NOT plan to "predict"
         m_anchor = 9.1093837015e-31  # electron mass in kg (measured)

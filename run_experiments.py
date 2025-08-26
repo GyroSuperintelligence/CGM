@@ -26,15 +26,15 @@ experiments_dir = Path(__file__).parent
 sys.path.insert(0, str(experiments_dir))
 
 # Import experiment modules
-from Experiments.experiments.core_experiments import CoreTheoremTester
-from Experiments.experiments.physical_constants import ElectricCalibrationValidator
-from Experiments.experiments.gravity_coupling import GravityCouplingAnalyzer
+from experiments.core_experiments import CoreTheoremTester
+from experiments.physical_constants import ElectricCalibrationValidator
+from experiments.gravity_coupling import GravityCouplingAnalyzer
 
 from Experiments.theorems.run_proofs import run_all_proofs
-from Experiments.core.gyrovector_ops import GyroVectorSpace
+from Experiments.functions.gyrovector_ops import GyroVectorSpace
 
 # Triad source index analysis
-from Experiments.experiments.triad_index_analyzer import TriadIndexAnalyzer
+from experiments.triad_index_analyzer import TriadIndexAnalyzer
 
 
 
@@ -96,10 +96,10 @@ def main():
         gravity_analyzer = GravityCouplingAnalyzer()
         gravity_results = run_stable_experiment("Gravity Coupling", gravity_analyzer.run_comprehensive_analysis)
         
-        from Experiments.experiments.tw_precession import test_tw_precession_small_angle
+        from experiments.tw_precession import test_tw_precession_small_angle
         tw_results = run_stable_experiment("Thomas-Wigner Precession", test_tw_precession_small_angle)
         
-        from Experiments.experiments.tw_closure_test import TWClosureTester
+        from experiments.tw_closure_test import TWClosureTester
         tw_closure_tester = TWClosureTester(gyrospace)
         tw_closure_results = run_stable_experiment("TW Consistency Band", tw_closure_tester.run_tw_closure_tests)
         
@@ -111,7 +111,7 @@ def main():
         target_L_star = 1.337e-4  # m (target from CMB temperature)
         
         # Use the helical analyzer to find N*
-        from Experiments.experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
+        from experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
         helical_analyzer = HelicalMemoryAnalyzer(gyrospace)
         
         # Use the new CMB N-solver with actual psi_bu data
@@ -125,19 +125,19 @@ def main():
         print()
         
         # Run light chirality experiments (streamlined - stable)
-        from Experiments.experiments.light_chirality_experiments import LightChiralityExperiments
+        from experiments.light_chirality_experiments import LightChiralityExperiments
         light_experiments = LightChiralityExperiments(gyrospace)
         light_results = run_stable_experiment("Light Chirality", light_experiments.run_complete_light_chirality_experiments)
         
         print()
         
         # Run singularity and infinity experiments (streamlined - stable)
-        from Experiments.experiments.singularity_infinity import SingularityInfinityValidator
+        from experiments.singularity_infinity import SingularityInfinityValidator
         singularity_validator = SingularityInfinityValidator(gyrospace)
         singularity_results = run_stable_experiment("Singularity & Infinity", singularity_validator.run_all_validations)
         
         # Run gravitational field experiments (streamlined - stable)
-        from Experiments.experiments.gravitational_field_experiments import estimate_kappa_from_geometry
+        from experiments.gravitational_field_experiments import estimate_kappa_from_geometry
         kappa_results = estimate_kappa_from_geometry(gyrospace)
         print(f"   Gravitational Field: κ(geo)={kappa_results['kappa_estimate']:.3e}, κ(hol)={kappa_results['kappa_holonomy']:.3e}")
         
@@ -164,17 +164,17 @@ def main():
         print("=" * 50)
         
         # Kompaneets distortion analysis
-        from Experiments.experiments.kompaneets_analyzer import KompaneetsAnalyzer
+        from experiments.kompaneets_analyzer import KompaneetsAnalyzer
         kompaneets_analyzer = KompaneetsAnalyzer(gyrospace)
         kompaneets_results = run_stable_experiment("Kompaneets Distortions", kompaneets_analyzer.run_comprehensive_analysis)
         
         # Etherington relation validation
-        from Experiments.experiments.etherington_validator import EtheringtonValidator
+        from experiments.etherington_validator import EtheringtonValidator
         etherington_validator = EtheringtonValidator(gyrospace)
         etherington_results = run_stable_experiment("Etherington Relation", etherington_validator.run_comprehensive_validation)
         
         # Acoustic coherence analysis
-        from Experiments.experiments.acoustic_coherence_analyzer import AcousticCoherenceAnalyzer
+        from experiments.acoustic_coherence_analyzer import AcousticCoherenceAnalyzer
         acoustic_analyzer = AcousticCoherenceAnalyzer(gyrospace)
         acoustic_results = run_stable_experiment("Acoustic Coherence", acoustic_analyzer.run_comprehensive_analysis)
         

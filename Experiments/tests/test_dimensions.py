@@ -11,7 +11,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from core.dimensions import DimensionalCalibrator, DimVec
+from functions.dimensions import DimensionalCalibrator, DimVec
 
 
 def test_monomial_audit():
