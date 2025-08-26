@@ -380,3 +380,84 @@ The implementation is:
 This analysis establishes a rigorous connection between CGM's theoretical framework and observable CMB physics. The toroidal geometry emerges consistently across multiple observables, the evolution follows expected physical behavior, and all predictions remain within observational bounds. While the phenomenological coupling between CGM domain deviations and energy injections requires further theoretical development, the framework provides a solid foundation for testing CGM predictions against current and future CMB observations.
 
 The key achievement is demonstrating that CGM's conceptual narrative—CS as unobservable source, UNA as white-body peak, ONA as toroidal gray-body, and BU as equilibrium black-body—can be mapped to concrete, testable physics without violating known constraints. The framework is ready for refinement as new observational data becomes available or as the theoretical connection between gyrovector operations and energy injections is further developed.
+
+===
+
+Thank you for laying out the foundations so clearly. Let me anchor everything to your own definitions and then place our “δ_BU” discussion in the right context, so there’s no ambiguity about what is fundamental and what is a derived probe.
+
+What each threshold actually is in CGM (from your text)
+- CS (α = π/2, s_p = π/2)
+  - Meaning: minimal chiral phase that breaks parity; only left gyration is active (lgyr ≠ id, rgyr = id).
+  - Type: angle (phase).
+  - Role: seeds the single left-handed helical worldline.
+
+- UNA (β = π/4, u_p = cos β = 1/√2)
+  - Meaning: the minimal planar split that produces three orthogonal spin axes (SU(2) triad).
+  - Type: angle (β), ratio (u_p = cos β).
+  - Role: right gyration turns on (both gyrations ≠ id), enabling observation with left-bias intact.
+
+- ONA (γ = π/4, o_p = γ)
+  - Meaning: minimal diagonal tilt out of the UNA plane that activates translations (SO(3)); “radial onset.”
+  - Type: angle (γ), “ratio” is the angle itself (o_p = π/4), not cos γ.
+  - Role: full differentiation (3 rotational + 3 translational DoF), maximal non-associativity.
+
+- BU (m_p = 1/(2√(2π)) in the CGM formalism)
+  - Meaning: closure amplitude fixed by A² × (2π)_L × (2π)_R = π/2 ⇒ A = m_p.
+  - Type: amplitude (dimensionless, but not an angle).
+  - Role: both gyrations return to identity (lgyr = rgyr = id); structure closes; memory (the 2π ranges) remains.
+
+Two clarifications that keep everything straight
+1) Angles vs amplitude
+   - α, β, γ are angles (phases).
+   - m_p is not an angle; it’s the amplitude picked out by the closure constraint with the two memory ranges (2π)_L and (2π)_R.
+   - Because both are “dimensionless” it’s easy to compare numerically—however, comparing an angle to an amplitude requires a model-specified mapping (otherwise it’s apples vs oranges).
+
+2) The “ratios” u_p and o_p are not the same kind of object
+   - UNA’s “ratio” is cos β = 1/√2 (a projection balance).
+   - ONA’s “ratio” is the angle γ itself (π/4), because what matters is the diagonal tilt in 3D.
+
+So what is δ_BU we reported—does it actually live in your model?
+- What we computed empirically
+  - In the TW closure test, we defined a “BU dual-pole slice,” composed of three gyrations:
+    ONA → BU+ → BU− → ONA,
+    and we measured the net rotation angle of that 3-leg composition. Because egress and ingress are symmetric, this net angle simplifies to 2 × ω(ONA ↔ BU), so we called it δ_BU := 2·ω(ONA↔BU).
+  - Numerically we found δ_BU ≈ 0.195342 rad, and we noticed it sits near m_p ≈ 0.199471.
+
+- Is that a fundamental constant?
+  - Not yet. δ_BU is a derived, path-specific monodromy angle from a particular slice of the stage diagram (a specific loop around “the BU poles”) using a numerical proxy. It’s not one of your axiomatic thresholds. It can be meaningful, but only after we define precisely how the BU amplitude m_p is represented in the group action used to compute that slice.
+  - The near-equality δ_BU ≈ 0.98·m_p arose in our code because we fed the stage numbers (o_p, m_p) as inputs to the velocity-based gyration engine. That encodes an implicit identification between amplitude (m_p) and a rotation-driving “strength,” which you haven’t prescribed in your foundations. So it’s not “fabricated,” but it is model-dependent and not justified as a fundamental identity unless we define that map explicitly.
+
+How to place δ_BU in your formalism without hand-waving
+If we want δ_BU to be a legitimate derived invariant, we need a clean mapping from your stage thresholds to group elements, consistent with your own SU(2) helical worldline:
+
+- Use the SU(2) worldline you specify:
+  - U_CS = exp(-i α σ₃/2)
+  - U_UNA = U_CS · exp(+i β σ₁/2)
+  - U_ONA = U_UNA · exp(+i γ σ₂/2)
+  - BU is “closure” (lgyr = rgyr = id) and an amplitude constraint A = m_p from the latent 2π ranges.
+
+- Define a BU “micro-phase” operator along σ₃ that encodes the closure amplitude:
+  - This is the only missing link: you must choose a principled map A → Φ_BU (an angle along σ₃) or an operator weight W_BU(A) that participates in the monodromy slice.
+  - Example (to be justified, not assumed): set Φ_BU = κ · m_p for a structural κ; or define a small-angle SU(2) rotation exp(+i Φ_BU σ₃/2) whose size is tied to A through the amplitude constraint (but not through G or Planck units).
+
+- Then compute the BU dual-pole slice analytically:
+  - R_pole = G(ONA→BU+) · G(BU+→BU−) · G(BU−→ONA), where each G is the adjoint action (or the equivalent SO(3) rotation) induced by the SU(2) step dictated by the stage operator.
+  - The result’s rotation angle is δ_BU^theory.
+  - Only then does comparing δ_BU^theory and m_p make sense (they are still different types, but the relationship is now a theorem- or model-level statement).
+
+Bottom line on δ_BU
+- As we computed it so far, δ_BU is a useful diagnostic of the BU vicinity symmetry (it was stable and reproducible).
+- It is not one of your four foundational thresholds; it is not currently a derived theorem in your formalism.
+- Treat it as a candidate derived invariant that becomes meaningful only after you specify the BU amplitude-to-operator mapping in SU(2)/SO(3). Until then, the numerical proximity to m_p should be labeled “empirical observation under a particular probe,” not a principle.
+
+What to adopt as “canonical” from your foundations (and how to test each)
+- CS (α = π/2, s_p): test via left/right-gyration asymmetry (lgyr≠id, rgyr=id) and signed-sequence defect asymmetry. In SU(2): U_CS = exp(-iπσ₃/4).
+- UNA (β = π/4, u_p=1/√2): test via emergence of three orthogonal spin axes; in SU(2): U_UNA = U_CS · exp(+iπσ₁/8).
+- ONA (γ = π/4, o_p=π/4): test via activation of translations; in SU(2): U_ONA = U_UNA · exp(+iπσ₂/8).
+- BU (m_p = 1/(2√(2π))): test via amplitude constraint A² × (2π)_L × (2π)_R = π/2 and confirmation that both gyrations become identity. Do not treat m_p as a rotation angle unless you supply a mapping.
+
+CS→UNA→ONA→BU as a single left-handed helical worldline in SU(2), projected to SO(3).
+
+- Everything flows from a single helical worldline in SU(2). The three angles (α, β, γ) are phase advances along fixed Pauli axes (σ₃, σ₁, σ₂). The closure amplitude m_p is not a phase; it is fixed by how the latent 2π ranges survive closure. That is your foundational picture.
+- δ_BU (as we computed it) is not a new “threshold.” It is a derived angle from a particular loop through BU whose meaning depends on how you represent the BU amplitude in the group. Until you specify that operator mapping, δ_BU is a diagnostic—good for checking symmetry—but not a law.
+

@@ -26,21 +26,15 @@ experiments_dir = Path(__file__).parent
 sys.path.insert(0, str(experiments_dir))
 
 # Import experiment modules
-from experiments.core_experiments import CoreTheoremTester
+from experiments.cgm_theorems_physics import CoreTheoremTester
 from experiments.physical_constants import ElectricCalibrationValidator
-from experiments.gravity_coupling import GravityCouplingAnalyzer
+from experiments.cgm_gravity_analysis import GravityCouplingAnalyzer
 
-from Experiments.theorems.run_proofs import run_all_proofs
-from Experiments.functions.gyrovector_ops import GyroVectorSpace
+from experiments.cgm_theorems_math import run_all_proofs
+from experiments.functions.gyrovector_ops import GyroVectorSpace
 
 # Triad source index analysis
 from experiments.triad_index_analyzer import TriadIndexAnalyzer
-
-
-
-
-
-
 
 def run_stable_experiment(name, func, *args, **kwargs):
     """Run a stable experiment with minimal output"""
@@ -94,7 +88,7 @@ def main():
         constants_results = run_stable_experiment("Electric Calibration", constants_validator.run_electric_calibration_experiment, alpha_input=1/137.035999084)
         
         gravity_analyzer = GravityCouplingAnalyzer()
-        gravity_results = run_stable_experiment("Gravity Coupling", gravity_analyzer.run_comprehensive_analysis)
+        gravity_results = run_stable_experiment("Gravity Coupling", gravity_analyzer.run_dimensional_analysis)
         
         from experiments.tw_precession import test_tw_precession_small_angle
         tw_results = run_stable_experiment("Thomas-Wigner Precession", test_tw_precession_small_angle)
@@ -136,10 +130,11 @@ def main():
         singularity_validator = SingularityInfinityValidator(gyrospace)
         singularity_results = run_stable_experiment("Singularity & Infinity", singularity_validator.run_all_validations)
         
-        # Run gravitational field experiments (streamlined - stable)
-        from experiments.gravitational_field_experiments import estimate_kappa_from_geometry
-        kappa_results = estimate_kappa_from_geometry(gyrospace)
-        print(f"   Gravitational Field: κ(geo)={kappa_results['kappa_estimate']:.3e}, κ(hol)={kappa_results['kappa_holonomy']:.3e}")
+        # Run gravitational field experiments using recursive memory
+        from experiments.functions.recursive_memory import RecursiveMemory
+        recursive_memory = RecursiveMemory(gyrospace)
+        kappa_results = recursive_memory.estimate_kappa_from_geometry()
+        print(f"   Gravitational Field: κ(geo)={kappa_results['kappa_estimate']:.3e}, coherence={kappa_results['coherence_magnitude']:.3e}")
         
         print()
         
@@ -163,20 +158,15 @@ def main():
         print("Running Advanced CGM Validations...")
         print("=" * 50)
         
-        # Kompaneets distortion analysis
-        from experiments.kompaneets_analyzer import KompaneetsAnalyzer
-        kompaneets_analyzer = KompaneetsAnalyzer(gyrospace)
-        kompaneets_results = run_stable_experiment("Kompaneets Distortions", kompaneets_analyzer.run_comprehensive_analysis)
+        # Kompaneyets distortion analysis
+        from experiments.cgm_kompaneyets_analysis import CGMKompaneyetsAnalyzer
+        kompaneyets_analyzer = CGMKompaneyetsAnalyzer(gyrospace)
+        kompaneyets_results = run_stable_experiment("Kompaneets Distortions", kompaneyets_analyzer.run_comprehensive_analysis)
         
-        # Etherington relation validation
-        from experiments.etherington_validator import EtheringtonValidator
-        etherington_validator = EtheringtonValidator(gyrospace)
-        etherington_results = run_stable_experiment("Etherington Relation", etherington_validator.run_comprehensive_validation)
-        
-        # Acoustic coherence analysis
-        from experiments.acoustic_coherence_analyzer import AcousticCoherenceAnalyzer
-        acoustic_analyzer = AcousticCoherenceAnalyzer(gyrospace)
-        acoustic_results = run_stable_experiment("Acoustic Coherence", acoustic_analyzer.run_comprehensive_analysis)
+        # Acoustic diagnostics analysis
+        from experiments.cgm_sound_diagnostics import CGMAcousticDiagnostics
+        acoustic_diagnostics = CGMAcousticDiagnostics(gyrospace)
+        acoustic_results = run_stable_experiment("Acoustic Diagnostics", acoustic_diagnostics.run_diagnostic_suite)
         
         print()
         
@@ -247,20 +237,15 @@ def main():
             print("Cosmogenesis Analysis: ⚠️ NEEDS REFINEMENT")
             
         # New validation results
-        if kompaneets_results.get('overall_viable', False):
+        if kompaneyets_results.get('overall_viable', False):
             print("Kompaneets Distortions: ✅ VALIDATED")
         else:
             print("Kompaneets Distortions: ❌ FAILED")
             
-        if etherington_results.get('overall_passed', False):
-            print("Etherington Relation: ✅ VALIDATED")
-        else:
-            print("Etherington Relation: ❌ FAILED")
-            
         if acoustic_results.get('overall_passed', False):
-            print("Acoustic Coherence: ✅ VALIDATED")
+            print("Acoustic Diagnostics: ✅ VALIDATED")
         else:
-            print("Acoustic Coherence: ❌ FAILED")
+            print("Acoustic Diagnostics: ❌ FAILED")
             
 
         

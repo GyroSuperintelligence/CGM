@@ -54,6 +54,7 @@ Thumbs.db
 *.pickle
 results/
 data/
+!experiments/data/
 
 # Temporary files
 *.tmp

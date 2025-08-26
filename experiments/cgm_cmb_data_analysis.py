@@ -14,8 +14,11 @@ import pickle
 from pathlib import Path
 import warnings
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add parent directory to path for imports - WSL compatible
+current_file = Path(__file__).resolve()
+experiments_dir = current_file.parent
+project_root = experiments_dir.parent
+sys.path.insert(0, str(project_root))
 
 from experiments.functions.torus import (
     torus_template, get_cgm_template_amplitude, 
@@ -35,13 +38,15 @@ class CGMDataManager:
     """
     
     def __init__(self, cache_dir: str = "cache"):
-        # Data file paths
-        experiments_dir = os.path.dirname(os.path.abspath(__file__))
-        self.y_map_file = os.path.join(experiments_dir, "data", "milca_ymaps.fits")
-        self.mask_file = os.path.join(experiments_dir, "data", "COM_CompMap_Compton-SZMap-masks_2048_R2.01.fits")
+        # Data file paths - WSL compatible using pathlib
+        experiments_dir = Path(__file__).resolve().parent
+        data_dir = experiments_dir / "data"
         
-        # Cache directory
-        self.cache_dir = Path(cache_dir)
+        self.y_map_file = data_dir / "milca_ymaps.fits"
+        self.mask_file = data_dir / "COM_CompMap_Compton-SZMap-masks_2048_R2.01.fits"
+        
+        # Cache directory - WSL compatible
+        self.cache_dir = Path(cache_dir).resolve()
         self.cache_dir.mkdir(exist_ok=True)
         
         # Data storage
@@ -82,7 +87,7 @@ class CGMDataManager:
             import astropy.io.fits as fits
             
             # Load Compton-y map
-            with fits.open(self.y_map_file) as hdul:
+            with fits.open(str(self.y_map_file)) as hdul:
                 y_data = hdul[1].data['FULL']  # type: ignore
                 if y_data is None:
                     raise ValueError("No data in y-map FITS file")
@@ -94,7 +99,7 @@ class CGMDataManager:
                     raise ValueError("Failed to load y-map data")
             
             # Load mask
-            with fits.open(self.mask_file) as hdul:
+            with fits.open(str(self.mask_file)) as hdul:
                 mask_data = hdul[1].data['M1']  # type: ignore
                 if mask_data is None:
                     raise ValueError("No data in mask FITS file")
@@ -323,12 +328,11 @@ class CGMDataManager:
         """Get real supernova data from Pantheon+ catalog."""
         try:
             # Try to load real Pantheon+ data
-            pantheon_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                                        "data", "pantheon_plus_real.dat")
+            pantheon_file = Path(__file__).resolve().parent / "data" / "pantheon_plus_real.dat"
             
-            if os.path.exists(pantheon_file):
+            if pantheon_file.exists():
                 # Load Pantheon+ data (space-separated, skip header)
-                data = np.loadtxt(pantheon_file, skiprows=1, dtype=str)
+                data = np.loadtxt(str(pantheon_file), skiprows=1, dtype=str)
                 # Convert numeric columns to float
                 redshifts = data[:, 2].astype(float)  # zHD (Hubble Diagram Redshift)
                 mu = data[:, 20].astype(float)  # MU_SH0ES (Distance modulus)
