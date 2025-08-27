@@ -286,99 +286,139 @@ def scan_axis_angles(n_theta=10, n_phi=20):
     return thetas, phis
 
 
-def find_best_axis(data_alm, lmax=4, n_theta=10, n_phi=20):
+def _fit_amp_masked(data_map, template_map, mask):
+    """Fit amplitude using masked least squares."""
+    v = (mask > 0)
+    t = template_map[v]
+    d = data_map[v]
+    XtX = np.sum(t*t)
+    if XtX <= 0 or d.size < 100:
+        return 0.0, 0.0
+    A = np.sum(t*d) / XtX
+    return float(A), float(XtX)
+
+def _template_map_healpix(nside, axis, a_polar, b_cubic):
+    """Create template map on HEALPix grid for given axis."""
+    import healpy as hp  # pyright: ignore[reportMissingImports]
+    npix = 12 * nside * nside
+    ipix = np.arange(npix)
+    theta, phi = hp.pix2ang(nside, ipix)
+    x = np.sin(theta) * np.cos(phi)
+    y = np.sin(theta) * np.sin(phi)
+    z = np.cos(theta)
+    ax, ay, az = unit(axis)
+    mu = np.clip(ax*x + ay*y + az*z, -1.0, 1.0)
+    P2_val = 0.5 * (3.0 * mu*mu - 1.0)
+    C4_val = (x**4 + y**4 + z**4) - 3.0/5.0
+    t = a_polar * P2_val + b_cubic * C4_val
+    return t.astype(np.float32)
+
+def _normalize_on_mask(tmap, mask):
+    """Normalize template map to zero mean and unit RMS on masked sky."""
+    v = (mask > 0)
+    if np.count_nonzero(v) < 100:
+        return tmap
+    tm = tmap[v].mean()
+    ts = tmap[v].std()
+    if ts > 0:
+        out = (tmap - tm) / ts
+    else:
+        out = tmap - tm
+    return out.astype(np.float32)
+
+def find_best_axis(y_map, mask, nside, a_polar=DEFAULT_A_POLAR, b_cubic=DEFAULT_B_CUBIC,
+                   n_theta=10, n_phi=20):
     """
-    Find the best-fit axis by scanning rotations and maximizing correlation.
-    
-    Args:
-        data_alm: Spherical harmonic coefficients of the data
-        lmax: Maximum multipole to use
-        n_theta: Number of theta steps for scanning
-        n_phi: Number of phi steps for scanning
-        
-    Returns:
-        Dictionary with best axis, correlation, and scan results
+    Pixel-space, masked axis scan that maximizes |amplitude| under the same estimator used downstream.
+    Returns best axis and amplitude. No alm heuristics.
     """
-    thetas, phis = scan_axis_angles(n_theta, n_phi)
-    
-    best_correlation = -1.0
-    best_axis = np.array([0, 0, 1])
+    thetas = np.linspace(0, np.pi, n_theta)
+    phis = np.linspace(0, 2*np.pi, n_phi, endpoint=False)
+
+    best_amp = None
+    best_axis = np.array([0.0, 0.0, 1.0])
     best_theta = 0.0
     best_phi = 0.0
-    
-    correlations = np.zeros((len(thetas), len(phis)))
-    
-    # Create template alm for reference axis (z)
-    template_alm = np.zeros_like(data_alm)
-    
-    # Set P2 and C4 components (simplified - we may want to use proper alm construction)
-    if len(template_alm) > 4:  # Ensure we have enough alm coefficients
-        # P2 component (m=0)
-        template_alm[2] = DEFAULT_A_POLAR
-        # C4 component (m=0) 
-        template_alm[4] = DEFAULT_B_CUBIC
-    
-    for i, theta in enumerate(thetas):
-        for j, phi in enumerate(phis):
-            # Rotate template alm using 3D rotation matrices
-            rotated_alm = rotate_alm_3d(template_alm, theta, phi, 0.0)
-            
-            # Compute correlation (dot product of alm vectors)
-            correlation = np.real(np.sum(data_alm[:lmax+1] * np.conj(rotated_alm[:lmax+1])))
-            correlations[i, j] = correlation
-            
-            if correlation > best_correlation:
-                best_correlation = correlation
-                best_axis = rotate_axis(np.array([0, 0, 1]), theta, phi)
-                best_theta = theta
-                best_phi = phi
-    
+
+    for t in thetas:
+        st = np.sin(t); ct = np.cos(t)
+        for p in phis:
+            cp = np.cos(p); sp = np.sin(p)
+            axis = np.array([st*cp, st*sp, ct], dtype=float)
+            tmap = _template_map_healpix(nside, axis, a_polar, b_cubic)
+            # Don't normalize - keep original scale
+            A, _ = _fit_amp_masked(y_map, tmap, mask)
+            if best_amp is None or abs(A) > abs(best_amp):
+                best_amp = A
+                best_axis = axis
+                best_theta = t
+                best_phi = p
+
     return {
         "best_axis": best_axis,
         "best_theta": best_theta,
         "best_phi": best_phi,
-        "best_correlation": best_correlation,
-        "correlations": correlations,
-        "thetas": thetas,
-        "phis": phis
+        "best_amplitude": float(best_amp) if best_amp is not None else 0.0,
+        "n_theta": n_theta,
+        "n_phi": n_phi,
     }
 
 
 def rotate_alm_3d(alm, theta, phi, psi):
     """
-    Rotate spherical harmonic coefficients using 3D rotation matrices.
-    Simplified version for low-ℓ analysis.
-    
-    Args:
-        alm: Spherical harmonic coefficients
-        theta: Colatitude rotation
-        phi: Longitude rotation  
-        psi: Azimuthal rotation
-        
-    Returns:
-        Rotated alm coefficients
+    DEPRECATED: Use pixel-space scanning instead.
+    This heuristic alm rotation is not rigorous.
     """
-    # For low-ℓ, we can approximate rotation by rotating the underlying 3D space
-    # This is a simplified approach - for high precision you'd need Wigner D matrices
-    
-    # Create a simple 3D rotation matrix
-    cos_t, sin_t = np.cos(theta), np.sin(theta)
-    cos_p, sin_p = np.cos(phi), np.sin(phi)
-    cos_ps, sin_ps = np.cos(psi), np.sin(psi)
-    
-    # R = Rz(ψ) * Ry(θ) * Rz(φ)
-    R = np.array([
-        [cos_ps * cos_t * cos_p - sin_ps * sin_p, -cos_ps * cos_t * sin_p - sin_ps * cos_p, cos_ps * sin_t],
-        [sin_ps * cos_t * cos_p + cos_ps * sin_p, -sin_ps * cos_t * sin_p + cos_ps * cos_p, sin_ps * sin_t],
-        [-sin_t * cos_p, sin_t * sin_p, cos_t]
-    ])
-    
-    # For low-ℓ, approximate rotation by scaling coefficients
-    # This is a heuristic - the exact rotation would require Wigner D matrices
-    rotated_alm = alm.copy()
-    
-    # Scale factors based on rotation angles (heuristic)
-    scale_factor = np.cos(theta/2) * np.cos(phi/2) * np.cos(psi/2)
-    rotated_alm *= scale_factor
-    
-    return rotated_alm
+    import warnings
+    warnings.warn("rotate_alm_3d is deprecated; use pixel-space scanning.", DeprecationWarning)
+    # Return unchanged alm to avoid breaking existing code
+    return alm.copy()
+
+
+def project_P2_C4_healpix(y_map, mask, nside, axis=(0,0,1)):
+    """
+    Project a HEALPix y_map onto the CGM basis P2 (about axis) and C4 on the masked sky.
+    Returns coefficients and fractional power.
+    """
+    import healpy as hp  # pyright: ignore[reportMissingImports]
+    npix = 12 * nside * nside
+    ipix = np.arange(npix)
+    theta, phi = hp.pix2ang(nside, ipix)
+    x = np.sin(theta) * np.cos(phi)
+    y = np.sin(theta) * np.sin(phi)
+    z = np.cos(theta)
+
+    ax, ay, az = unit(axis)
+    mu = np.clip(ax*x + ay*y + az*z, -1.0, 1.0)
+    P2_map = 0.5 * (3.0 * mu*mu - 1.0)
+    C4_map = (x**4 + y**4 + z**4) - 3.0/5.0
+
+    v = (mask > 0)
+    # remove masked mean
+    def demean(m):
+        mv = m[v]
+        return m - mv.mean()
+
+    Y = demean(y_map.copy())
+    P2m = demean(P2_map)
+    C4m = demean(C4_map)
+
+    # normalize basis on masked sky
+    def norm(m):
+        return np.sqrt(np.sum((m[v])**2))
+
+    P2n = P2m / (norm(P2m) + 1e-30)
+    C4n = C4m / (norm(C4m) + 1e-30)
+
+    a2 = float(np.sum(Y[v] * P2n[v]))
+    a4 = float(np.sum(Y[v] * C4n[v]))
+    tot = norm(Y) + 1e-30
+
+    return {
+        "a2": a2,
+        "a4": a4,
+        "frac_power_P2": abs(a2) / tot,
+        "frac_power_C4": abs(a4) / tot,
+    }
+
+
