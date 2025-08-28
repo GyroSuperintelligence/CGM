@@ -5,6 +5,14 @@ All notable changes to the CGM Experimental Framework will be documented in this
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+---
+
+## [1.0.6] - 2025-08-29
+
+A lot of changes and cleaning up. 
+Experiments Review and Results found here: docs\Notes\results_28082025.md
+
 ---
 
 ## [1.0.5] - 2025-08-25
