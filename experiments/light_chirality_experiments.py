@@ -388,7 +388,7 @@ class LightChiralityExperiments:
         print(f"Success rate: {(passed_validations/total_validations)*100:.1f}%")
 
         overall_success = passed_validations == total_validations
-        
+
         if overall_success:
             print("🎯 All light and chirality experiments validated!")
         else:
@@ -398,7 +398,7 @@ class LightChiralityExperiments:
             **results,
             "overall_success": overall_success,
             "passed_validations": passed_validations,
-            "total_validations": total_validations
+            "total_validations": total_validations,
         }
 
     # Helper methods for light chirality computations

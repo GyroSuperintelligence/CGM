@@ -90,7 +90,8 @@ class CoreTheoremTester:
         # Validation criteria - adjusted for realistic relativistic behavior
         validation_passed = (
             avg_asymmetry > 0.05  # Significant chiral asymmetry (lowered from 0.1)
-            and max_asymmetry > 0.15  # Realistic max asymmetry with 0.6c speeds (lowered from 0.25)
+            and max_asymmetry
+            > 0.15  # Realistic max asymmetry with 0.6c speeds (lowered from 0.25)
             and avg_assoc_defect > 1e-6  # Non-associativity present
         )
 
@@ -181,7 +182,8 @@ class CoreTheoremTester:
         # Validation criteria: distinction & memory; non-commutativity present; gyro-law reasonable
         validation_passed = (
             avg_distinction > 0.05  # Observable distinction present (lowered from 0.1)
-            and max_distinction > 0.05  # Strong distinction in some cases (lowered from 0.3)
+            and max_distinction
+            > 0.05  # Strong distinction in some cases (lowered from 0.3)
             and avg_memory_pres > 0.1  # Memory preservation present
             and avg_comm_defect > 1e-3  # non-commutativity real
             and avg_gyro_law_defect < 1.0  # law holds reasonably (relaxed from 1e-6)
@@ -266,7 +268,8 @@ class CoreTheoremTester:
         # Validation criteria - final adjustment for realistic opposition scales
         validation_passed = (
             non_assoc > 0.02  # Detectable non-associativity
-            and max_non_assoc > 0.05  # Strong non-associativity in some cases (lowered from 0.1)
+            and max_non_assoc
+            > 0.05  # Strong non-associativity in some cases (lowered from 0.1)
             and avg_opposition
             > 0.09  # Opposition non-absoluteness present (relaxed to match actual)
             and max_opposition
@@ -440,7 +443,7 @@ class CoreTheoremTester:
         print(f"\nOverall result: {passed_tests}/{total_tests} TESTS PASSED")
 
         overall_success = passed_tests == total_tests
-        
+
         if overall_success:
             print("🎯 All core CGM theorems validated!")
         else:
@@ -450,7 +453,7 @@ class CoreTheoremTester:
             **results,
             "overall_success": overall_success,
             "passed_tests": passed_tests,
-            "total_tests": total_tests
+            "total_tests": total_tests,
         }
 
 
@@ -464,35 +467,37 @@ def main():
     """
     print("CGM Core Experiments - Standalone Test")
     print("=" * 40)
-    
+
     try:
         # Initialize gyrovector space
         gyrospace = GyroVectorSpace(c=1.0)
-        
+
         # Create tester and run all tests
         tester = CoreTheoremTester(gyrospace)
         results = tester.run_all_core_tests()
-        
+
         # Print final summary
         print("\n" + "=" * 50)
         print("STANDALONE TEST COMPLETED")
         print("=" * 50)
-        
-        if results.get('overall_success', False):
+
+        if results.get("overall_success", False):
             print("✅ All core CGM theorems validated successfully!")
             return 0
         else:
             print("❌ Some core theorems failed validation")
             return 1
-            
+
     except Exception as e:
         print(f"❌ Error running core experiments: {e}")
         import traceback
+
         traceback.print_exc()
         return 1
 
 
 if __name__ == "__main__":
     import sys
+
     exit_code = main()
     sys.exit(exit_code)

@@ -20,9 +20,4 @@ from .gyrovector_ops import GyroVectorSpace, RecursivePath
 from .gyrotriangle import GyroTriangle
 from .recursive_memory import RecursiveMemory
 
-__all__ = [
-    "dimensions",
-    "gyrovector_ops", 
-    "gyrotriangle",
-    "recursive_memory"
-]
+__all__ = ["dimensions", "gyrovector_ops", "gyrotriangle", "recursive_memory"]

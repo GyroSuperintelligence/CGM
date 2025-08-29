@@ -5,7 +5,7 @@ This module rigorously derives physical constants and dimensions from CGM mathem
 integrating with existing passing experiments to validate the theoretical framework.
 
 IMPORTANT: NO PHYSICAL CONSTANTS ARE PREDICTED by this module.
-Only dimensionless diagnostics are computed unless/until we supply 
+Only dimensionless diagnostics are computed unless/until we supply
 CGM-derived dimensionless couplings (κ, etc.).
 
 The constants section is strictly diagnostic and should not be used
@@ -104,7 +104,7 @@ class ElectricCalibrationValidator:
         calib = DimensionalCalibrator(
             hbar=self.experimental_constants["hbar"],
             c=self.experimental_constants["c"],
-            m_anchor=m_anchor
+            m_anchor=m_anchor,
         )
         base = calib.base_units_SI()  # {'M0': kg, 'L0': m, 'T0': s}
 
@@ -116,10 +116,10 @@ class ElectricCalibrationValidator:
 
         # Preserve c-invariance and the anchor mass:
         # Use a single scale for L and T so L/T = c is preserved
-        scale_LT = self.cgm_ratios["m_p"]   # or simply 1.0 – either way L/T stays = c
+        scale_LT = self.cgm_ratios["m_p"]  # or simply 1.0 – either way L/T stays = c
         L = base["L0"] * scale_LT
         T = base["T0"] * scale_LT
-        M = base["M0"]                   # keep the calibrated anchor mass
+        M = base["M0"]  # keep the calibrated anchor mass
 
         # Test gyrotriangle closure (existing passing experiment)
         gt = GyroTriangle(self.gyrospace)
@@ -154,8 +154,12 @@ class ElectricCalibrationValidator:
         print(f"  Length: {L:.2e} m")
         print(f"  Time: {T:.2e} s")
         print(f"  Mass: {M:.2e} kg")
-        print(f"  Length/Time ratio: {L/T:.2e} m/s — c-invariance: {'✅ PASS' if c_check else '❌ FAIL'}")
-        print(f"  Mass anchor preserved: {'✅ PASS' if mass_anchor_preserved else '❌ FAIL'}")
+        print(
+            f"  Length/Time ratio: {L/T:.2e} m/s — c-invariance: {'✅ PASS' if c_check else '❌ FAIL'}"
+        )
+        print(
+            f"  Mass anchor preserved: {'✅ PASS' if mass_anchor_preserved else '❌ FAIL'}"
+        )
         print()
         print(f"Validation:")
         print(f"  Gyrotriangle closure: {'PASS' if gyrotriangle_closure else 'FAIL'}")
@@ -163,24 +167,35 @@ class ElectricCalibrationValidator:
 
         # Guardrails: fail fast on broken invariants
         assert c_check, f"c-invariance broken: L/T = {L/T:.2e} ≠ c = {c_input:.2e}"
-        assert mass_anchor_preserved, f"mass anchor must not be rescaled: M = {M:.2e} ≠ M0 = {base['M0']:.2e}"
+        assert (
+            mass_anchor_preserved
+        ), f"mass anchor must not be rescaled: M = {M:.2e} ≠ M0 = {base['M0']:.2e}"
 
         return {
-            "SI_base_units": base,             # authoritative scales (kg, m, s)
-            "CGM_factors": self.cgm_ratios,    # pure numbers
-            "length_SI": L, "time_SI": T, "mass_SI": M,
-            "length_time_ratio": L/T,          # now has units of speed
+            "SI_base_units": base,  # authoritative scales (kg, m, s)
+            "CGM_factors": self.cgm_ratios,  # pure numbers
+            "length_SI": L,
+            "time_SI": T,
+            "mass_SI": M,
+            "length_time_ratio": L / T,  # now has units of speed
             "c_invariant": c_invariant,
             "c_invariance_passed": bool(c_check),
             "mass_anchor_preserved": bool(mass_anchor_preserved),
             "gyrotriangle_closure": bool(gyrotriangle_closure),
             "bu_global_closure": bool(bu_global_closure),
-            "validation_passed": bool(gyrotriangle_closure and bu_global_closure and c_check and mass_anchor_preserved),
+            "validation_passed": bool(
+                gyrotriangle_closure
+                and bu_global_closure
+                and c_check
+                and mass_anchor_preserved
+            ),
             "dimensional_audits": [length_audit, time_audit, mass_audit],
-            "note": "Dimensions are SI-calibrated via {ħ,c,m⋆}; CGM ratios are dimensionless structural data."
+            "note": "Dimensions are SI-calibrated via {ħ,c,m⋆}; CGM ratios are dimensionless structural data.",
         }
 
-    def derive_physical_constants_from_dimensions(self, dimensions: Dict[str, Any] | None = None) -> Dict[str, Any]:
+    def derive_physical_constants_from_dimensions(
+        self, dimensions: Dict[str, Any] | None = None
+    ) -> Dict[str, Any]:
         """
         Derive physical constants from CGM dimensions using only ħ (allowed)
 
@@ -205,13 +220,13 @@ class ElectricCalibrationValidator:
             return {
                 "status": "NOT_IDENTIFIABLE",
                 "reason": "Need ≥3 independent dimensional inputs (e.g. ħ,c,m⋆) to map to SI.",
-                "validation_passed": False
+                "validation_passed": False,
             }
 
         # Extract SI-calibrated dimensions
         L = dimensions["length_SI"]  # has units of meters
-        T = dimensions["time_SI"]    # has units of seconds  
-        M = dimensions["mass_SI"]    # has units of kilograms
+        T = dimensions["time_SI"]  # has units of seconds
+        M = dimensions["mass_SI"]  # has units of kilograms
 
         # Use only ħ (allowed) and CGM ratios to derive constants
         hbar = self.experimental_constants["hbar"]
@@ -232,11 +247,11 @@ class ElectricCalibrationValidator:
         # where α_G(m_anchor) = G m_anchor^2 / (ħ c) is dimensionless
         alpha_G_anchor = float(G_exp * M**2 / (hbar * c))
         planck_over_anchor = float(np.sqrt(1.0 / alpha_G_anchor))
-        
+
         # κ is the dimensionless coupling that multiplies ħc/m²
         # κ = sqrt(α_G(m_anchor)) = m_anchor / m_Planck
         kappa_required = float(np.sqrt(alpha_G_anchor))
-        
+
         G_status = "DIAGNOSTIC_ALPHA_G"
         G_predicted = None  # do not report a fake number here
         G_error = None
@@ -250,7 +265,10 @@ class ElectricCalibrationValidator:
         # Provide a *consistency* value only if we accept (α, ε0) as inputs:
         e_consistent = float(np.sqrt(4.0 * np.pi * eps0 * alpha_exp * hbar * c))
         e_status = "CONSISTENCY_FROM_(α,ε0,ħ,c)"
-        e_error = abs(e_consistent - self.experimental_constants["e"]) / self.experimental_constants["e"]
+        e_error = (
+            abs(e_consistent - self.experimental_constants["e"])
+            / self.experimental_constants["e"]
+        )
 
         # Validate against experimental values (diagnostic only)
         # c_error is 0.0 since c is anchored by construction
@@ -280,7 +298,9 @@ class ElectricCalibrationValidator:
         m_anchor = 9.1093837015e-31  # electron mass
         expected_compton_length = hbar / (m_anchor * c)
         actual_compton_length = dimensions["SI_base_units"]["L0"]
-        compton_check = np.isclose(expected_compton_length, actual_compton_length, rtol=1e-10)
+        compton_check = np.isclose(
+            expected_compton_length, actual_compton_length, rtol=1e-10
+        )
 
         if os.getenv("CGM_DIAG", "1") == "1":
             print(f"Predicted c: {c_predicted:.2e} m/s  (status: {c_status})")
@@ -288,7 +308,9 @@ class ElectricCalibrationValidator:
             print(f"m_Planck / m_anchor = {planck_over_anchor:.3e}")
             print(f"κ = sqrt(α_G) = {kappa_required:.3e}")
             print(f"Stage ratio (UNA, not α_EM): {alpha_stage_ratio:.6f}")
-            print(f"e (from α,ε0,ħ,c; consistency): {e_consistent:.3e} C  rel.err={e_error:.2e}")
+            print(
+                f"e (from α,ε0,ħ,c; consistency): {e_consistent:.3e} C  rel.err={e_error:.2e}"
+            )
             print(f"UNA orthogonality: {una_orthogonality:.6f}")
             print(f"BU closure test: {'PASS' if bu_closure_test else 'FAIL'}")
             print(f"Compton length check: {'PASS' if compton_check else 'FAIL'}")
@@ -305,19 +327,15 @@ class ElectricCalibrationValidator:
             "una_orthogonality": una_orthogonality,
             "bu_closure_test": bu_closure_test,
             "compton_check": compton_check,
-
             # Diagnostics
             "c_predicted": c_predicted,
             "c_status": c_status,
-
-            "alpha_G_anchor": alpha_G_anchor,         # gravitational coupling for anchor
-            "planck_over_anchor": planck_over_anchor, # m_Planck / m_anchor
-            "kappa_required_for_G": kappa_required,   # sqrt(α_G) = m_anchor / m_Planck
+            "alpha_G_anchor": alpha_G_anchor,  # gravitational coupling for anchor
+            "planck_over_anchor": planck_over_anchor,  # m_Planck / m_anchor
+            "kappa_required_for_G": kappa_required,  # sqrt(α_G) = m_anchor / m_Planck
             "G_status": G_status,
-
-            "alpha_stage_ratio": alpha_stage_ratio,   # clearly not α_EM
+            "alpha_stage_ratio": alpha_stage_ratio,  # clearly not α_EM
             "alpha_status": alpha_status,
-
             "e_consistent_from_alpha_eps0": e_consistent,
             "e_status": e_status,
             "e_error": e_error,
@@ -421,7 +439,7 @@ class ElectricCalibrationValidator:
             "validation_passed": validation_passed,
             "status": "DIAGNOSTIC_ONLY",
             "units": "dimensionless ratio (requires L0/T0 to scale to m/s)",
-            "reason": "requires CGM-derived dimensionless coupling"
+            "reason": "requires CGM-derived dimensionless coupling",
         }
 
         print(f"(Dimensionless) c ratio:      {c_predicted_ensemble:.6f}")
@@ -529,9 +547,7 @@ class ElectricCalibrationValidator:
 
             # Measure the effective angular momentum from gyration
             test_vector = np.array([1.0, 0, 0])
-            gyr = self.gyrospace.gyration(
-                test_vector, np.array([0, 0, rotation_angle])
-            )
+            gyr = self.gyrospace.gyration(test_vector, np.array([0, 0, rotation_angle]))
 
             if hasattr(gyr, "shape") and gyr.shape == (3, 3):
                 # Extract rotation component around z-axis
@@ -580,7 +596,7 @@ class ElectricCalibrationValidator:
             "validation_methods": 3,
             "validation_passed": validation_passed,
             "status": "DIAGNOSTIC_ONLY",
-            "reason": "requires CGM-derived dimensionless coupling"
+            "reason": "requires CGM-derived dimensionless coupling",
         }
 
         print(f"Ensemble ħ prediction:        {hbar_predicted_ensemble:.6f}")
@@ -636,7 +652,7 @@ class ElectricCalibrationValidator:
 
         # CGM κ-proxy: dimensionless coupling from closure energy
         kappa_proxy = 1.0 / np.sqrt(max(float(avg_closure_energy), 1e-12))
-        
+
         # κ required for G with electron mass anchor
         hbar = self.experimental_constants["hbar"]
         c = self.experimental_constants["c"]
@@ -713,7 +729,7 @@ class ElectricCalibrationValidator:
             "all_monodromy_defects": monodromy_defects,
             "validation_passed": min_monodromy > 1e-6,  # Non-zero defect found
             "status": "DIAGNOSTIC_ONLY",
-            "reason": "requires CGM-derived dimensionless coupling"
+            "reason": "requires CGM-derived dimensionless coupling",
         }
 
         print(f"Predicted Higgs scale:        {higgs_scale_predicted:.2f}")
@@ -724,11 +740,11 @@ class ElectricCalibrationValidator:
         print(f"Min monodromy defect:         {min_monodromy:.6f}")
 
         return results
-    
+
     def predict_sound_speed_ratio_from_thresholds(self) -> float:
         """
         Predict sound speed ratio c_s/c from CGM thresholds using Thomas-Wigner relation.
-        
+
         Solves ω(β, o_p) = m_p for β, where:
         - o_p = π/4 (ONA threshold, sound speed related)
         - m_p = BU threshold (closure amplitude)
@@ -737,26 +753,28 @@ class ElectricCalibrationValidator:
         m_p = self.cgm_ratios["m_p"]
         o_p = self.cgm_ratios["o_p"]
         u_p = self.cgm_ratios["u_p"]
-        
+
         def wigner_angle_exact(beta, theta):
             eta = np.arctanh(beta)
-            sh2 = np.sinh(eta/2.0)**2
-            ch2 = np.cosh(eta/2.0)**2
-            tan_half = (np.sin(theta)*sh2)/(ch2 + np.cos(theta)*sh2)
-            return 2.0*np.arctan(np.abs(tan_half))
-        
+            sh2 = np.sinh(eta / 2.0) ** 2
+            ch2 = np.cosh(eta / 2.0) ** 2
+            tan_half = (np.sin(theta) * sh2) / (ch2 + np.cos(theta) * sh2)
+            return 2.0 * np.arctan(np.abs(tan_half))
+
         beta = u_p
         for _ in range(20):
             cur = wigner_angle_exact(beta, o_p)
-            if abs(cur - m_p) < 1e-12: 
+            if abs(cur - m_p) < 1e-12:
                 break
             db = 1e-6
-            dcur = (wigner_angle_exact(beta+db, o_p)-wigner_angle_exact(beta-db, o_p))/(2*db)
-            if abs(dcur) < 1e-12: 
+            dcur = (
+                wigner_angle_exact(beta + db, o_p) - wigner_angle_exact(beta - db, o_p)
+            ) / (2 * db)
+            if abs(dcur) < 1e-12:
                 break
-            beta = float(np.clip(beta - (cur - m_p)/dcur, 1e-6, 0.999999))
+            beta = float(np.clip(beta - (cur - m_p) / dcur, 1e-6, 0.999999))
         return beta
-    
+
     def validate_fine_structure_constant(self) -> Dict[str, Any]:
         """
         Validate fine structure constant prediction from CGM
@@ -794,7 +812,7 @@ class ElectricCalibrationValidator:
             )
             < 0.5,  # Within factor of 2
             "status": "DIAGNOSTIC_ONLY",
-            "reason": "requires CGM-derived dimensionless coupling"
+            "reason": "requires CGM-derived dimensionless coupling",
         }
 
         print(f"Predicted α_em:               {alpha_em_predicted:.4f}")
@@ -806,7 +824,9 @@ class ElectricCalibrationValidator:
 
         return results
 
-    def run_electric_calibration_experiment(self, alpha_input: float | None = None) -> Dict[str, Any]:
+    def run_electric_calibration_experiment(
+        self, alpha_input: float | None = None
+    ) -> Dict[str, Any]:
         """
         Run electric calibration experiment integrating with existing tests
 
@@ -824,31 +844,33 @@ class ElectricCalibrationValidator:
         print("Calibrating electric sector using CGM foundations")
         print("and external fine structure constant input")
         print()
-        
+
         # Require alpha input for calibration
         if alpha_input is None:
-            print("❌ CALIBRATION FAILED: Fine structure constant (α) required as input")
+            print(
+                "❌ CALIBRATION FAILED: Fine structure constant (α) required as input"
+            )
             print("   This prevents circular reasoning - α must be provided externally")
             return {
                 "overall_success": False,
                 "status": "CALIBRATION_FAILED",
-                "reason": "Fine structure constant (α) required as input to prevent circularity"
+                "reason": "Fine structure constant (α) required as input to prevent circularity",
             }
-        
+
         print(f"✅ CALIBRATION INPUT: α = {alpha_input:.6f}")
         print("=" * 50)
-        
+
         # Store alpha for use in calculations
         self.alpha_input = alpha_input
-        
+
         # CGM fundamental ratios (from validated thresholds)
         self.cgm_ratios = {
             "s_p": np.pi / 2,  # CS threshold
             "u_p": 1 / np.sqrt(2),  # UNA threshold (light speed related)
             "o_p": np.pi / 4,  # ONA threshold (sound speed related)
-            "m_p": 1 / (2 * np.sqrt(2 * np.pi))  # BU threshold
+            "m_p": 1 / (2 * np.sqrt(2 * np.pi)),  # BU threshold
         }
-        
+
         results = {}
 
         # Step 1: Derive fundamental dimensions from CGM ratios
@@ -856,7 +878,7 @@ class ElectricCalibrationValidator:
         print("STEP 1: Deriving Fundamental Dimensions from CGM Ratios")
         print("=" * 60)
         results["dimensions"] = self.derive_fundamental_dimensions()
-        
+
         # Predict anatomical sound speed from CGM thresholds
         beta_sound = self.predict_sound_speed_ratio_from_thresholds()
         print(f"Anatomical sound ratio c_s/c (from thresholds): {beta_sound:.6f}")
@@ -866,7 +888,9 @@ class ElectricCalibrationValidator:
         print("\n" + "=" * 60)
         print("STEP 2: Deriving Physical Constants from CGM Dimensions")
         print("=" * 60)
-        results["constants"] = self.derive_physical_constants_from_dimensions(results["dimensions"])
+        results["constants"] = self.derive_physical_constants_from_dimensions(
+            results["dimensions"]
+        )
 
         # Step 3: Integration validation with existing experiments
         print("\n" + "=" * 60)
@@ -880,7 +904,7 @@ class ElectricCalibrationValidator:
             "cs_axiom": {"validation_passed": True},  # These are already validated
             "una_theorem": {"validation_passed": True},  # in the main experiment
             "ona_theorem": {"validation_passed": True},  # so we don't re-run them
-            "bu_theorem": {"validation_passed": True}
+            "bu_theorem": {"validation_passed": True},
         }
 
         # Test gyrotriangle closure (existing experiment)
@@ -928,7 +952,9 @@ class ElectricCalibrationValidator:
         )
 
         print(f"Dimensions derivation: {'PASS' if dimension_validation else 'FAIL'}")
-        print(f"Constants derivation: {'DIAGNOSTIC' if constants_validation else 'DIAGNOSTIC'} (dimensionless couplings not supplied)")
+        print(
+            f"Constants derivation: {'DIAGNOSTIC' if constants_validation else 'DIAGNOSTIC'} (dimensionless couplings not supplied)"
+        )
         print(
             f"Core theorems: {integration_results['core_theorem_count']}/{integration_results['total_core_theorems']} PASSED"
         )
@@ -941,13 +967,19 @@ class ElectricCalibrationValidator:
         print(
             f"UNA orthogonality: {'PASS' if integration_results['una_orthogonality'] else 'FAIL'}"
         )
-        
+
         # Show the new invariant checks
         if "c_invariance_passed" in results["dimensions"]:
-            c_inv_status = "✅ PASS" if results["dimensions"]["c_invariance_passed"] else "❌ FAIL"
+            c_inv_status = (
+                "✅ PASS" if results["dimensions"]["c_invariance_passed"] else "❌ FAIL"
+            )
             print(f"c-invariance: {c_inv_status}")
         if "mass_anchor_preserved" in results["dimensions"]:
-            mass_status = "✅ PASS" if results["dimensions"]["mass_anchor_preserved"] else "❌ FAIL"
+            mass_status = (
+                "✅ PASS"
+                if results["dimensions"]["mass_anchor_preserved"]
+                else "❌ FAIL"
+            )
             print(f"Mass anchor preserved: {mass_status}")
 
         # Overall success assessment

@@ -23,6 +23,7 @@ from typing import Tuple, Optional, Union, List, Callable, Any
 
 try:
     from scipy.linalg import polar
+
     SCIPY_AVAILABLE = True
 except ImportError:
     SCIPY_AVAILABLE = False
@@ -75,9 +76,9 @@ class GyroVectorSpace:
         """
         u = self._ensure_subluminal(np.asarray(u, dtype=float))
         v = self._ensure_subluminal(np.asarray(v, dtype=float))
-        if np.allclose(u, 0): 
+        if np.allclose(u, 0):
             return v.copy()
-        if np.allclose(v, 0): 
+        if np.allclose(v, 0):
             return u.copy()
 
         u2 = float(np.dot(u, u))
@@ -85,7 +86,7 @@ class GyroVectorSpace:
             return v.copy()
 
         γu = self.gamma(u)
-        uv_over_c2 = float(np.dot(u, v)) / (self.c ** 2)
+        uv_over_c2 = float(np.dot(u, v)) / (self.c**2)
         denom = 1.0 + uv_over_c2
         if abs(denom) < 1e-15:
             denom = 1e-15 if denom == 0 else np.sign(denom) * 1e-15
@@ -135,25 +136,27 @@ class GyroVectorSpace:
         """
         Return a 3×3 linear approximation (Jacobian) of gyr[a,b] at the origin.
         We apply gyr[a,b] to ε e_i and divide by ε to form columns.
-        
+
         Implements Thomas-Wigner rotation for small velocities via BCH formula.
         """
         # Adaptive epsilon based on vector magnitudes for better numerical stability
-        eps = max(1e-8, 1e-8 * (float(np.linalg.norm(a)) + float(np.linalg.norm(b)) + 1))
+        eps = max(
+            1e-8, 1e-8 * (float(np.linalg.norm(a)) + float(np.linalg.norm(b)) + 1)
+        )
         E = np.eye(3)
         cols = []
         for i in range(3):
             col = self._gyr_apply(a, b, eps * E[:, i]) / eps
             cols.append(col)
         G = np.column_stack(cols)
-        
+
         # Project to nearest rotation matrix via polar decomposition for better orthogonality
         U, _, Vt = np.linalg.svd(G)
         R = U @ Vt
         if np.linalg.det(R) < 0:  # fix reflection
             U[:, -1] *= -1
             R = U @ Vt
-        
+
         # Proof-guard: check orthogonality and fall back to BCH if needed
         orthogonality_error = np.linalg.norm(R.T @ R - np.eye(3))
         if orthogonality_error > 1e-10:
@@ -166,11 +169,15 @@ class GyroVectorSpace:
                 angle = cross / (2.0 * self.c**2)
                 angle = float(np.clip(angle, 0.0, np.pi))  # keep in-range
                 axis = u_cross_v / cross
-                K = np.array([[0, -axis[2], axis[1]],
-                              [axis[2], 0, -axis[0]],
-                              [-axis[1], axis[0], 0]])
+                K = np.array(
+                    [
+                        [0, -axis[2], axis[1]],
+                        [axis[2], 0, -axis[0]],
+                        [-axis[1], axis[0], 0],
+                    ]
+                )
                 R = np.eye(3) + np.sin(angle) * K + (1 - np.cos(angle)) * (K @ K)
-        
+
         return R
 
     def coaddition(self, u: np.ndarray, v: np.ndarray) -> np.ndarray:
@@ -238,7 +245,9 @@ class GyroVectorSpace:
         right = self.gyroaddition(u, self.gyroaddition(v, w))
         return float(np.linalg.norm(left - right))
 
-    def holonomy_triangle(self, u: np.ndarray, v: np.ndarray, w: np.ndarray | None = None):
+    def holonomy_triangle(
+        self, u: np.ndarray, v: np.ndarray, w: np.ndarray | None = None
+    ):
         """
         Rotation holonomy around a closed triangle in velocity space.
         If w is None, close with w = -(u ⊕ v). Returns (angle, matrix).
@@ -255,13 +264,13 @@ class GyroVectorSpace:
 
         tr = float(np.trace(R))
         tr = np.clip(tr, -1.0, 3.0)
-        angle = float(np.arccos((tr - 1.0)/2.0))
+        angle = float(np.arccos((tr - 1.0) / 2.0))
         return angle, R
 
     def rotation_angle_from_matrix(self, R: np.ndarray) -> float:
         """Principal rotation angle from an SO(3) matrix."""
         tr = float(np.clip(np.trace(R), -1.0, 3.0))
-        return float(np.arccos((tr - 1.0)/2.0))
+        return float(np.arccos((tr - 1.0) / 2.0))
 
 
 class RecursivePath:

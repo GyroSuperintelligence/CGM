@@ -31,44 +31,44 @@ def C4_zero_mean(nhat):
     Produces 6 lobes along ±x, ±y, ±z.
     """
     x, y, z = unit(nhat)
-    return (x ** 4 + y ** 4 + z ** 4) - 3.0 / 5.0
+    return (x**4 + y**4 + z**4) - 3.0 / 5.0
 
 
 def torus_template(nhat, axis=(0, 0, 1), a_polar=0.2, b_cubic=0.1):
     """
     Zero-mean toroidal template: T(n̂) = a_polar * P₂(k̂·n̂) + b_cubic * C₄(n̂).
-    
+
     This is the fundamental template that should be used everywhere.
     Zero-mean by construction: ⟨T⟩ = 0 over the sphere.
-    
+
     Args:
         nhat: Direction vector (unit vector)
         axis: Torus axis (default: Galactic north)
         a_polar: Polar anisotropy strength (P₂ coefficient)
         b_cubic: Cubic anisotropy strength (C₄ coefficient)
-        
+
     Returns:
         Zero-mean template value
     """
     nhat = unit(nhat)
     khat = unit(axis)
     mu = float(np.clip(np.dot(nhat, khat), -1.0, 1.0))
-    
+
     P2_val = P2(mu)
     C4_val = C4_zero_mean(nhat)
-    
+
     return a_polar * P2_val + b_cubic * C4_val
 
 
 def tau_from_template(nhat, tau_rms=1e-3, **kwargs):
     """
     Build physical τ from zero-mean template.
-    
+
     Args:
         nhat: Direction vector
         tau_rms: RMS of the template (sets the scale)
         **kwargs: Passed to torus_template
-        
+
     Returns:
         Physical opacity value (can be negative)
     """
@@ -87,24 +87,28 @@ def dir_cosines(theta, phi):
 def cubic_C4(theta, phi):
     """Cubic harmonic C4(θ,φ) = x⁴ + y⁴ + z⁴ - 3/5 (zero-mean over sphere)."""
     x, y, z = dir_cosines(theta, phi)
-    return (x ** 4 + y ** 4 + z ** 4) - 3.0 / 5.0
+    return (x**4 + y**4 + z**4) - 3.0 / 5.0
 
 
 # DEPRECATED: Use torus_template + tau_from_template instead
 def toroidal_opacity(nhat, axis=(0, 0, 1), tau0=1e-3, eps_polar=0.2, eps_card=0.1):
     """
     DEPRECATED: Directional optical depth with non-zero mean.
-    
+
     Use tau_from_template() instead for consistent zero-mean behavior.
     """
     import warnings
-    warnings.warn("toroidal_opacity is deprecated. Use tau_from_template() instead.", 
-                  DeprecationWarning, stacklevel=2)
-    
+
+    warnings.warn(
+        "toroidal_opacity is deprecated. Use tau_from_template() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
     nhat = unit(nhat)
     khat = unit(axis)
     mu = float(np.clip(np.dot(nhat, khat), -1.0, 1.0))
-    
+
     # Use the new template
     template = torus_template(nhat, axis, eps_polar, eps_card)
     return tau0 * (1.0 + template)
@@ -116,9 +120,13 @@ def toroidal_y_weight(nhat, axis=(0, 0, 1), y0=1.0, eps_polar=0.2, eps_card=0.1)
     DEPRECATED: Use torus_template() instead for consistent behavior.
     """
     import warnings
-    warnings.warn("toroidal_y_weight is deprecated. Use torus_template() instead.", 
-                  DeprecationWarning, stacklevel=2)
-    
+
+    warnings.warn(
+        "toroidal_y_weight is deprecated. Use torus_template() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
     template = torus_template(nhat, axis, eps_polar, eps_card)
     return float(y0 * np.exp(-0.2 * template))
 
@@ -129,15 +137,20 @@ def tau_anisotropic(theta, phi, tau0=1e-3, a_polar=-0.3, b_cubic=0.2):
     DEPRECATED: Use tau_from_template() instead for consistent behavior.
     """
     import warnings
-    warnings.warn("tau_anisotropic is deprecated. Use tau_from_template() instead.", 
-                  DeprecationWarning, stacklevel=2)
-    
-    nhat = np.array([np.sin(theta) * np.cos(phi),
-                     np.sin(theta) * np.sin(phi),
-                     np.cos(theta)])
-    
-    return tau_from_template(nhat, tau0, axis=(0, 0, 1), 
-                           a_polar=a_polar, b_cubic=b_cubic)
+
+    warnings.warn(
+        "tau_anisotropic is deprecated. Use tau_from_template() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
+    nhat = np.array(
+        [np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]
+    )
+
+    return tau_from_template(
+        nhat, tau0, axis=(0, 0, 1), a_polar=a_polar, b_cubic=b_cubic
+    )
 
 
 # DEPRECATED: Use torus_template instead
@@ -146,61 +159,64 @@ def anisotropy_weight(theta, phi, a_polar=-0.3, b_cubic=0.2):
     DEPRECATED: Use torus_template() instead for consistent behavior.
     """
     import warnings
-    warnings.warn("anisotropy_weight is deprecated. Use torus_template() instead.", 
-                  DeprecationWarning, stacklevel=2)
-    
-    nhat = np.array([np.sin(theta) * np.cos(phi),
-                     np.sin(theta) * np.sin(phi),
-                     np.cos(theta)])
-    
-    return 1.0 + torus_template(nhat, axis=(0, 0, 1), 
-                               a_polar=a_polar, b_cubic=b_cubic)
+
+    warnings.warn(
+        "anisotropy_weight is deprecated. Use torus_template() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
+    nhat = np.array(
+        [np.sin(theta) * np.cos(phi), np.sin(theta) * np.sin(phi), np.cos(theta)]
+    )
+
+    return 1.0 + torus_template(nhat, axis=(0, 0, 1), a_polar=a_polar, b_cubic=b_cubic)
 
 
 def project_P2_C4(y_map, thetas, phis):
     """
     Project a y-map onto the CGM basis (P₂, C₄) to prove ℓ=2/4 dominance.
-    
+
     Args:
         y_map: 2D array of y values (theta × phi)
         thetas: 1D array of theta values
         phis: 1D array of phi values
-        
+
     Returns:
         Dictionary with projection coefficients and fractional power
     """
     Y = y_map.copy()
-    TH, PH = np.meshgrid(thetas, phis, indexing='ij')
+    TH, PH = np.meshgrid(thetas, phis, indexing="ij")
     w = np.sin(TH)  # weight by sinθ for spherical average
-    
+
     # remove monopole before projecting
     Y -= np.sum(Y * w) / np.sum(w)
-    
+
     # basis (zero-mean over sphere by construction)
-    P2 = 0.5 * (3 * np.cos(TH)**2 - 1.0)
+    P2 = 0.5 * (3 * np.cos(TH) ** 2 - 1.0)
     x = np.sin(TH) * np.cos(PH)
     y = np.sin(TH) * np.sin(PH)
     z = np.cos(TH)
-    C4 = (x**4 + y**4 + z**4) - 3.0/5.0
-    
+    C4 = (x**4 + y**4 + z**4) - 3.0 / 5.0
+
     # normalize and project
     def dot(A, B):
         return np.sum(A * B * w)
-    
+
     P2n = P2 / np.sqrt(dot(P2, P2))
     C4n = C4 / np.sqrt(dot(C4, C4))
-    
+
     a2 = dot(Y, P2n)
     a4 = dot(Y, C4n)
-    
+
     # also give fractional power
     tot = np.sqrt(dot(Y, Y))
-    
+
     return {
         "a2": float(a2),
         "a4": float(a4),
         "frac_power_P2": float(abs(a2) / tot),
-        "frac_power_C4": float(abs(a4) / tot)
+        "frac_power_C4": float(abs(a4) / tot),
     }
 
 
@@ -213,17 +229,17 @@ Y_PRED_RMS_FROM_CGM = 5e-14  # Predicted y_rms from triad-driven injections
 TAU_PRED_RMS_FROM_CGM = 4 * Y_PRED_RMS_FROM_CGM  # For late-time y: Δρ/ργ ≈ 4y
 
 # Default template parameters (from your sweeps)
-DEFAULT_A_POLAR = 0.2   # Polar anisotropy strength
-DEFAULT_B_CUBIC = 0.1   # Cubic anisotropy strength
+DEFAULT_A_POLAR = 0.2  # Polar anisotropy strength
+DEFAULT_B_CUBIC = 0.1  # Cubic anisotropy strength
 
 
 def get_cgm_template_amplitude(template_type="y"):
     """
     Get the CGM-predicted amplitude for different observables.
-    
+
     Args:
         template_type: "y" for Compton-y, "tau" for opacity, "mu" for distance modulus
-        
+
     Returns:
         Predicted RMS amplitude
     """
@@ -242,64 +258,69 @@ def get_cgm_template_amplitude(template_type="y"):
 # AXIS ROTATION UTILITIES
 # =============================================================================
 
+
 def rotate_axis(axis, theta, phi):
     """
     Rotate axis by spherical angles (theta, phi).
-    
+
     Args:
         axis: Original axis vector
         theta: Colatitude (0 to π)
         phi: Longitude (0 to 2π)
-        
+
     Returns:
         Rotated axis vector
     """
     axis = unit(axis)
-    
+
     # Rotation matrix for rotation by theta around y-axis, then phi around z-axis
     cos_t, sin_t = np.cos(theta), np.sin(theta)
     cos_p, sin_p = np.cos(phi), np.sin(phi)
-    
+
     # R = Rz(φ) * Ry(θ)
-    R = np.array([
-        [cos_p * cos_t, -sin_p, cos_p * sin_t],
-        [sin_p * cos_t,  cos_p, sin_p * sin_t],
-        [-sin_t,         0,      cos_t]
-    ])
-    
+    R = np.array(
+        [
+            [cos_p * cos_t, -sin_p, cos_p * sin_t],
+            [sin_p * cos_t, cos_p, sin_p * sin_t],
+            [-sin_t, 0, cos_t],
+        ]
+    )
+
     return R @ axis
 
 
 def scan_axis_angles(n_theta=10, n_phi=20):
     """
     Generate a grid of axis angles for scanning.
-    
+
     Args:
         n_theta: Number of theta steps (0 to π)
         n_phi: Number of phi steps (0 to 2π)
-        
+
     Returns:
         Arrays of theta and phi values
     """
     thetas = np.linspace(0, np.pi, n_theta)
-    phis = np.linspace(0, 2*np.pi, n_phi)
+    phis = np.linspace(0, 2 * np.pi, n_phi)
     return thetas, phis
 
 
 def _fit_amp_masked(data_map, template_map, mask):
     """Fit amplitude using masked least squares."""
-    v = (mask > 0)
+    v = mask > 0
     t = template_map[v]
     d = data_map[v]
-    XtX = np.sum(t*t)
+    XtX = np.sum(t * t)
     if XtX <= 0 or d.size < 100:
         return 0.0, 0.0
-    A = np.sum(t*d) / XtX
+    A = np.sum(t * d) / XtX
     return float(A), float(XtX)
+
 
 def _template_map_healpix(nside, axis, a_polar, b_cubic):
     """Create template map on HEALPix grid for given axis."""
     import healpy as hp  # pyright: ignore[reportMissingImports]
+
     npix = 12 * nside * nside
     ipix = np.arange(npix)
     theta, phi = hp.pix2ang(nside, ipix)
@@ -307,15 +328,16 @@ def _template_map_healpix(nside, axis, a_polar, b_cubic):
     y = np.sin(theta) * np.sin(phi)
     z = np.cos(theta)
     ax, ay, az = unit(axis)
-    mu = np.clip(ax*x + ay*y + az*z, -1.0, 1.0)
-    P2_val = 0.5 * (3.0 * mu*mu - 1.0)
-    C4_val = (x**4 + y**4 + z**4) - 3.0/5.0
+    mu = np.clip(ax * x + ay * y + az * z, -1.0, 1.0)
+    P2_val = 0.5 * (3.0 * mu * mu - 1.0)
+    C4_val = (x**4 + y**4 + z**4) - 3.0 / 5.0
     t = a_polar * P2_val + b_cubic * C4_val
     return t.astype(np.float32)
 
+
 def _normalize_on_mask(tmap, mask):
     """Normalize template map to zero mean and unit RMS on masked sky."""
-    v = (mask > 0)
+    v = mask > 0
     if np.count_nonzero(v) < 100:
         return tmap
     tm = tmap[v].mean()
@@ -326,14 +348,22 @@ def _normalize_on_mask(tmap, mask):
         out = tmap - tm
     return out.astype(np.float32)
 
-def find_best_axis(y_map, mask, nside, a_polar=DEFAULT_A_POLAR, b_cubic=DEFAULT_B_CUBIC,
-                   n_theta=10, n_phi=20):
+
+def find_best_axis(
+    y_map,
+    mask,
+    nside,
+    a_polar=DEFAULT_A_POLAR,
+    b_cubic=DEFAULT_B_CUBIC,
+    n_theta=10,
+    n_phi=20,
+):
     """
     Pixel-space, masked axis scan that maximizes |amplitude| under the same estimator used downstream.
     Returns best axis and amplitude. No alm heuristics.
     """
     thetas = np.linspace(0, np.pi, n_theta)
-    phis = np.linspace(0, 2*np.pi, n_phi, endpoint=False)
+    phis = np.linspace(0, 2 * np.pi, n_phi, endpoint=False)
 
     best_amp = None
     best_axis = np.array([0.0, 0.0, 1.0])
@@ -341,10 +371,12 @@ def find_best_axis(y_map, mask, nside, a_polar=DEFAULT_A_POLAR, b_cubic=DEFAULT_
     best_phi = 0.0
 
     for t in thetas:
-        st = np.sin(t); ct = np.cos(t)
+        st = np.sin(t)
+        ct = np.cos(t)
         for p in phis:
-            cp = np.cos(p); sp = np.sin(p)
-            axis = np.array([st*cp, st*sp, ct], dtype=float)
+            cp = np.cos(p)
+            sp = np.sin(p)
+            axis = np.array([st * cp, st * sp, ct], dtype=float)
             tmap = _template_map_healpix(nside, axis, a_polar, b_cubic)
             # Don't normalize - keep original scale
             A, _ = _fit_amp_masked(y_map, tmap, mask)
@@ -370,17 +402,21 @@ def rotate_alm_3d(alm, theta, phi, psi):
     This heuristic alm rotation is not rigorous.
     """
     import warnings
-    warnings.warn("rotate_alm_3d is deprecated; use pixel-space scanning.", DeprecationWarning)
+
+    warnings.warn(
+        "rotate_alm_3d is deprecated; use pixel-space scanning.", DeprecationWarning
+    )
     # Return unchanged alm to avoid breaking existing code
     return alm.copy()
 
 
-def project_P2_C4_healpix(y_map, mask, nside, axis=(0,0,1)):
+def project_P2_C4_healpix(y_map, mask, nside, axis=(0, 0, 1)):
     """
     Project a HEALPix y_map onto the CGM basis P2 (about axis) and C4 on the masked sky.
     Returns coefficients and fractional power.
     """
     import healpy as hp  # pyright: ignore[reportMissingImports]
+
     npix = 12 * nside * nside
     ipix = np.arange(npix)
     theta, phi = hp.pix2ang(nside, ipix)
@@ -389,11 +425,12 @@ def project_P2_C4_healpix(y_map, mask, nside, axis=(0,0,1)):
     z = np.cos(theta)
 
     ax, ay, az = unit(axis)
-    mu = np.clip(ax*x + ay*y + az*z, -1.0, 1.0)
-    P2_map = 0.5 * (3.0 * mu*mu - 1.0)
-    C4_map = (x**4 + y**4 + z**4) - 3.0/5.0
+    mu = np.clip(ax * x + ay * y + az * z, -1.0, 1.0)
+    P2_map = 0.5 * (3.0 * mu * mu - 1.0)
+    C4_map = (x**4 + y**4 + z**4) - 3.0 / 5.0
 
-    v = (mask > 0)
+    v = mask > 0
+
     # remove masked mean
     def demean(m):
         mv = m[v]
@@ -405,7 +442,7 @@ def project_P2_C4_healpix(y_map, mask, nside, axis=(0,0,1)):
 
     # normalize basis on masked sky
     def norm(m):
-        return np.sqrt(np.sum((m[v])**2))
+        return np.sqrt(np.sum((m[v]) ** 2))
 
     P2n = P2m / (norm(P2m) + 1e-30)
     C4n = C4m / (norm(C4m) + 1e-30)
@@ -420,5 +457,3 @@ def project_P2_C4_healpix(y_map, mask, nside, axis=(0,0,1)):
         "frac_power_P2": abs(a2) / tot,
         "frac_power_C4": abs(a4) / tot,
     }
-
-

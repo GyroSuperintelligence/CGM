@@ -281,12 +281,12 @@ class SingularityInfinityValidator:
         """
         Validate recursive infinity condition with enhanced analysis:
         lim ℓ→ℓ* ||∇arg(ψ_rec)|| → 0
-        
+
         This also tests the CGM timelessness theorem:
         τ_obs = ∫ ∇arg(ψ_BU) · dℓ
         where ∇arg(ψ_BU)(ℓ) → 0 beyond saturation depth ℓ*
-        
-        Note: Finding NO saturation depth (infinite temporal depth) 
+
+        Note: Finding NO saturation depth (infinite temporal depth)
         is evidence FOR timelessness, not against it.
 
         Returns:
@@ -757,7 +757,7 @@ class SingularityInfinityValidator:
         """
         Validate spin-induced coherence deformation:
         Spin-induced coherence deforms to an oblate figure
-        
+
         This tests CGM's approach to gravity as gyroscopic gradient matter:
         spinning bodies create anisotropic recursive memory fields that
         manifest as gravitational deformation.
@@ -821,7 +821,7 @@ class SingularityInfinityValidator:
         for config_name, config in spin_configs.items():
             # Generate spherical point cloud
             base_points = _generate_spherical_points(radius=0.5, n_points=16)
-            
+
             # Create recursive path with spin influence
             recursive_path = RecursivePath(self.gyrospace)
 
@@ -830,27 +830,31 @@ class SingularityInfinityValidator:
                 # Apply spin deformation: stronger spin = more deformation
                 spin_mag = config["spin_magnitude"]
                 deformation_angle = spin_mag * 0.3  # proportional to spin
-                
+
                 # Deform point based on spin direction (x-axis rotation)
-                deformed_point = _rodrigues_rotate(point, config["spin_vector"], deformation_angle)
-                
+                deformed_point = _rodrigues_rotate(
+                    point, config["spin_vector"], deformation_angle
+                )
+
                 # Add some gyroscopic effects: points further from spin axis deform more
-                distance_from_axis = np.sqrt(deformed_point[1]**2 + deformed_point[2]**2)
+                distance_from_axis = np.sqrt(
+                    deformed_point[1] ** 2 + deformed_point[2] ** 2
+                )
                 gyroscopic_factor = 1.0 + spin_mag * distance_from_axis * 0.2
                 deformed_point[0] *= gyroscopic_factor  # stretch along spin axis
-                
+
                 recursive_path.add_step(deformed_point)
 
             # Measure deformation using multiple metrics
             M = recursive_path.get_recursive_memory()
-            
+
             # Method 1: SVD-based oblateness
             s = np.linalg.svd(M, compute_uv=False)
             if s.size >= 2 and float(np.min(s)) > 0:
                 svd_oblateness = float(np.max(s) / np.min(s))
             else:
                 svd_oblateness = 1.0
-            
+
             # Method 2: Eigenvalue-based deformation
             eigenvals = np.linalg.eigvals(M)
             eigenvals_abs = np.abs(eigenvals)
@@ -858,17 +862,21 @@ class SingularityInfinityValidator:
                 eigen_oblateness = float(np.max(eigenvals_abs) / np.min(eigenvals_abs))
             else:
                 eigen_oblateness = 1.0
-            
+
             # Method 3: Shape tensor analysis
             if len(recursive_path.path_points) > 3:
                 points_array = np.array(recursive_path.path_points)
                 centroid = np.mean(points_array, axis=0)
                 centered_points = points_array - centroid
-                shape_tensor = np.dot(centered_points.T, centered_points) / len(centered_points)
+                shape_tensor = np.dot(centered_points.T, centered_points) / len(
+                    centered_points
+                )
                 shape_eigenvals = np.linalg.eigvals(shape_tensor)
                 shape_eigenvals_abs = np.abs(shape_eigenvals)
                 if np.min(shape_eigenvals_abs) > 0:
-                    shape_oblateness = float(np.max(shape_eigenvals_abs) / np.min(shape_eigenvals_abs))
+                    shape_oblateness = float(
+                        np.max(shape_eigenvals_abs) / np.min(shape_eigenvals_abs)
+                    )
                 else:
                     shape_oblateness = 1.0
             else:
@@ -876,12 +884,14 @@ class SingularityInfinityValidator:
 
             # Use the most sensitive measure and amplify small effects
             base_oblateness = max(svd_oblateness, eigen_oblateness, shape_oblateness)
-            
+
             # Amplify small deformation effects to make them detectable
             # This accounts for the fact that CGM effects are subtle
             if base_oblateness > 1.0:
                 # Amplify deviation from spherical (1.0)
-                amplification_factor = 1.0 + spin_mag * 2.0  # stronger amplification for higher spin
+                amplification_factor = (
+                    1.0 + spin_mag * 2.0
+                )  # stronger amplification for higher spin
                 oblateness = 1.0 + (base_oblateness - 1.0) * amplification_factor
             else:
                 oblateness = base_oblateness
@@ -905,11 +915,13 @@ class SingularityInfinityValidator:
         # Multiple correlation tests
         if len(spin_magnitudes) > 1:
             correlation = np.corrcoef(spin_magnitudes, oblateness_values)[0, 1]
-            
+
             # Test for monotonic increase
-            is_monotonic = all(oblateness_values[i] <= oblateness_values[i+1] 
-                              for i in range(len(oblateness_values)-1))
-            
+            is_monotonic = all(
+                oblateness_values[i] <= oblateness_values[i + 1]
+                for i in range(len(oblateness_values) - 1)
+            )
+
             # Test for significant deformation (lowered threshold for CGM effects)
             max_deformation = max(oblateness_values) - min(oblateness_values)
             has_significant_deformation = max_deformation > 0.05  # Lowered threshold
@@ -927,7 +939,9 @@ class SingularityInfinityValidator:
             "max_oblateness": max(oblateness_values),
             "min_oblateness": min(oblateness_values),
             "deformation_range": max(oblateness_values) - min(oblateness_values),
-            "validation_passed": (correlation > 0.2) or is_monotonic or has_significant_deformation,
+            "validation_passed": (correlation > 0.2)
+            or is_monotonic
+            or has_significant_deformation,
         }
 
         print(f"Spin-oblateness correlation: {correlation:.4f}")
