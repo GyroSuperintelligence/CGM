@@ -184,7 +184,7 @@ class CGMDataManager:
         print("Preprocessing Planck data (fast mode)...")
         try:
             import healpy as hp  # pyright: ignore[reportMissingImports]
-            import astropy.io.fits as fits
+            import astropy.io.fits as fits  # pyright: ignore[reportMissingImports]
             from typing import Any
 
             t1 = time.perf_counter()

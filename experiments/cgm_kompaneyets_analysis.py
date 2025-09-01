@@ -686,7 +686,7 @@ class CGMKompaneyetsAnalyzer:
             if not os.path.exists(milca_file):
                 raise FileNotFoundError(f"MILCA y-maps not found at {milca_file}")
 
-            from astropy.io import fits
+            from astropy.io import fits  # pyright: ignore[reportMissingImports]
 
             with fits.open(milca_file, memmap=True) as milca_hdu:
                 # Extract y-maps (these are real Planck thermal SZ measurements)
