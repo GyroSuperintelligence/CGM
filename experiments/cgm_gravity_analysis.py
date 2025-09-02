@@ -18,13 +18,11 @@ from typing import Dict, Any, List, Tuple
 import sys
 import os
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from experiments.functions.gyrovector_ops import GyroVectorSpace
-from experiments.functions.gyrogeometry import ThomasWignerRotation
-from experiments.functions.dimensions import DimensionalCalibrator, DimVec
-from experiments.tw_closure_test import TWClosureTester
+# Using relative imports
+from .functions.gyrovector_ops import GyroVectorSpace
+from .functions.gyrogeometry import ThomasWignerRotation
+from .functions.dimensions import DimensionalCalibrator, DimVec
+from .tw_closure_test import TWClosureTester
 
 
 def compute_ladder_based_kappa(

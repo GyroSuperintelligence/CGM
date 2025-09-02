@@ -8,11 +8,9 @@ non-associativity cancels globally while recursive memory is preserved.
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import numpy as np
 from typing import Dict, Any, Tuple
-from functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from ..functions.gyrovector_ops import GyroVectorSpace, RecursivePath
 
 
 class BUStage:

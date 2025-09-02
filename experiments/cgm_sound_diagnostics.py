@@ -18,10 +18,8 @@ from scipy.integrate import quad
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from experiments.functions.gyrovector_ops import GyroVectorSpace
-from experiments.functions.torus import tau_from_template, unit
+from .functions.gyrovector_ops import GyroVectorSpace
+from .functions.torus import tau_from_template, unit
 
 
 class CGMAcousticDiagnostics:
@@ -130,16 +128,21 @@ class CGMAcousticDiagnostics:
         )
 
     def coherence_length(self, z_min: float, z_max: float) -> float:
-        """Sound horizon integrated over visibility window (Mpc)."""
-        # Use standard value for sound horizon at recombination
-        # r_s ≈ 147 Mpc for ΛCDM with current parameters
-        # This is well-established from CMB observations
+        """
+        Comoving sound horizon r_s(z_drag) = ∫_{z_drag}^{∞} c_s(z)/H(z) dz  (in Mpc)
+        We integrate up to z=1e6 as a practical ∞.
+        """
+        z_drag = self.z_drag
 
-        # For more accurate calculation, integrate sound speed over conformal time
-        # but for now use the standard value
-        r_s_standard = 147.0  # Mpc
+        def integrand(z):
+            R = self.baryon_to_photon_ratio(z)
+            c_s = self.c / np.sqrt(3.0 * (1.0 + R))
+            return c_s / self.hubble_parameter(z)  # m / (1/s) = m*s
 
-        return r_s_standard
+        upper = 1.0e6
+        val, _ = quad(integrand, z_drag, upper)
+        # convert meters to Mpc
+        return val / 3.086e22
 
     def test_sound_speed_consistency(self) -> Dict[str, Any]:
         """Test whether CGM can reach the cosmological sound speed target."""
@@ -170,23 +173,15 @@ class CGMAcousticDiagnostics:
         }
 
     def angular_diameter_distance(self, z: float) -> float:
-        """Angular diameter distance D_A in Mpc."""
-        # Use standard value for angular diameter distance to last scattering
-        # D_A ≈ 14 Gpc for z = 1100 with current cosmological parameters
+        """
+        D_A(z) = (1/(1+z)) ∫_0^z c/H(z') dz'  (in Mpc)
+        """
 
-        if z == self.z_rec:  # Last scattering surface
-            D_A_standard = 14000.0  # Mpc ≈ 14 Gpc
-        else:
-            # For other redshifts, use simplified calculation
-            def integrand(z_prime):
-                return 1 / self.hubble_parameter(z_prime)
+        def integrand(zp):
+            return self.c / self.hubble_parameter(zp)
 
-            D_H, _ = quad(integrand, 0, z)
-            D_H = D_H * self.c / (3.086e22)  # Convert to Mpc
-            D_A = D_H / (1 + z)
-            return D_A
-
-        return D_A_standard
+        I, _ = quad(integrand, 0.0, z)
+        return (I / (1.0 + z)) / 3.086e22
 
     # ========== CGM Gyration Mapping ==========
 

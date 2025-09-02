@@ -263,7 +263,7 @@ That is why we can mark the 8-fold toroidal kernel as a real breakthrough: it mo
 * **Toroidal holonomy deficit**: 0.863 rad (persistent invariant across all analyses)
 * **BU dual-pole monodromy**: δ_BU = 0.195 rad ≈ m_p (97.9% agreement)
 * **Anatomical TW ratio**: χ = 1.169539 ± 0.246470 with 21.1% variation
-* **Interpretation**: χ variation indicates incomplete toroidal closure, system still in emergence phase
+* **Interpretation**: χ variation indicates surplus toroidal closure, system still in emergence phase
 
 ---
 

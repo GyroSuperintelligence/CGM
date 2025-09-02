@@ -153,7 +153,7 @@ Force = -∇(monodromy) × (closure_amplitude)²
 ```
 
 ### 4. The Intelligence Connection
-If gravity = incomplete recursion toward coherence, then:
+If gravity = surplus recursion toward coherence, then:
 - Intelligence = system's ability to reduce monodromy
 - Consciousness = local BU node (observer function)
 - Learning = reducing defect δ toward closure

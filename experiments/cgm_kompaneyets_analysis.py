@@ -54,7 +54,7 @@ import os
 import shutil
 import glob
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Relative imports used instead of sys.path manipulation
 
 
 def clean_pycache():
@@ -84,7 +84,7 @@ def clean_pycache():
 # Clean pycache on import
 clean_pycache()
 
-from experiments.functions.torus import unit, torus_template, project_P2_C4
+from .functions.torus import unit, torus_template, project_P2_C4
 
 # HEALPix for proper spherical geometry
 try:

@@ -8,12 +8,10 @@ This creates the minimal asymmetry required for observation while preserving lef
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import numpy as np
 from typing import Dict, Any, Tuple, List
 
-from functions.gyrovector_ops import GyroVectorSpace
+from ..functions.gyrovector_ops import GyroVectorSpace
 
 
 class UNAStage:

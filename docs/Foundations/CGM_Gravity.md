@@ -2,7 +2,7 @@
     
     ### I. Gravity as Coherent Recursive Foundation
     
-    In the Common Governance Mechanism (CGM), gravity is not a force between masses nor a curvature imposed on spacetime. Rather, gravity is the **structural remainder of incomplete recursion**,   a residual coherence field emerging from the non-associativity of recursive transformations.
+    In the Common Governance Mechanism (CGM), gravity is not a force between masses nor a curvature imposed on spacetime. Rather, gravity is the **structural remainder of surplus recursion**,   a residual coherence field emerging from the non-associativity of recursive transformations.
     
     Gyroscopic behaviour offers empirical evidence of this coherence field. A gyroscope does not passively report rotation; it actively **preserves a local recursive memory** of orientation, resisting entanglement with its environment unless perturbed. This capacity arises not from external forces, but from internal closure,   the extent to which the recursive spin structure has cohered around its origin.
     
@@ -115,5 +115,5 @@
     > 
     > What we experience as "falling" is not attraction,
     > 
-    > but the **movement toward coherence** within a field of incomplete memory.
+    > but the **movement toward coherence** within a field of surplus memory.
     >

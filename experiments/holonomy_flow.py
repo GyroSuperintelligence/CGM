@@ -11,11 +11,12 @@ from typing import Dict, Any, List
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from experiments.functions.gyrovector_ops import GyroVectorSpace
-from experiments.tw_closure_test import TWClosureTester
-from experiments.helical_memory_analyzer import HelicalMemoryAnalyzer
+# Use absolute imports with path setup
+if os.path.dirname(os.path.abspath(__file__)) not in sys.path:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from functions.gyrovector_ops import GyroVectorSpace
+from tw_closure_test import TWClosureTester
+from helical_memory_analyzer import HelicalMemoryAnalyzer
 
 
 def run_holonomy_flow(depths: List[int] = [20, 40, 80, 160]) -> List[Dict[str, Any]]:
@@ -37,16 +38,18 @@ def run_holonomy_flow(depths: List[int] = [20, 40, 80, 160]) -> List[Dict[str, A
         print(f"Testing depth N = {N}")
         print("-" * 30)
 
-        # χ from canonical configs, but re-seed the RNG by N for reproducibility
-        np.random.seed(N)
-
-        # Get results without verbose output
-        chi = tw.compute_anatomical_tw_ratio(verbose=False)
-        hol = tw.test_toroidal_holonomy(verbose=False)
+        # χ should reflect sampling at this depth; use seed=N and scale sample count.
+        chi = tw.compute_anatomical_tw_ratio(
+            verbose=False, seed=N, n_samples=max(50, N // 2)
+        )
+        # Holonomy deficit on the canonical loop is depth-invariant; if you need a
+        # flow-like metric, use the 8-leg path (still canonical) and track signed deviation.
+        hol = tw.test_toroidal_holonomy_fullpath(verbose=False)
 
         # BU/ψ from helical analyzer (now SU(2)-based)
+        # Pass depth parameter to make helical analysis depth-dependent
         ana = HelicalMemoryAnalyzer(gs)
-        res = ana.analyze_helical_memory_structure(verbose=False)
+        res = ana.analyze_helical_memory_structure(verbose=False, depth_param=N)
         psi = res["psi_bu_field"]
 
         result = {
@@ -103,6 +106,18 @@ def run_holonomy_flow(depths: List[int] = [20, 40, 80, 160]) -> List[Dict[str, A
 
 
 if __name__ == "__main__":
+    # Debug test first
+    print("DEBUG TEST:")
+    gs = GyroVectorSpace(c=1.0)
+    tw = TWClosureTester(gs)
+
+    for depth in [20, 40, 80, 160]:
+        print(f"\nTesting depth {depth}:")
+        result = tw.test_toroidal_holonomy(verbose=False, depth_param=depth)
+        print(f"  Deviation: {result['deviation']:.6f}")
+
+    print("\n" + "=" * 50)
+    print("FULL ANALYSIS:")
     rows = run_holonomy_flow()
     print("\nSUMMARY TABLE:")
     print("Depth | χ_mean | χ_CV | Holonomy | Coherence | Residual | Pitch")

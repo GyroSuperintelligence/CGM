@@ -8,11 +8,9 @@ CS is freedom itself - not mere potential but the active source of parity violat
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import numpy as np
 from typing import Dict, Any
-from functions.gyrovector_ops import GyroVectorSpace
+from ..functions.gyrovector_ops import GyroVectorSpace
 
 
 class CSStage:

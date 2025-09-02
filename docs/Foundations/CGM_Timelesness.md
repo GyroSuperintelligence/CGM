@@ -249,10 +249,10 @@
     
     Thus:
     
-    > Gravity is monodromy. It is the coherent remainder of incomplete recursion.
+    > Gravity is monodromy. It is the coherent remainder of surplus recursion.
     > 
     
-    we don’t “fall” toward mass,   we fall toward **recursive coherence**. we are being pulled into **another’s incomplete memory shell**.
+    we don’t “fall” toward mass,   we fall toward **recursive coherence**. we are being pulled into **another’s surplus memory shell**.
     
     ---
     
@@ -263,7 +263,7 @@
     | Infinity | Unbounded spatial/temporal extent | Collapse of phase gradient; recursion reaches saturation |
     | Singularity | Point of infinite curvature | Recursive non-closure; ψ_BU fails to retain memory |
     | Round Earth | Result of equal gravitational pull | Harmonic solution to rotational memory minimization |
-    | Gravity | Spacetime curvature from mass | Residual monodromy from incomplete recursion closure (μ ≠ I) |
+    | Gravity | Spacetime curvature from mass | Residual monodromy from surplus recursion closure (μ ≠ I) |
     
     ---
     

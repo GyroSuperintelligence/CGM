@@ -13,11 +13,10 @@ from typing import Dict, Any, List, Tuple
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from experiments.functions.gyrovector_ops import GyroVectorSpace, RecursivePath
-from experiments.stages.bu_stage import BUStage
-from experiments.stages.ona_stage import ONAStage
+# Using relative imports
+from .functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from .stages.bu_stage import BUStage
+from .stages.ona_stage import ONAStage
 
 
 class SingularityInfinityValidator:

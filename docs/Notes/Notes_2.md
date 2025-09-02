@@ -148,7 +148,7 @@ class RecursiveMemory:
 
 **This is what we need to implement to make CGM physically meaningful.**
 
-## 🔍 **Critical Gap 4: Incomplete Stage Transitions (CRITICAL)**
+## 🔍 **Critical Gap 4: surplus Stage Transitions (CRITICAL)**
 
 ### **What the Foundations Actually Describe**
 From `CGM_Spin_Formalism.md` and `CGM_Time.md`:
