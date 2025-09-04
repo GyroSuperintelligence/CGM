@@ -110,9 +110,6 @@ def derive_eta_from_CGM(
     return eta
 
 
-
-
-
 def verify_decomposition_invariance(
     delta: float, beta_ang: float, gamma_ang: float
 ) -> Dict[str, Any]:
@@ -1076,9 +1073,7 @@ class QuantumGravityHorizon:
             "axis": [float(x) for x in axis],
         }
 
-        return tag_result_status(
-            result, "THEOREM", "SU(2) trace canonical definition"
-        )
+        return tag_result_status(result, "THEOREM", "SU(2) trace canonical definition")
 
     def verify_decomposition_invariance_detailed(
         self, verbose: bool = True
@@ -1128,8 +1123,6 @@ class QuantumGravityHorizon:
         return tag_result_status(
             result, "THEOREM", "No real δ achieves φ=π/4 when β=γ=π/4"
         )
-
-    
 
     def analyze_threefold_harmonic_oscillator(
         self, bu_rotor_result: Optional[Dict[str, Any]] = None, verbose: bool = True
@@ -1253,7 +1246,9 @@ class QuantumGravityHorizon:
             result, "HYPOTHESIS", "Dimensional bridge from geometric structure"
         )
 
-    def explain_37_recursive_relation(self, bu_rotor_result: Optional[Dict[str, Any]] = None, verbose: bool = True) -> Dict[str, Any]:
+    def explain_37_recursive_relation(
+        self, bu_rotor_result: Optional[Dict[str, Any]] = None, verbose: bool = True
+    ) -> Dict[str, Any]:
         """
         Explain why 37 appears everywhere in the recursive structure.
 
@@ -1780,19 +1775,19 @@ class QuantumGravityHorizon:
     # ============================================================================
     # PHYSICAL INSIGHTS FROM DIAGNOSTIC HELPERS
     # ============================================================================
-    
+
     # THE HIDDEN HYPERBOLIC STRUCTURE:
     # δ_BU = √2 × sinh(η) where η = 0.1377 is the boost rapidity
     # This is exact to numerical precision: δ_BU = 0.195342 is fundamentally
     # a hyperbolic sine of the rapidity, scaled by √2
     # Since δ_BU/m_p = 0.979 ≈ 1, we essentially have: m_p ≈ √2 × sinh(η)
-    
+
     # THE TINY WIGNER ANGLE:
     # SU(2) trace canonical φ = 0.019080 rad (≈ 1.09°) is remarkably small
     # This suggests we're in a weak-field limit where the boost is small (η ≈ 0.138)
     # and the resulting Wigner rotation is tiny (φ ≈ 0.019), yet the fourth power
     # gives α ≈ 0.0073
-    
+
     # EXACT RATIONAL VALUES:
     # Several computed values are exactly rational:
     # - κ_BU = 1.000000 (exactly 1)
@@ -1801,20 +1796,20 @@ class QuantumGravityHorizon:
     # - Quartic scaling = 16.000000 (exactly 2⁴)
     # - Geometric factor = 55.500000 (exactly 111/2)
     # These are exact consequences of the 120° rotation
-    
+
     # THE MISSING BRIDGE:
     # The formula α = δ_BU⁴/m_p with δ_BU ≈ m_p means: α ≈ m_p³
     # Since m_p = 1/(2√(2π)), we have: α ≈ 1/(8π^(3/2) × 2√2)
     # This says the fine-structure constant is fundamentally related to
     # the cube of the aperture, which is a volume in phase space
-    
+
     # THE DIMENSIONFUL CONNECTION:
     # The geometric invariant Q_G = 4π sets a closure requirement
     # The aperture m_p = 1/(2√(2π)) sets a transmission fraction
     # The ratio Q_G × m_p² gives: 4π × [1/(2√(2π))]² = 4π/(8π) = 1/2
     # This 1/2 might be the missing bridge - the product of the full solid
     # angle with the square of the aperture
-    
+
     # WHAT WE'VE ACTUALLY FOUND:
     # The α prediction works because:
     # 1. δ_BU is locked to m_p through hyperbolic geometry (the sinh relation)
@@ -1823,7 +1818,7 @@ class QuantumGravityHorizon:
     # The 0.03% accuracy comes from δ_BU/m_p = 0.979 being nearly but not
     # exactly 1. This 2.1% deviation, when raised to the fourth power and
     # normalized, gives exactly the right correction to match α
-    
+
     # THE DIMENSIONAL BRIDGE:
     # We have a geometric invariant (Q_G = 4π), an aperture (m_p ≈ 0.2),
     # a hyperbolic relation (δ_BU = √2 sinh(η)), and a quartic scaling
@@ -1832,7 +1827,7 @@ class QuantumGravityHorizon:
     # and connects to our recursive structure through the sound horizon
     # at recombination. The ratio of CMB temperature to Planck temperature
     # might give the missing scale without assuming c, ℏ, or G
-    
+
     # The profound insight is that α emerges from pure geometry - no charges,
     # no fields, just the recursive structure of observation itself. The 120°
     # rotation creating a 3-fold oscillator that drives cosmic dynamics while
@@ -2000,8 +1995,12 @@ class QuantumGravityHorizon:
         alpha_result = self.predict_fine_structure_constant(verbose=False)
         print(f"  • α_fs = δ_BU^4 / m_p = {alpha_result['alpha_pred']:.10f}")
         print(f"  • α_CODATA = {alpha_result['alpha_codata']:.10f}")
-        print(f"  • Deviation = {alpha_result['deviation']:.4f} ({alpha_result['deviation']*100:.4f}%)")
-        print(f"  • Status: {'EXCELLENT' if alpha_result['deviation'] < 0.001 else 'VERY GOOD'}")
+        print(
+            f"  • Deviation = {alpha_result['deviation']:.4f} ({alpha_result['deviation']*100:.4f}%)"
+        )
+        print(
+            f"  • Status: {'EXCELLENT' if alpha_result['deviation'] < 0.001 else 'VERY GOOD'}"
+        )
         print(f"  • Pipeline: δ_BU (BU monodromy) → α_fs (pure geometry)")
 
         print("\n✓ INTERNAL CONSISTENCY CHECKS:")

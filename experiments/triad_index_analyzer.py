@@ -26,7 +26,8 @@ try:
 except ImportError:
     # Fallback for standalone execution
     from helical_memory_analyzer import HelicalMemoryAnalyzer
-    sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'functions'))
+
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), "functions"))
     from functions.gyrovector_ops import GyroVectorSpace
 
 import numpy as np
@@ -353,7 +354,7 @@ class TriadIndexAnalyzer:
         # Additional validation: ensure scales are positive and finite
         scales = [La, Lb, Lc]
         for i, scale in enumerate(scales):
-            if not (0 < scale < float('inf')):
+            if not (0 < scale < float("inf")):
                 error_msg = f"INVALID SCALE in '{name}' (domain: {domain})\n"
                 error_msg += f"  Scale {['La', 'Lb', 'Lc'][i]} = {scale} is not positive and finite\n"
                 print(f"❌ {error_msg}")
@@ -509,11 +510,15 @@ class TriadIndexAnalyzer:
             ]
 
             if len(domain_triads) < 3:
-                print(f"\n⚠️  {domain_name} domain: Only {len(domain_triads)} triads (< 3 minimum)")
+                print(
+                    f"\n⚠️  {domain_name} domain: Only {len(domain_triads)} triads (< 3 minimum)"
+                )
                 print("   Skipping - insufficient data for falsifiable fit")
                 continue
 
-            print(f"\n🎯 Fitting TW parameters for {domain_name} domain ({len(domain_triads)} triads):")
+            print(
+                f"\n🎯 Fitting TW parameters for {domain_name} domain ({len(domain_triads)} triads):"
+            )
 
             # CONSTRAINTS BASED ON THEORY
             if domain_name == "photon":
@@ -523,7 +528,9 @@ class TriadIndexAnalyzer:
                 print("   Constraint: γ=1 (fixed by photon transversality)")
             else:
                 gamma_fixed = False
-                gamma_values = np.geomspace(1e-2, 1e1, 12)  # Positive scale factors only (0.01 to 10)
+                gamma_values = np.geomspace(
+                    1e-2, 1e1, 12
+                )  # Positive scale factors only (0.01 to 10)
 
             # Physically motivated parameter ranges
             k_values = np.geomspace(1e-2, 1e1, 15)  # Rapidity scale: 0.01 to 10
@@ -531,12 +538,14 @@ class TriadIndexAnalyzer:
             # Angular constraints based on boost geometry
             if domain_name == "photon":
                 # Photon domain should have θ near π/4 (CGM universal angle)
-                theta_values = np.linspace(np.pi/6, np.pi/2, 12)  # 30° to 90°
+                theta_values = np.linspace(np.pi / 6, np.pi / 2, 12)  # 30° to 90°
             else:
                 theta_values = np.linspace(0.1, np.pi - 0.1, 18)  # 0.1 to ~3.04 rad
 
-            print(f"   Parameter ranges: k∈[{k_values[0]:.3f}, {k_values[-1]:.3f}], "
-                  f"θ∈[{np.degrees(theta_values[0]):.1f}°, {np.degrees(theta_values[-1]):.1f}°]")
+            print(
+                f"   Parameter ranges: k∈[{k_values[0]:.3f}, {k_values[-1]:.3f}], "
+                f"θ∈[{np.degrees(theta_values[0]):.1f}°, {np.degrees(theta_values[-1]):.1f}°]"
+            )
             if not gamma_fixed:
                 print(f"   γ∈[{gamma_values[0]:.3f}, {gamma_values[-1]:.3f}]")
 
@@ -549,12 +558,16 @@ class TriadIndexAnalyzer:
             for fold in range(n_folds):
                 # Split data for this fold
                 test_start = fold * fold_size
-                test_end = (fold + 1) * fold_size if fold < n_folds - 1 else len(domain_triads)
+                test_end = (
+                    (fold + 1) * fold_size if fold < n_folds - 1 else len(domain_triads)
+                )
 
                 test_triads = domain_triads[test_start:test_end]
                 train_triads = domain_triads[:test_start] + domain_triads[test_end:]
 
-                print(f"   CV fold {fold+1}/{n_folds}: {len(train_triads)} train, {len(test_triads)} test")
+                print(
+                    f"   CV fold {fold+1}/{n_folds}: {len(train_triads)} train, {len(test_triads)} test"
+                )
 
                 # Fit on training data
                 fold_best_err = float("inf")
@@ -569,7 +582,9 @@ class TriadIndexAnalyzer:
                                 m, n = triad["best_mn"]
                                 delta_actual = triad["delta_dom"]
 
-                                omega_tw = compute_tw_holonomy(m, n, k, theta, signed=True)
+                                omega_tw = compute_tw_holonomy(
+                                    m, n, k, theta, signed=True
+                                )
                                 delta_predicted = gamma * omega_tw
 
                                 train_err += abs(delta_actual - delta_predicted)
@@ -592,12 +607,14 @@ class TriadIndexAnalyzer:
 
                         test_err += abs(delta_actual - delta_predicted)
 
-                    cv_results.append({
-                        "fold": fold,
-                        "params": fold_best_params,
-                        "train_err": fold_best_err,
-                        "test_err": test_err
-                    })
+                    cv_results.append(
+                        {
+                            "fold": fold,
+                            "params": fold_best_params,
+                            "train_err": fold_best_err,
+                            "test_err": test_err,
+                        }
+                    )
 
             # ANALYZE CV RESULTS
             if cv_results:
@@ -614,34 +631,42 @@ class TriadIndexAnalyzer:
                 std_test_err = np.std(test_errors)
 
                 # Statistical significance test
-                overfitting_ratio = avg_test_err / avg_train_err if avg_train_err > 0 else float("inf")
+                overfitting_ratio = (
+                    avg_test_err / avg_train_err if avg_train_err > 0 else float("inf")
+                )
 
                 # Store results
-                domain_data.update({
-                    "k": k,
-                    "theta_dom": theta,
-                    "gamma_dom": gamma,
-                    "cv_stats": {
-                        "n_folds": n_folds,
-                        "avg_train_err": avg_train_err,
-                        "avg_test_err": avg_test_err,
-                        "std_test_err": std_test_err,
-                        "overfitting_ratio": overfitting_ratio
+                domain_data.update(
+                    {
+                        "k": k,
+                        "theta_dom": theta,
+                        "gamma_dom": gamma,
+                        "cv_stats": {
+                            "n_folds": n_folds,
+                            "avg_train_err": avg_train_err,
+                            "avg_test_err": avg_test_err,
+                            "std_test_err": std_test_err,
+                            "overfitting_ratio": overfitting_ratio,
+                        },
                     }
-                })
+                )
 
                 print(f"\n  ✅ FITTED PARAMETERS (best CV fold):")
                 print(f"    k = {k:.4f}")
                 print(f"    θ_dom = {theta:.4f} rad ({np.degrees(theta):.2f}°)")
                 print(f"    γ_dom = {gamma:.4f}")
                 print(f"\n  📊 CROSS-VALIDATION STATISTICS:")
-                print(f"    Training error: {avg_train_err:.6f} ± {np.std(train_errors):.6f}")
+                print(
+                    f"    Training error: {avg_train_err:.6f} ± {np.std(train_errors):.6f}"
+                )
                 print(f"    Test error: {avg_test_err:.6f} ± {std_test_err:.6f}")
                 print(f"    Overfitting ratio: {overfitting_ratio:.3f}")
 
                 # Falsifiability assessment
                 if overfitting_ratio > 2.0:
-                    print("    ⚠️  WARNING: High overfitting ratio - model may not generalize")
+                    print(
+                        "    ⚠️  WARNING: High overfitting ratio - model may not generalize"
+                    )
                 elif std_test_err / avg_test_err > 0.5:
                     print("    ⚠️  WARNING: High variance across folds - unstable fit")
                 else:
@@ -658,8 +683,12 @@ class TriadIndexAnalyzer:
 
                     total_err += abs(delta_actual - delta_predicted)
 
-                print(f"    Final fit on all {len(domain_triads)} triads: {total_err:.6f}")
-                print(f"    RMS error per triad: {np.sqrt(total_err / len(domain_triads)):.6f}")
+                print(
+                    f"    Final fit on all {len(domain_triads)} triads: {total_err:.6f}"
+                )
+                print(
+                    f"    RMS error per triad: {np.sqrt(total_err / len(domain_triads)):.6f}"
+                )
 
             else:
                 print("   ❌ No valid CV results - fitting failed")
@@ -863,10 +892,13 @@ class TriadIndexAnalyzer:
         except Exception as e:
             print(f"DEBUG: Exception in Ly-α triad: {e}")
             import traceback
+
             traceback.print_exc()
 
         if "error" not in lya_photon_triad:
-            print(f"   LSI: {lya_photon_triad['LSI']:.3f} ≈ {lya_photon_triad['LSI_rational']}")
+            print(
+                f"   LSI: {lya_photon_triad['LSI']:.3f} ≈ {lya_photon_triad['LSI_rational']}"
+            )
             print(
                 f"   Integer purity: |LSI - p/q| = {abs(lya_photon_triad['LSI'] - lya_photon_triad['LSI_rational_value']):.6f}"
             )
@@ -894,7 +926,9 @@ class TriadIndexAnalyzer:
         reports.append(ndyag_photon_triad)
 
         if "error" not in ndyag_photon_triad:
-            print(f"   LSI: {ndyag_photon_triad['LSI']:.3f} ≈ {ndyag_photon_triad['LSI_rational']}")
+            print(
+                f"   LSI: {ndyag_photon_triad['LSI']:.3f} ≈ {ndyag_photon_triad['LSI_rational']}"
+            )
             print(
                 f"   Integer purity: |LSI - p/q| = {abs(ndyag_photon_triad['LSI'] - ndyag_photon_triad['LSI_rational_value']):.6f}"
             )
@@ -922,7 +956,9 @@ class TriadIndexAnalyzer:
         reports.append(cm21_photon_triad)
 
         if "error" not in cm21_photon_triad:
-            print(f"   LSI: {cm21_photon_triad['LSI']:.3f} ≈ {cm21_photon_triad['LSI_rational']}")
+            print(
+                f"   LSI: {cm21_photon_triad['LSI']:.3f} ≈ {cm21_photon_triad['LSI_rational']}"
+            )
             print(
                 f"   Integer purity: |LSI - p/q| = {abs(cm21_photon_triad['LSI'] - cm21_photon_triad['LSI_rational_value']):.6f}"
             )
@@ -1010,13 +1046,15 @@ class TriadIndexAnalyzer:
 
         # Corrected values: frame-dragging < geodetic < total
         geodetic_effect = 32.0 * arcsec_to_rad / 5850  # rad/s (per orbit)
-        frame_dragging = 0.18 * arcsec_to_rad / 5850   # rad/s (per orbit, ~0.56% of geodetic)
+        frame_dragging = (
+            0.18 * arcsec_to_rad / 5850
+        )  # rad/s (per orbit, ~0.56% of geodetic)
         total_relativistic = geodetic_effect + frame_dragging  # rad/s
 
         frame_dragging_triad = self.triad_report(
             "frame_dragging:Frame_drag→Geodetic→Total",
-            frame_dragging,      # Smallest: frame-dragging
-            geodetic_effect,     # Middle: geodetic
+            frame_dragging,  # Smallest: frame-dragging
+            geodetic_effect,  # Middle: geodetic
             total_relativistic,  # Largest: total (ascending order)
             domain="relativistic_GR",  # Group all GR tests together
         )
@@ -1164,7 +1202,9 @@ class TriadIndexAnalyzer:
             "tw_validation": tw_validation,
         }
 
-    def cross_validate_tw_parameters(self, reports: List[Dict[str, Any]], k_folds: int = 3) -> Dict[str, Any]:
+    def cross_validate_tw_parameters(
+        self, reports: List[Dict[str, Any]], k_folds: int = 3
+    ) -> Dict[str, Any]:
         """
         Perform k-fold cross-validation on TW parameter fitting to assess confidence.
 
@@ -1217,15 +1257,19 @@ class TriadIndexAnalyzer:
                 predictions = [avg_delta_train] * len(test_deltas)  # Simple baseline
 
                 # Compute prediction error
-                errors = [abs(pred - actual) for pred, actual in zip(predictions, test_deltas)]
+                errors = [
+                    abs(pred - actual) for pred, actual in zip(predictions, test_deltas)
+                ]
                 rmse = np.sqrt(np.mean([e**2 for e in errors]))
 
-                param_estimates.append({
-                    "fold": fold,
-                    "rmse": rmse,
-                    "train_size": len(train_set),
-                    "test_size": len(test_set)
-                })
+                param_estimates.append(
+                    {
+                        "fold": fold,
+                        "rmse": rmse,
+                        "train_size": len(train_set),
+                        "test_size": len(test_set),
+                    }
+                )
 
             # Compute confidence intervals
             rmses = [est["rmse"] for est in param_estimates]
@@ -1234,13 +1278,18 @@ class TriadIndexAnalyzer:
 
             print(f"  Mean RMSE: {mean_rmse:.6f}")
             print(f"  RMSE Std:  {std_rmse:.6f}")
-            print(f"  95% CI: [{mean_rmse - 2*std_rmse:.6f}, {mean_rmse + 2*std_rmse:.6f}]")
+            print(
+                f"  95% CI: [{mean_rmse - 2*std_rmse:.6f}, {mean_rmse + 2*std_rmse:.6f}]"
+            )
 
             validation_results[domain_name] = {
                 "mean_rmse": mean_rmse,
                 "std_rmse": std_rmse,
-                "confidence_interval": [mean_rmse - 2*std_rmse, mean_rmse + 2*std_rmse],
-                "fold_results": param_estimates
+                "confidence_interval": [
+                    mean_rmse - 2 * std_rmse,
+                    mean_rmse + 2 * std_rmse,
+                ],
+                "fold_results": param_estimates,
             }
 
         return validation_results
@@ -1538,13 +1587,14 @@ class TriadIndexAnalyzer:
         # Get SU(2) invariants from quantum gravity analysis
         # These come from the commutator algebra, not EM measurements
         from experiments.cgm_quantum_gravity_analysis import QuantumGravityHorizon
+
         qg = QuantumGravityHorizon()
         # Get BU dual-pole monodromy constant (pure SU(2))
         bu_monodromy = qg.compute_bu_dual_pole_monodromy()
         delta_bu = bu_monodromy["delta_bu"]
 
         # Get holonomy at canonical δ=π/2
-        holonomy = qg.compute_su2_commutator_holonomy(delta=np.pi/2)
+        holonomy = qg.compute_su2_commutator_holonomy(delta=np.pi / 2)
         phi_eff = holonomy["phi_eff"]
 
         # Get helical pitch (pure gyrovector algebra)
@@ -1552,8 +1602,13 @@ class TriadIndexAnalyzer:
 
         # Use fitted TW parameters from non-QED domains only.
         # Gate the prediction until domains are properly fitted with ≥3 triads and good CV stats
-        if "photon" not in self.domain_factors and "relativistic_GR" not in self.domain_factors:
-            raise RuntimeError("No non-QED domains fitted; cannot predict α without circularity.")
+        if (
+            "photon" not in self.domain_factors
+            and "relativistic_GR" not in self.domain_factors
+        ):
+            raise RuntimeError(
+                "No non-QED domains fitted; cannot predict α without circularity."
+            )
 
         # Check fitting quality for available domains
         available_domains = []
@@ -1564,13 +1619,15 @@ class TriadIndexAnalyzer:
 
         # Select best domain based on CV statistics (if available)
         best_domain = None
-        best_cv_score = float('inf')
+        best_cv_score = float("inf")
 
         for domain in available_domains:
             domain_data = self.domain_factors[domain]
             if "cv_stats" in domain_data:
                 cv_stats = domain_data["cv_stats"]
-                overfitting = cv_stats.get("overfitting_ratio", 2.0)  # Default to high if missing
+                overfitting = cv_stats.get(
+                    "overfitting_ratio", 2.0
+                )  # Default to high if missing
                 if overfitting < best_cv_score:
                     best_cv_score = overfitting
                     best_domain = domain
@@ -1580,33 +1637,49 @@ class TriadIndexAnalyzer:
                     best_domain = domain
 
         if best_cv_score > 2.0:
-            print("⚠️  WARNING: Selected domain has poor CV statistics (overfitting ratio > 2.0)")
-            print("   α prediction may not be reliable until better fitting is achieved")
+            print(
+                "⚠️  WARNING: Selected domain has poor CV statistics (overfitting ratio > 2.0)"
+            )
+            print(
+                "   α prediction may not be reliable until better fitting is achieved"
+            )
 
         if best_domain is None:
-            raise RuntimeError("No suitable domain found for α prediction despite having available domains")
+            raise RuntimeError(
+                "No suitable domain found for α prediction despite having available domains"
+            )
 
         src = best_domain
         domain_data = self.domain_factors[src]
 
         # Strict gating: require trustworthy CV statistics
         stats = domain_data.get("cv_stats")
-        if not stats or stats.get("n_folds", 0) < 3 or stats.get("overfitting_ratio", 2.0) > 1.5:
-            print(f"⚠️  SKIPPED: α prediction requires ≥3-fold CV with overfitting ratio ≤1.5")
-            print("   Current stats insufficient - run more triads or improve domain coverage")
+        if (
+            not stats
+            or stats.get("n_folds", 0) < 3
+            or stats.get("overfitting_ratio", 2.0) > 1.5
+        ):
+            print(
+                f"⚠️  SKIPPED: α prediction requires ≥3-fold CV with overfitting ratio ≤1.5"
+            )
+            print(
+                "   Current stats insufficient - run more triads or improve domain coverage"
+            )
             return {
                 "alpha_hat": None,
                 "skipped": True,
                 "reason": "insufficient_cv_quality",
                 "domain": src,
-                "cv_stats": stats
+                "cv_stats": stats,
             }
 
         k_avg = domain_data["k"]
         theta_dom_avg = domain_data["theta_dom"]
         gamma_avg = domain_data["gamma_dom"]
 
-        print(f"Using TW parameters from {src} domain (selected for best CV statistics)")
+        print(
+            f"Using TW parameters from {src} domain (selected for best CV statistics)"
+        )
 
         # Predict δ_dom(QED) using TW geometry for m=n=1 (simplest ratio)
         omega_pred = compute_tw_holonomy(1, 1, k_avg, theta_dom_avg, signed=True)
@@ -1647,24 +1720,25 @@ class TriadIndexAnalyzer:
         return {
             "alpha_predicted": alpha_pred,
             "alpha_codata": self.alpha,
-            "ratio": alpha_pred/self.alpha,
+            "ratio": alpha_pred / self.alpha,
             "status": status,
             "tw_parameters": {
                 "k": k_avg,
                 "theta_dom": theta_dom_avg,
-                "gamma_dom": gamma_avg
+                "gamma_dom": gamma_avg,
             },
             "su2_invariants": {
                 "delta_bu": delta_bu,
                 "phi_eff": phi_eff,
-                "pi_loop": pi_loop
-            }
+                "pi_loop": pi_loop,
+            },
         }
 
     # Removed analyze_proton_radius_puzzle method to reduce file size
 
-
-    def sanity_check_su2_commutator_identity(self, n_samples: int = 100, seed: int = 42) -> Dict[str, Any]:
+    def sanity_check_su2_commutator_identity(
+        self, n_samples: int = 100, seed: int = 42
+    ) -> Dict[str, Any]:
         """
         Property test for SU(2) commutator identity over random parameters.
 
@@ -1690,7 +1764,7 @@ class TriadIndexAnalyzer:
             sin_delta = np.sin(delta)
 
             # Expected trace from identity
-            expected_trace = 2.0 - 4.0 * (sin_delta ** 2) * (sin_half_theta ** 4)
+            expected_trace = 2.0 - 4.0 * (sin_delta**2) * (sin_half_theta**4)
 
             # Compute actual commutator trace
             cos_half_phi = np.clip(expected_trace / 2.0, -1.0, 1.0)
@@ -1715,7 +1789,9 @@ class TriadIndexAnalyzer:
             print("  ✅ PASSED: Identity holds within numerical precision")
             status = "PASSED"
         elif max_error < 1e-10:
-            print("  ⚠️  ACCEPTABLE: Small numerical errors (likely due to trig precision)")
+            print(
+                "  ⚠️  ACCEPTABLE: Small numerical errors (likely due to trig precision)"
+            )
             status = "ACCEPTABLE"
         else:
             print("  ❌ FAILED: Large errors indicate implementation issues")
@@ -1726,10 +1802,12 @@ class TriadIndexAnalyzer:
             "n_samples": n_samples,
             "max_error": float(max_error),
             "mean_error": float(np.mean(errors)),
-            "std_error": float(np.std(errors))
+            "std_error": float(np.std(errors)),
         }
 
-    def sanity_check_gauge_invariance_fuzzing(self, n_tests: int = 10, seed: int = 123) -> Dict[str, Any]:
+    def sanity_check_gauge_invariance_fuzzing(
+        self, n_tests: int = 10, seed: int = 123
+    ) -> Dict[str, Any]:
         """
         Gauge invariance fuzzing: Test that φ_eff is unchanged under random SU(2) conjugations.
 
@@ -1754,7 +1832,7 @@ class TriadIndexAnalyzer:
             cos_delta = np.cos(delta)
             sin_delta = np.sin(delta)
 
-            expected_trace = 2.0 - 4.0 * (sin_delta ** 2) * (sin_half_theta ** 4)
+            expected_trace = 2.0 - 4.0 * (sin_delta**2) * (sin_half_theta**4)
             cos_half_phi_orig = np.clip(expected_trace / 2.0, -1.0, 1.0)
             phi_orig = 2.0 * np.arccos(cos_half_phi_orig)
 
@@ -1765,7 +1843,9 @@ class TriadIndexAnalyzer:
 
             # Apply conjugation (this is a simplified test - full conjugation would be more complex)
             # For this sanity check, we test that the identity is preserved
-            phi_conj = phi_orig  # In the canonical case, conjugation should preserve phi
+            phi_conj = (
+                phi_orig  # In the canonical case, conjugation should preserve phi
+            )
 
             deviation = abs(phi_orig - phi_conj)
             max_deviation = max(max_deviation, deviation)
@@ -1782,17 +1862,21 @@ class TriadIndexAnalyzer:
             print("  ✅ PASSED: Gauge invariance holds")
             status = "PASSED"
         else:
-            print("  ⚠️  TOLERABLE: Small deviations (may be due to numerical precision)")
+            print(
+                "  ⚠️  TOLERABLE: Small deviations (may be due to numerical precision)"
+            )
             status = "TOLERABLE"
 
         return {
             "status": status,
             "n_tests": n_tests,
             "max_deviation": float(max_deviation),
-            "mean_deviation": float(np.mean(deviations))
+            "mean_deviation": float(np.mean(deviations)),
         }
 
-    def sanity_check_tw_small_rapidity(self, n_grid: int = 20, max_eta: float = 0.05) -> Dict[str, Any]:
+    def sanity_check_tw_small_rapidity(
+        self, n_grid: int = 20, max_eta: float = 0.05
+    ) -> Dict[str, Any]:
         """
         Test TW small-rapidity expansion accuracy.
 
@@ -1815,8 +1899,12 @@ class TriadIndexAnalyzer:
 
                 # Exact TW angle using the validated formula
                 # For small rapidities: ω ≈ (1/2) * η1 * η2 * sin(θ)
-                theta_exact = 0.5 * eta1 * eta2 * np.sin(np.pi/4)  # Using θ = π/4 as canonical
-                theta_approx = 0.5 * eta1 * eta2 * np.sin(np.pi/4)  # Same approximation for testing
+                theta_exact = (
+                    0.5 * eta1 * eta2 * np.sin(np.pi / 4)
+                )  # Using θ = π/4 as canonical
+                theta_approx = (
+                    0.5 * eta1 * eta2 * np.sin(np.pi / 4)
+                )  # Same approximation for testing
 
                 if theta_exact > 1e-12:  # Avoid division by zero
                     rel_error = abs(theta_exact - theta_approx) / theta_exact
@@ -1844,7 +1932,7 @@ class TriadIndexAnalyzer:
             "status": status,
             "total_tests": total_tests,
             "max_rel_error": float(max_rel_error),
-            "significant_errors": len(significant_errors)
+            "significant_errors": len(significant_errors),
         }
 
     def run_sanity_checks(self) -> Dict[str, Any]:

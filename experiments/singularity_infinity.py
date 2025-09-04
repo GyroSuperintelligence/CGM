@@ -13,10 +13,16 @@ from typing import Dict, Any, List, Tuple
 import sys
 import os
 
-# Using relative imports
-from .functions.gyrovector_ops import GyroVectorSpace, RecursivePath
-from .stages.bu_stage import BUStage
-from .stages.ona_stage import ONAStage
+# Add the experiments directory to the path for standalone execution
+current_dir = os.path.dirname(os.path.abspath(__file__))
+experiments_dir = os.path.dirname(current_dir)
+if experiments_dir not in sys.path:
+    sys.path.insert(0, experiments_dir)
+
+# Import from functions and stages modules
+from experiments.functions.gyrovector_ops import GyroVectorSpace, RecursivePath
+from experiments.stages.bu_stage import BUStage
+from experiments.stages.ona_stage import ONAStage
 
 
 class SingularityInfinityValidator:

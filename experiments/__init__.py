@@ -37,7 +37,6 @@ from .tw_closure_test import TWClosureTester
 # Import utility functions
 from .holonomy_flow import run_holonomy_flow
 from .tw_precession import test_tw_precession_small_angle
-from .cgm_anchors import CGMAnchor, CGMAnchors
 
 __all__ = [
     # Main analysis classes
@@ -56,6 +55,4 @@ __all__ = [
     "run_holonomy_flow",
     "run_comprehensive_gravity_analysis",
     "test_tw_precession_small_angle",
-    "CGMAnchor",
-    "CGMAnchors",
 ]

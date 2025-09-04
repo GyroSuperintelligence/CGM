@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0-QuantumGravity] - 2025-08-04
+
+Experiments Review and Results found here: 
+docs\Notes\results_04082025.md
+
+---
+
 ## [1.0.9-QuantumGravity] - 2025-08-01
 
 Experiments Review and Results found here: 

@@ -93,8 +93,6 @@ try:
     HEALPY_AVAILABLE = True
 except ImportError:
     HEALPY_AVAILABLE = False
-    print("Warning: healpy not available. Some validation features will be limited.")
-
 
 @dataclass
 class PhysicalConstants:
