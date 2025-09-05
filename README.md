@@ -31,10 +31,8 @@ Recent developments have extended CGM to define quantum gravity as the geometric
 
 ## 📚 Documentation
 
-### Core Theory
 - 📖 **[CHANGELOG.md](CHANGELOG.md)** - Complete version history and development timeline
-- 🌐 **[Foundations](docs/Foundations/)** - Theoretical foundations and mathematical framework
-- 🔬 **[Technical Notes](docs/Notes/)** - Detailed analyses and experimental results
+- 🌐 **[Foundations](docs/Foundations/CommonGovernanceModel.md)** - Theoretical foundations and mathematical framework
 
 ### Key Results & Experiments
 
