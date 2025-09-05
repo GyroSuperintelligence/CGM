@@ -3,7 +3,7 @@
 
 ### Executive Summary
 
-The computational analysis has yielded a consistent framework where quantum gravity emerges from a geometric invariant Q_G = 4π, representing the complete solid angle required for coherent observation. The framework predicts the fine-structure constant α = 0.0072997 within 0.03% of the measured value through pure geometric relations, without electromagnetic inputs. All computations converge on a fundamental surplus factor ρ = 0.979, suggesting reality maintains a ~2% aperture enabling observation through available reserve.
+The computational analysis has yielded a consistent framework where quantum gravity emerges from a geometric invariant Q_G = 4π, representing the complete solid angle required for coherent observation. The framework predicts the fine-structure constant α = 0.0072997 within 0.03% of the measured value through pure geometric relations, without electromagnetic inputs. All computations converge on a fundamental surplus factor ρ = 0.979, suggesting reality maintains a ~2.1% aperture enabling observation through available reserve.
 
 ### 1. Core Geometric Structure
 

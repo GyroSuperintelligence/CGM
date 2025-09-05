@@ -25,105 +25,48 @@ The Common Governance Model (CGM) presents an axiomatic framework for understand
     
 The model demonstrates that three-dimensional space with six degrees of freedom is not an assumption but a logical derivation. Time appears as the sequential ordering of recursive operations, encoded by gyration's memory of operation order. The mathematical formalism employs gyrogroup and bi-gyrogroup structures following Abraham Ungar's work, providing precise language for tracking transitions from undifferentiated potential to fully structured reality.
 
+Recent developments have extended CGM to define quantum gravity as the geometric invariant Q_G = 4π, representing the complete solid angle required for coherent observation. This framework derives fundamental physical constants from pure geometric principles, including the fine-structure constant α to experimental precision (0.043 ppb) and predicts characteristic energy scales through recursive polygon methods. The unified picture reveals physics as the necessary geometry for self-coherent observation.
+
+---
+
+## 📚 Documentation
+
+### Core Theory
+- 📖 **[CHANGELOG.md](CHANGELOG.md)** - Complete version history and development timeline
+- 🌐 **[Foundations](docs/Foundations/)** - Theoretical foundations and mathematical framework
+- 🔬 **[Technical Notes](docs/Notes/)** - Detailed analyses and experimental results
+
+### Key Results & Experiments
+
+| Version | Focus Area | Documentation | Implementation |
+|---------|------------|---------------|----------------|
+| **1.1.0** | 🎯 Fine-Structure Constant | [Analysis](docs/Notes/Analysis_Fine_Structure.md) | [Code](experiments/cgm_alpha_analysis.py) |
+| **1.0.9** | ⚛️ Proto-Units Framework | [Analysis](docs/Notes/Analysis_CGM_Units.md) | [Code](experiments/cgm_proto_units_analysis.py) |
+| **1.0.8** | 🌌 Quantum Gravity | [Analysis](docs/Notes/Analysis_Quantum_Gravity.md) | [Code](experiments/cgm_quantum_gravity_analysis.py) |
+| **1.0.7** | 🔄 Monodromy Structure | [Analysis](docs/Notes/Analysis_Monodromy.md) | [Code](experiments/tw_closure_test.py) |
+| **1.0.7** | 📡 Kompaneyets Analysis | [Analysis](docs/Notes/Analysis_Kompaneyets.md) | [Code](experiments/cgm_kompaneyets_analysis.py) |
+| **1.0.6** | 🌠 CMB Patterns | [Analysis](docs/Notes/Analysis_CMB.md) | [Code](experiments/cgm_cmb_data_analysis_300825.py) |
+
 ---
 
 ## 📊 Current Status
 
-### 🔬 Framework Development
+### Theoretical Achievements
+- ✅ Derived α = 1/137.036 from pure geometry (0.043 ppb accuracy)
+- ✅ Defined quantum gravity as Q_G = 4π (complete solid angle)
+- ✅ Predicted gravitational coupling ζ = 23.155 from first principles
+- ✅ Established 97.93% closure with 2.07% observational aperture
 
-**Version 1.0.5:** The Common Governance Model is an experimental framework connecting geometry, cosmology, and biology through recursive principles. Recent work validates theoretical predictions against observational data:
+### Empirical Validations
+- ✅ CMB multipole enhancement at ℓ = 37 and harmonics (p = 0.0039)
+- ✅ P₂/C₄ harmonic anti-alignment in Planck data (p = 0.005)
+- ✅ Cross-observable phase coherence (R = 0.743)
+- ✅ Machine-precision internal consistency (<10⁻¹⁶ errors)
 
-#### 🛰️ Observational Validation
-- **Planck CMB Analysis:** Testing predictions against microwave background data
-- **Distance Duality Test:** Examining cosmic distance relationships using galaxy clusters
-- **Supernova Analysis:** Investigating systematic effects in Hubble diagram data
-
-**Implementation Status:** Three independent observational tests have been completed. All results are consistent with CGM predictions—no contradictions detected, signals remain within observational limits, and expected angular structures appear at sub-detection amplitudes.
-
-*Note: These tests constitute compatibility checks rather than proofs.*
-
-### 🔬 Mathematical Foundation
-
-The framework develops rigorous tools for understanding recursive geometry:
-- **Dimensional Calibration:** Unit behavior in gyrogroup structures
-- **Geometric Theorems:** Fundamental relationships and proofs
-- **Toroidal Holonomy:** Memory patterns in recursive operations
-- **Emergent Scaling:** Natural scale generation from first principles
-
-### 🔍 Discovered Patterns
-
-Key mathematical findings include:
-- **Integer Scaling:** Precise relationships between physical scales
-- **Geometric Invariants:** Universal quantities across domains
-- **Self-Similar Architecture:** Fractal patterns from micro to macro scales
-- **Cross-Domain Connections:** Links between cosmic and biological systems
-
----
-
-## 🔬 Key Capabilities
-
-### 📊 Analysis Tools
-
-#### 🛰️ Observational Data Processing
-- **CMB Pattern Recognition:** Microwave background structure analysis
-- **Cosmic Distance Calibration:** Multi-probe distance measurements
-- **Large-Scale Structure:** Supernova and galaxy distribution studies
-
-#### 🧮 Mathematical Engine
-- **Dimensional Calibration:** Automated unit consistency checking
-- **Geometric Proofs:** Theorem validation and discovery
-- **Memory Analysis:** Toroidal holonomy tracking
-- **Scale Generation:** Emergent hierarchy computation
-
-#### 🔍 Pattern Discovery
-- **Integer Relations:** Natural number connections across scales
-- **Universal Invariants:** Constants emerging from geometry
-- **Fractal Architecture:** Self-similar structures at all levels
-- **Cross-Scale Bridges:** Quantified connections between domains
-
-## 📊 Results & Dependencies
-
-### Output Format
-- **Console Reports**: Real-time validation status
-- **Structured Data**: Programmatic access to computed quantities
-- **Statistical Summary**: Amplitudes, p-values, and CGM consistency checks
-
-### Requirements
-- **Python 3.12+**
-- **NumPy** (numerical computations)
-- **SciPy** (advanced mathematics)
-- **Matplotlib** (visualization)
-
-### Quick Setup
-```bash
-pip install -r requirements.txt
-python run_experiments.py
-```
-
-### Documentation
-- **CHANGELOG.md**: Version history
-- **Docs/Foundations/**: Theoretical foundations
-- **Docs/Notes/**: Technical details
-
-## 🔍 Current Work & Future Directions
-
-### 📝 Active Development
-- **Proof Refinement:** Strengthening mathematical foundations
-- **Data Pipeline:** Expanding observational test suite
-- **Pattern Catalog:** Documenting discovered relationships
-- **Code Architecture:** Optimizing computational efficiency
-
-### 🔭 Research Horizons
-- **Quantum Bridge:** Connecting classical and quantum scales
-- **Biological Applications:** Testing predictions in living systems
-- **Cosmological Implications:** Dark matter and energy connections
-- **Community Collaboration:** Open-source development and peer review
-
-### 💡 Research Focus
-
-**The Common Governance Model investigates whether recursive geometric principles can unify disparate physical phenomena across scales, from quantum to cosmic.**
-
-This active research program combines rigorous mathematics with observational testing to explore fundamental questions about the nature of reality.
+### Active Development
+- 🔬 Standard Model particle spectrum derivation
+- 🔬 Cosmological dynamics from geometric evolution
+- 🔬 Experimental validation programs
 
 ---
 
@@ -150,7 +93,14 @@ If you use this framework in your research, please cite:
   note={Axiomatic framework for recursive geometry in physics}
 }
 ```
-
 ---
 
-*The CGM framework provides mathematical tools for investigating the hypothesis that recursive geometric principles underlie the organization of matter and energy across all scales.*
+<div style="border: 1px solid #ccc; padding: 1em; font-size: 0.6em; background-color: #f9f9f9; border-radius: 6px; line-height: 1.5;">
+  <p><strong>🤖 AI Disclosure</strong></p>
+  <p>All code architecture, documentation, and theoretical models in this project were authored and architected by Basil Korompilias.</p>
+  <p>Artificial intelligence was employed solely as a technical assistant, limited to code drafting, formatting, verification, and editorial services, always under direct human supervision.</p>
+  <p>All foundational ideas, design decisions, and conceptual frameworks originate from the Author.</p>
+  <p>Responsibility for the validity, coherence, and ethical direction of this project remains fully human.</p>
+  <p><strong>Acknowledgements:</strong><br>
+  This project benefited from AI language model services accessed through LMArena, Cursor IDE, OpenAI (ChatGPT), Anthropic (Opus), and Google (Gemini).</p>
+</div>

@@ -3,15 +3,15 @@
 Common Governance Model (CGM) Proto-Units Analysis Framework
 
 This module implements the geometric foundation of the Common Governance Model (CGM),
-which derives from the axiom "The Source is Common" and demonstrates how reality 
-emerges through four recursive stages:
+which derives from the axiom of a "Common Source", defines Quantum Gravity (Q_G) as observation itself,
+and demonstrates how reality emerges from first principles through a four-stage recursive process:
 
 CS (Common Source) → UNA (Unity Non-Absolute) → ONA (Opposition Non-Absolute) → BU (Balance Universal)
 
 Core CGM Principles:
     - Reality emerges from a single left-handed helical worldline in SU(2)
     - Exactly 3 spatial dimensions with 6 degrees of freedom arise from geometric necessity
-    - The aperture parameter m_ap = 1/(2√(2π)) ≈ 0.2 (aperture parameter). The 98% closure / 2% aperture balance is conceptual (holonomy-based), not computed from m_ap.
+    - The aperture parameter m_ap = 1/(2√(2π)) ≈ 0.2 (aperture parameter). The 97.9% closure / 2.1% aperture balance is conceptual (holonomy-based), not computed from m_ap.
     - Observation itself creates spacetime through recursive alignment
     
 Geometric Thresholds:
@@ -25,8 +25,13 @@ geometric invariants through minimal necessary bridges, with all physical scales
 following from the requirement of coherent observation in 3D+6DoF structure.
 
 Key Invariant: Survey/Solid-Angle Invariant Q_G = 4π 
-represents the complete solid angle required 
-for coherent observation - not a velocity but the geometric closure ratio.
+not a velocity, but the closure ratio defining the first
+quantum gravitational boundary where light's recursive chirality establishes
+the geometric preconditions for observation itself.
+
+Core Discovery: Quantum gravity emerges from the requirement that observation
+maintains coherence through recursive chirality on the 2-sphere topology,
+without assuming background spacetime.
 
 Author: Basil Korompilias & AI Assistants
 """
@@ -256,15 +261,15 @@ class CGMGeometricUnits:
         - Geometric speed ratio: c_CGM = L_horizon/t_aperture = 4π
         - Geometric energy: ℰ_CGM = S_min/t_aperture = π/2
     
-    Note on "98% closure":
-    The often-cited "98% closure with 2% aperture" is a conceptual description of 
+    Note on "97.9% closure":
+    The often-cited "97.9% closure with 2.1% aperture" is a conceptual description of 
     the optimal balance for observation, not a direct calculation from m_p.
     The actual geometric relationships are:
     - m_p ≈ 0.2 (20% aperture parameter)
     - Q_G × m_p² = 0.5 (exact geometric constraint)
     - Holonomy deficit ≈ 0.863 rad (toroidal memory structure)
     
-    The "98% closure" emerges from the overall system behavior where these 
+    The "97.9% closure" emerges from the overall system behavior where these 
     parameters create a structure stable enough to exist yet open enough to 
     observe. It's a qualitative description of the observation threshold,
     not a quantitative calculation from any single parameter.
@@ -378,7 +383,7 @@ class CGMGeometricUnits:
     @property
     def observation_balance(self) -> str:
         """Conceptual description of the observation balance"""
-        return "≈98% closure (holonomy-based), small aperture for observation"
+        return "≈97.9% closure (holonomy-based), small aperture for observation"
     
     def set_energy_scale(self, amplitude: Any) -> None:
         """Assign quantum amplitude to energy scale attribute."""
@@ -911,6 +916,72 @@ def analyze_uv_ir_mixing(
         }
     }
 
+def calculate_fine_structure_constant(geometric_units: CGMGeometricUnits) -> Dict[str, Any]:
+    """
+    Calculate the fine-structure constant from CGM geometric invariants.
+    
+    This function uses the BU dual-pole monodromy to predict the fine-structure
+    constant using the formula: α_fs = δ_BU^4 / m_p
+    
+    This is the same calculation as in the quantum gravity analysis, but integrated
+    into the proto-units framework for comprehensive results.
+    
+    Args:
+        geometric_units: CGM geometric unit system
+    
+    Returns:
+        Dictionary containing fine-structure constant prediction and comparison
+    """
+    # Import the TW closure tester to get the BU dual-pole monodromy
+    try:
+        from .tw_closure_test import TWClosureTester
+        from .functions.gyrovector_ops import GyroVectorSpace
+    except ImportError:
+        # Fallback for when running as script
+        from tw_closure_test import TWClosureTester
+        from functions.gyrovector_ops import GyroVectorSpace
+    
+    # Get the BU dual-pole monodromy
+    gyrospace = GyroVectorSpace(c=1.0)
+    tester = TWClosureTester(gyrospace)
+    monodromy_result = tester.compute_bu_dual_pole_monodromy(verbose=False)
+    
+    # Extract key quantities
+    delta_BU = monodromy_result["delta_bu"]  # Note: lowercase key from tw_closure_test
+    m_p = geometric_units.aperture_parameter
+    
+    # Predict fine-structure constant using the geometric formula
+    alpha_pred = (delta_BU**4) / m_p
+    
+    # CODATA 2018 value for comparison
+    alpha_codata = CONSTANTS.fine_structure
+    
+    # Calculate deviation
+    deviation = abs(alpha_pred - alpha_codata) / alpha_codata
+    
+    # Invert to get implied monodromy if we assume CODATA α
+    delta_BU_star = (alpha_codata * m_p) ** 0.25
+    delta_BU_diff = abs(delta_BU - delta_BU_star)
+    
+    return {
+        "alpha_predicted": float(alpha_pred),
+        "alpha_codata": float(alpha_codata),
+        "deviation": float(deviation),
+        "deviation_percent": float(deviation * 100),
+        "delta_BU": float(delta_BU),
+        "delta_BU_star": float(delta_BU_star),
+        "delta_BU_diff": float(delta_BU_diff),
+        "m_p": float(m_p),
+        "formula": "α_fs = δ_BU^4 / m_p",
+        "status": "excellent" if deviation < 0.001 else "very_good" if deviation < 0.01 else "good",
+        "physics_interpretation": {
+            "delta_BU_meaning": "BU dual-pole monodromy (holonomy across BU stage)",
+            "quartic_scaling": "Fourth power from dual-pole × dual-hemisphere structure",
+            "m_p_normalization": "Aperture parameter provides dimensionless normalization",
+            "geometric_origin": "Pure geometry - no electrodynamic inputs required"
+        }
+    }
+
 def show_theoretical_predictions(minimal_action: Any, gravitational_coupling: Optional[Any] = None) -> Dict[str, Any]:
     """
     Show theoretical predictions from the clean calibration approach.
@@ -993,7 +1064,8 @@ def format_number(value: Any, digits: int = 12) -> str:
     Returns:
         Formatted string representation
     """
-    return mp.nstr(value, digits)
+    result = mp.nstr(value, digits)
+    return result if result is not None else str(value)
 
 def format_scientific(value: Any, digits: int = 4) -> str:
     """Format numbers in consistent scientific notation."""
@@ -1331,14 +1403,40 @@ def print_comprehensive_results(
         print(f"     4π × m_p = {mp.nstr(relations['4π × m_p'], 10)} (equals L_horizon)")
         print(f"     L_horizon = {mp.nstr(relations['L_horizon'], 10)}")
     
-    # Section 16: Summary and Predictions
-    print("\n16. SUMMARY AND PREDICTIONS")
+    # Section 16: Fine-Structure Constant Prediction
+    print("\n16. FINE-STRUCTURE CONSTANT PREDICTION")
+    try:
+        fine_structure_result = calculate_fine_structure_constant(geometric_units)
+        
+        print(f"   Geometric prediction from CGM invariants:")
+        print(f"     Formula: {fine_structure_result['formula']}")
+        print(f"     δ_BU = {mp.nstr(fine_structure_result['delta_BU'], 8)} rad")
+        print(f"     m_p = {mp.nstr(fine_structure_result['m_p'], 10)}")
+        print(f"     α_pred = {mp.nstr(fine_structure_result['alpha_predicted'], 10)}")
+        print(f"     α_CODATA = {mp.nstr(fine_structure_result['alpha_codata'], 10)}")
+        print(f"     Deviation = {mp.nstr(fine_structure_result['deviation'], 2)} ({mp.nstr(fine_structure_result['deviation_percent'], 4)}%)")
+        print(f"     Status: {fine_structure_result['status'].upper()}")
+        
+        print(f"   Physics interpretation:")
+        for key, description in fine_structure_result['physics_interpretation'].items():
+            print(f"     • {description}")
+        
+        print(f"   Inverted constraint:")
+        print(f"     δ_BU* = (α_CODATA × m_p)^(1/4) = {mp.nstr(fine_structure_result['delta_BU_star'], 8)} rad")
+        print(f"     |δ_BU - δ_BU*| = {mp.nstr(fine_structure_result['delta_BU_diff'], 2)} rad")
+        
+    except Exception as e:
+        print(f"   Fine-structure constant calculation failed: {e}")
+        print(f"   (This may be due to missing dependencies)")
+
+    # Section 17: Summary and Predictions
+    print("\n17. SUMMARY AND PREDICTIONS")
     print(f"   Core geometric invariant: Q_G = 4π (complete solid angle / survey closure)")
-    # The 98% closure with 2% aperture is not arbitrary but emerges from m_p = 1/(2√(2π)).
+    # The 97.9% closure with 2.1% aperture is not arbitrary but emerges from m_p = 1/(2√(2π)).
     # This represents the precise balance where structure is stable enough to exist
-    # (98% closed) yet open enough to be observed (2% aperture). Complete closure
+    # (97.9% closed) yet open enough to be observed (2.1% aperture). Complete closure
     # would make observation impossible; too much openness would prevent structure formation.
-    print(f"   Aperture parameter: m_p = {mp.nstr(geometric_units.m_p, 10)} (aperture parameter ≈ 20%; 98% closure is conceptual/holonomy-based)")
+    print(f"   Aperture parameter: m_p = {mp.nstr(geometric_units.m_p, 10)} (aperture parameter ≈ 20%; 97.9% closure is conceptual/holonomy-based)")
     print(f"   Geometric mean action: S_geo = {mp.nstr(geometric_units.geometric_mean_action, 10)} (dual-invariance compatible)")
     print(f"   Predicted energy scale: E₀ = {mp.nstr(E0_GeV, 2)} GeV")
     print(f"   Predicted length scale: L₀ = {mp.nstr(L0_fm, 2)} fm")
@@ -1423,7 +1521,7 @@ def main(
     print("  CGM derives from 'The Source is Common' axiom")
     print("  Four recursive stages: CS → UNA → ONA → BU")
     print("  Geometric thresholds: α=π/2, β=π/4, γ=π/4, m_p=1/(2√(2π))")
-    print("  Physical interpretation: 98% closure with 2% observation aperture")
+    print("  Physical interpretation: 97.9% closure with 2.1% observation aperture")
     
     # Phase 1: Polygon recursion until target precision
     print(f"\nPhase 1: Polygon Recursion (target precision: {target_precision})")
@@ -1462,7 +1560,7 @@ def main(
     # geometric energy scale. As the polygon approaches a circle (gap → 0),
     # E_Q → 0, showing that perfect geometric closure eliminates quantum fluctuations.
     # The non-zero m_p ensures perfect closure is never achieved, maintaining
-    # observability through the 2% aperture.
+    # observability through the 2.1% aperture.
     
     # Phase 3: Action bridge establishment
     print("\nPhase 3: Action Bridge Establishment")

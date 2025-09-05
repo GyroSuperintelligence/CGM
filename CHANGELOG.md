@@ -7,43 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0-QuantumGravity] - 2025-08-04
+## [1.1.0-Alpha] - 2025-08-04
 
 Experiments Review and Results found here: 
-docs\Notes\results_04082025.md
+docs\Notes\Analysis_3_Fine_Structure.md
+experiments\cgm_alpha_analysis.py
 
 ---
 
-## [1.0.9-QuantumGravity] - 2025-08-01
-
+## [1.0.9-Proto-Units] - 2025-08-03
 Experiments Review and Results found here: 
-docs\Notes\results_01082025.md
+docs\Notes\Analysis_CGM_Units.md
+experiments\cgm_proto_units_analysis.py
+experiments\cgm_proto_units_helpers_.py
 
 ---
 
-## [1.0.9-QuantumGravity] - 2025-08-31
-
+## [1.0.8-QuantumGravity] - 2025-08-02
 Experiments Review and Results found here: 
-docs\Notes\results_31082025.md
+docs\Notes\Analysis_2_Quantum_Gravity.md
+experiments\cgm_quantum_gravity_analysis.py
+experiments\cgm_quantum_gravity_helpers.py
 
 ---
 
-## [1.0.8] - 2025-08-30
+## [1.0.7-Monodromy] - 2025-08-01
+
 Experiments Review and Results found here: 
+docs\Notes\Analysis_5_Monodromy.md
+experiments\tw_closure_test.py
+
+---
+
+## [1.0.7-Kompaneyets] - 2025-08-31
+
+Experiments Review and Results found here: 
+docs\Notes\Analysis_Kompaneyets.md
+experiments\cgm_kompaneyets_analysis.py
+
+---
+
+## [1.0.6] - 2025-08-30
+
+Experiments Review and Results found here: 
+docs\Notes\Analysis_CMB.md
 experiments\cgm_cmb_data_analysis_300825.py
 
 ---
 
-## [1.0.7] - 2025-08-29
-Experiments Review and Results found here: 
-docs\Notes\results_29082025.md
+## [1.0.6] - 2025-08-29
+
+Experiment: 
+experiments\cgm_cmb_data_analysis_290825.py
 
 ---
 
 ## [1.0.6] - 2025-08-28
 
 A lot of changes and cleaning up. 
-Experiments Review and Results found here: docs\Notes\results_28082025.md
+
+Experiment: 
+docs\Notes\results_28082025.md
 
 ---
 

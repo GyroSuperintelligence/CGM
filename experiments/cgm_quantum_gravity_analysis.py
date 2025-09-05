@@ -448,7 +448,7 @@ class QuantumGravityHorizon:
           tr(C) = 2 − 4 sin^2(δ) sin^2(β/2) sin^2(γ/2),  where C = U1 U2 U1† U2†
           ⇒ cos(φ/2) = 1 − 2 sin^2(δ) sin^2(β/2) sin^2(γ/2)
 
-        For δ = π/2 and β=γ=π/4, this yields φ ≈ 0.588 rad (not π/4).
+        For δ = π/2 and β=γ=π/4, this yields φ ≈ 0.587901 rad.
         """
         I = np.array([[1, 0], [0, 1]], dtype=complex)
         sx = np.array([[0, 1], [1, 0]], dtype=complex)
