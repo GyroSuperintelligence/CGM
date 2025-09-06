@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0-Alignment] - 2025-08-05
+
+Experiments Review and Results found here: 
+docs\Notes\Analysis_Alignment.md
+
+---
+
 ## [1.1.0-Alpha] - 2025-08-04
 
 Experiments Review and Results found here: 
