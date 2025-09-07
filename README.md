@@ -38,13 +38,13 @@ Recent developments have extended CGM to define quantum gravity as the geometric
 
 | Version | Focus Area | Documentation | Implementation |
 |---------|------------|---------------|----------------|
-| **1.1.0** | 📏 4pi Unification through Alignment | [Analysis](docs/Notes/Analysis_4pi_Alignment.md) | []() |
-| **1.1.0** | 🎯 Fine-Structure Constant | [Analysis](docs/Notes/Analysis_Fine_Structure.md) | [Code](experiments/cgm_alpha_analysis.py) |
-| **1.0.9** | ⚛️ Proto-Units Framework | [Analysis](docs/Notes/Analysis_CGM_Units.md) | [Code](experiments/cgm_proto_units_analysis.py) |
-| **1.0.8** | 🌌 Quantum Gravity | [Analysis](docs/Notes/Analysis_Quantum_Gravity.md) | [Code](experiments/cgm_quantum_gravity_analysis.py) |
-| **1.0.7** | 🔄 Monodromy Structure | [Analysis](docs/Notes/Analysis_Monodromy.md) | [Code](experiments/tw_closure_test.py) |
-| **1.0.7** | 📡 Kompaneyets Analysis | [Analysis](docs/Notes/Analysis_Kompaneyets.md) | [Code](experiments/cgm_kompaneyets_analysis.py) |
-| **1.0.6** | 🌠 CMB Patterns | [Analysis](docs/Notes/Analysis_CMB.md) | [Code](experiments/cgm_cmb_data_analysis_300825.py) |
+| **1.1.0** | 📏 4pi Unification through Alignment | [Analysis](docs/Findings/Analysis_4pi_Alignment.md) | []() |
+| **1.1.0** | 🎯 Fine-Structure Constant | [Analysis](docs/Findings/Analysis_Fine_Structure.md) | [Code](experiments/cgm_alpha_analysis.py) |
+| **1.0.9** | ⚛️ Proto-Units Framework | [Analysis](docs/Findings/Analysis_CGM_Units.md) | [Code](experiments/cgm_proto_units_analysis.py) |
+| **1.0.8** | 🌌 Quantum Gravity | [Analysis](docs/Findings/Analysis_Quantum_Gravity.md) | [Code](experiments/cgm_quantum_gravity_analysis.py) |
+| **1.0.7** | 🔄 Monodromy Structure | [Analysis](docs/Findings/Analysis_Monodromy.md) | [Code](experiments/tw_closure_test.py) |
+| **1.0.7** | 📡 Kompaneyets Analysis | [Analysis](docs/Findings/Analysis_Kompaneyets.md) | [Code](experiments/cgm_kompaneyets_analysis.py) |
+| **1.0.6** | 🌠 CMB Patterns | [Analysis](docs/Findings/Analysis_CMB.md) | [Code](experiments/cgm_cmb_data_analysis_300825.py) |
 
 ---
 
