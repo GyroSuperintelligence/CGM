@@ -7,21 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.1-Motion] - 2025-08-07
+## [1.1.1-Walking] - 2025-09-10
+
+Experiments Review and Results found here: 
+docs\Findings\Analysis_Walking.md
+experiments\cgm_walking_analysis.py
+
+---
+
+## [1.1.1-Motion] - 2025-09-07
 
 New Topic - Documentation found here: 
 docs\Findings\Analysis_Motion.md
 
 ---
 
-## [1.1.1-Alignment] - 2025-08-05
+## [1.1.1-Alignment] - 2025-09-05
 
 Experiments Review and Results found here: 
 docs\Findings\Analysis_4pi_Alignment.md
 
 ---
 
-## [1.1.0-Alpha] - 2025-08-04
+## [1.1.0-Alpha] - 2025-09-04
 
 Experiments Review and Results found here: 
 docs\Findings\Analysis_3_Fine_Structure.md
@@ -29,7 +37,7 @@ experiments\cgm_alpha_analysis.py
 
 ---
 
-## [1.0.9-Proto-Units] - 2025-08-03
+## [1.0.9-Proto-Units] - 2025-09-03
 Experiments Review and Results found here: 
 docs\Findings\Analysis_CGM_Units.md
 experiments\cgm_proto_units_analysis.py
@@ -37,7 +45,7 @@ experiments\cgm_proto_units_helpers_.py
 
 ---
 
-## [1.0.8-QuantumGravity] - 2025-08-02
+## [1.0.8-QuantumGravity] - 2025-09-02
 Experiments Review and Results found here: 
 docs\Findings\Analysis_2_Quantum_Gravity.md
 experiments\cgm_quantum_gravity_analysis.py
@@ -45,7 +53,7 @@ experiments\cgm_quantum_gravity_helpers.py
 
 ---
 
-## [1.0.7-Monodromy] - 2025-08-01
+## [1.0.7-Monodromy] - 2025-09-01
 
 Experiments Review and Results found here: 
 docs\Findings\Analysis_5_Monodromy.md
