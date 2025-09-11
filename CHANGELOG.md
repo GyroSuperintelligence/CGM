@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1-Alignment] - 2025-09-11
+New Topic - Documentation found here: 
+docs\Findings\Analysis_Alignment.md
+
+---
+
 ## [1.1.1-Walking] - 2025-09-10
 
 Experiments Review and Results found here: 

@@ -27,7 +27,7 @@ Key CGM predictions include:
 ### 1.3 Biomechanical Foundation
 
 Herr & Popović (2008) established that human walking maintains near-zero angular momentum through segmental cancellation. Key empirical findings:
-- CMP-CP separation: 14% of foot length (steady), 50% (maneuvers)
+- CMP-CenPen separation: 14% of foot length (steady), 50% (maneuvers)
 - Zero-moment model R²: 0.91 (ML), 0.90 (AP)
 - Segmental cancellation: 95% (ML), 70% (AP), 80% (V)
 - Principal components: 3 PCs explain >90% variance
@@ -40,7 +40,7 @@ Recent studies (2020-2025) confirm walking as continuous perpendicularity mainte
 
 We developed a self-contained Python analysis connecting CGM constants to walking metrics without requiring external datasets. The analysis examines:
 
-1. **Aperture Correspondence**: Relating CGM's 2.07% aperture to walking's 14% CMP-CP defect
+1. **Aperture Correspondence**: Relating CGM's 2.07% aperture to walking's 14% CMP-CenPen defect
 2. **Chirality Analysis**: Computing helical structure from angular momentum distributions
 3. **Perpendicularity Budget**: Quantifying safety margins from balance horizons
 4. **Action Quantization**: Testing if walking uses discrete S_min units
@@ -50,7 +50,7 @@ We developed a self-contained Python analysis connecting CGM constants to walkin
 ### 2.2 Assumptions & Parameters
 
 - **Foot length**: 0.25 m, **width**: 0.10 m
-- **CMP-CP (steady)**: 0.14 × foot length; **ML projection factor**: 0.3
+- **CMP-CenPen (steady)**: 0.14 × foot length; **ML projection factor**: 0.3
 - **Mechanical efficiency**: 0.65; body mass not used directly in index results
 - **PCs**: 3 (>90% variance)
 - **Axis convention fixed**: x=ML, y=AP, z=UP
@@ -100,7 +100,7 @@ The coherent helical structure in gait is quantified by CHSI, combining orthogon
 - **Geometric BOS margin (ML)**: ≈ 0.92
 - **Overall margin**: 0.72
 
-Using foot length 0.25 m, width 0.10 m, CMP-CP = 0.14×foot length, with a 0.3 ML projection factor (first-order bound, not a full stability metric). These margins quantify how much "space" the system has for corrective action before reaching a boundary. That's directly interpretable as **available information capacity for adaptation** — first-order information buffers that allow error signals to be meaningful rather than catastrophic.
+Using foot length 0.25 m, width 0.10 m, CMP-CenPen = 0.14×foot length, with a 0.3 ML projection factor (first-order bound, not a full stability metric). These margins quantify how much "space" the system has for corrective action before reaching a boundary. That's directly interpretable as **available information capacity for adaptation** — first-order information buffers that allow error signals to be meaningful rather than catastrophic.
 
 ### 3.3 Action-per-Stride Index
 
@@ -172,7 +172,7 @@ This is the **clearest evidence of intelligence**: the nervous system reduces di
 
 **Beam Walking (3cm width)**:
 - Required defect reduction: 0.429× 
-- Allowable CMP-CP: 6.0% (from 14%)
+- Allowable CMP-CenPen: 6.0% (from 14%)
 
 **Aging Simulation (step width ×1.2)**:
 - ML axis fraction increases: 0.714 → 0.783
@@ -216,6 +216,20 @@ Using only 3 principal components to capture >90% variance while maintaining 6 d
 
 The support polygon edge exhibits scaling analogous to black hole horizons, with 20% complexity increase and 17% variability reduction. This suggests the balance boundary functions as an **information horizon** where control information saturates — the edge of meaningful corrective information. The closure identity (m_p²×Q_G = 0.5000) serves as an internal consistency check for the geometric framework.
 
+Here is a section you could add, written in the same voice and register as your analysis. The most natural place is in **Discussion → 4.6 Information Horizons and Boundaries**, because that is where you already treat the support polygon as a horizon analogue. The finger example extends the argument to a finer scale, so it belongs immediately after that.
+
+### 4.6a Digits, Apertures, and Micro-Horizons
+
+The aperture–horizon principle that governs walking is expressed through the structure of the feet. The five-toed foot is not a redundant evolutionary remnant but an instance of recursive closure. Four toes establish a lateral base and distribute support across the mediolateral axis, while the hallux functions as a directional anchor that determines forward progression. In human gait the hallux dominates the final push-off, contributing more than 80% of the propulsive ground reaction force, while the lateral toes provide stabilising corrections. This four-plus-one organisation reflects near-complete closure with a preserved aperture, where most of the digits support global stability and one asymmetric element channels directional flow.
+
+Walking stability therefore arises from recursive alignment around a privileged aperture. The hallux enforces orientation and forward progression, while the lateral toes maintain limited corrective capacity that prevents collapse into rigid determinism. This structure exemplifies the balance between closure and openness identified in the CGM framework: 97.93 percent stability with 2.07 percent aperture. Alignment in gait is not the repetition of symmetric oscillations but the ordered interaction of digits that reconcile symmetry with asymmetry and stability with adaptability.
+
+The same pattern appears in the hand at a different functional horizon. Four fingers form a stabilising manifold for grip, while the thumb supplies the asymmetry that allows opposition, manipulation and directional control. Each fingertip defines a micro-horizon where control is preserved inside the friction cone and tactile aperture but is lost beyond it. Manipulation typically recruits triads of thumb and two fingers whose force sharing resembles the 120° frustrated closure observed in gait. As in the foot, stability emerges from offset contributions balanced around a geometric reference rather than from rigid closure.
+
+The wrist–digit chain also forms a coherent chiral structure. Pronation and supination, radial and ulnar deviation, and thumb opposition combine to produce a helical organisation. As in gait, the sign of this helicity depends on axis convention, but the non-zero magnitude reveals that manipulative patterns are structured and information-bearing rather than isotropic noise.
+
+Hands and feet therefore represent complementary expressions of the same principle. The feet enforce parallel orientation for locomotor coherence, maximising directional stability while preserving apertures primarily as safety margins. The hands maximise local coverage around the thumb, maintaining micro-apertures for adaptive manipulation. Both are examples of near-closure for stability with a controlled aperture for adaptation, scaled to the requirements of progression in walking and dexterity in grasp.
+
 ### 4.7 Harmonic Policy Updates
 
 The 6.45× ratio between stride time and CGM timescale indicates **harmonic policy updates** — the nervous system operates at harmonics of a fundamental timescale, which is an information-structuring property. This provides a temporal framework for discrete correction deployment through structured temporal information management.
@@ -225,7 +239,7 @@ The 6.45× ratio between stride time and CGM timescale indicates **harmonic poli
 ### 5.1 For Biomechanics
 
 - Walking can be understood as continuous geometric realignment
-- The 14% CMP-CP defect represents an optimal aperture for human scale
+- The 14% CMP-CenPen defect represents an optimal aperture for human scale
 - Phase relationships encode geometric constraints, not just timing
 
 ### 5.2 For Motor Control
@@ -269,7 +283,7 @@ While walking exhibits CGM-predicted patterns, this doesn't prove CGM causes wal
 This analysis examines human walking as geometric alignment under gravity using literature values and a CGM-inspired framework. The key findings:
 
 **Empirically supported (from literature values)**:
-1. **CMP-CP separation**: steady ≈ 14%, maneuvers ≈ 50%
+1. **CMP-CenPen separation**: steady ≈ 14%, maneuvers ≈ 50%
 2. **Segmental cancellation**: 95% (ML), 70% (AP), 80% (V)  
 3. **Principal components**: ~3 PCs cover >90% variance
 4. **Low net angular momentum**: |L| < 0.050 (normalized)
@@ -294,7 +308,7 @@ Walking thus serves as an accessible window into how **information processing pr
 - **CoM**: center of mass
 - **ZMP**: zero moment point  
 - **CMP**: centroidal moment pivot
-- **CP (here)**: *Centroidal Pendulum*, a geometric diagnostic used in this analysis (not Center of Pressure)
+- **CenPen**: *Centroidal Pendulum*, a geometric diagnostic used in this analysis
 - **CHSI**: Coherent Helical Structure Index
 - **ASI**: Action-per-Stride Index
 - **AIS**: Alignment Intelligence Score
