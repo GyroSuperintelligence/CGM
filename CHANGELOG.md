@@ -2,13 +2,17 @@
 
 All notable changes to the CGM Experimental Framework will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+---
+
+## [1.1.1-BSM] - 2025-09-12
+New Topic - Beyond Standard Model Analysis.
+Experiments Review and Results found here: 
+experiments\cgm_bsm_analysis.py
 
 ---
 
 ## [1.1.1-Higgs] - 2025-09-12
-New Topic - Began our Higgs Analysis.
+New Topic - Higgs Analysis.
 Experiments Review and Results found here: 
 docs\Findings\Analysis_Higgs.md
 experiments\cgm_higgs_analysis.py
