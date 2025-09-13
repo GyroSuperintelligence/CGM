@@ -28,7 +28,6 @@ from .cgm_gravity_analysis import (
     GravityCouplingAnalyzer,
     run_comprehensive_gravity_analysis,
 )
-from .physical_constants import ElectricCalibrationValidator
 from .singularity_infinity import SingularityInfinityValidator
 from .cgm_sound_diagnostics import CGMAcousticDiagnostics
 from .light_chirality_experiments import LightChiralityExperiments
@@ -46,7 +45,6 @@ __all__ = [
     "CGMConstants",
     "CGMKompaneyetsAnalyzer",
     "GravityCouplingAnalyzer",
-    "ElectricCalibrationValidator",
     "SingularityInfinityValidator",
     "CGMAcousticDiagnostics",
     "LightChiralityExperiments",

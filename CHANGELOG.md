@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1-Higgs] - 2025-09-12
+New Topic - Began our Higgs Analysis.
+Experiments Review and Results found here: 
+docs\Findings\Analysis_Higgs.md
+experiments\cgm_higgs_analysis.py
+
+---
+
 ## [1.1.1-Alignment] - 2025-09-11
 New Topic - Documentation found here: 
 docs\Findings\Analysis_Alignment.md
