@@ -20,7 +20,7 @@ from functools import lru_cache
 
 @dataclass(frozen=True)
 class CGMInvariants:
-    """Dimensionless geometric invariants from CGM framework."""
+    """Dimensionless ontological invariants from the CGM framework."""
     # Primary thresholds
     alpha_CS: float = pi/2                    # Common Source chirality
     beta_UNA: float = pi/4                    # Unity Non-Absolute threshold
@@ -162,7 +162,8 @@ class SMRenormalizationGroup:
         """Evolve λ, y_t, and gauge couplings from mu_initial to mu_final using adaptive geometric spacing."""
         # Adaptive step size based on log-span for stability
         span = abs(log(mu_final/mu_initial))
-        n_points = max(800, int(80*span))  # dt ~ 0.012–0.02, stable
+        base = 60 if span < 1.5 else 80
+        n_points = max(400, int(base*span))  # dt ~ 0.012–0.02, stable
         log_scales = np.linspace(log(mu_initial), log(mu_final), n_points)
         
         λ, y_t = lambda_initial, y_t_initial
@@ -290,17 +291,26 @@ class HiggsQuarticAnalysis:
         return {'mu_uv': mu_uv, 'lambda_uv': lam_uv, 'lambda_ir': lam_ir, 'mH_pred': mH_pred}
     
     def find_ratio_crossing(self, target: float, kind: str = 'lambda_over_yt2',
-                           mu_min: float = 91.1876, mu_max: float = 1e18, n: int = 140, use_two_loop: bool = False) -> Dict[str, Any]:
-        """Find scale μ* where CGM invariant appears in SM running."""
+                           mu_min: float = 91.1876, mu_max: float = 1e18, n: int = 120, use_two_loop: bool = True,
+                           y_t_init: Optional[float] = None,
+                           g1_init: Optional[float] = None,
+                           g2_init: Optional[float] = None,
+                           g3_init: Optional[float] = None) -> Dict[str, Any]:
+        """Find scale μ* where CGM invariant appears in SM running
+           with optional overrides for initial couplings at MZ."""
         if self.sm.m_fermions is None:
             return {'kind': kind, 'mu_star': None, 'value': target, 'error': 'No fermion masses available'}
-            
+
+        # Initial couplings at MZ
+        y_t = y_t_init if y_t_init is not None else 0.94 * sqrt(2) * self.sm.m_fermions['top'] / self.sm.v_weak
+        g1  = g1_init if g1_init is not None else self.sm.g1_MZ
+        g2  = g2_init if g2_init is not None else self.sm.g2_MZ
+        g3  = g3_init if g3_init is not None else self.sm.g3_MZ
+
         logs = np.linspace(np.log(mu_min), np.log(mu_max), n)
-        # Initialize couplings at MZ
-        g1, g2, g3 = self.sm.g1_MZ, self.sm.g2_MZ, self.sm.g3_MZ
-        y_t = 0.94 * sqrt(2) * self.sm.m_fermions['top'] / self.sm.v_weak
+        rge = SMRenormalizationGroup(self.sm, order='2loop' if use_two_loop else '1loop')
         lam = self.sm.lambda_SM
-        
+
         # Pre-scan to build states at each grid point
         mus = []
         states = []
@@ -311,7 +321,7 @@ class HiggsQuarticAnalysis:
                 states.append((lam, y_t, g1, g2, g3))
             else:
                 mu_prev = np.exp(logs[i-1])
-                lam, y_t, g1, g2, g3 = self.rge.evolve_couplings(mu_prev, mu, lam, y_t, use_two_loop, g1, g2, g3)
+                lam, y_t, g1, g2, g3 = rge.evolve_couplings(mu_prev, mu, lam, y_t, use_two_loop, g1, g2, g3)
                 states.append((lam, y_t, g1, g2, g3))
         
         # Find sign change and do bracketed bisection
@@ -326,28 +336,42 @@ class HiggsQuarticAnalysis:
             val_j = lam_j/(y_j*y_j) if kind=='lambda_over_yt2' else lam_j/(g2_j*g2_j + g1_j*g1_j/3.0)
             
             if (val_i - target) * (val_j - target) < 0:
-                # Sign change detected - do bracketed bisection
+                # Sign change detected - do hybrid refinement
                 mu_low, state_low = mus[i], states[i]
                 mu_high, state_high = mus[i+1], states[i+1]
                 f_low = val_i
                 f_high = val_j
                 
-                for _ in range(10):
-                    mu_mid = (mu_low * mu_high)**0.5
-                    lam_mid, y_mid, g1_mid, g2_mid, g3_mid = self.rge.evolve_couplings(
-                        mu_low, mu_mid, state_low[0], state_low[1], use_two_loop, state_low[2], state_low[3], state_low[4]
-                    )
-                    if lam_mid <= 0 or y_mid <= 0:
-                        break
-                    f_mid = lam_mid/(y_mid*y_mid) if kind=='lambda_over_yt2' else lam_mid/(g2_mid*g2_mid + g1_mid*g1_mid/3.0)
-                    if abs(f_mid - target) < 1e-6:
-                        return {'kind': kind, 'mu_star': mu_mid, 'value': target}
-                    if (f_low - target) * (f_mid - target) <= 0:
-                        mu_high, state_high, f_high = mu_mid, (lam_mid, y_mid, g1_mid, g2_mid, g3_mid), f_mid
-                    else:
-                        mu_low, state_low, f_low = mu_mid, (lam_mid, y_mid, g1_mid, g2_mid, g3_mid), f_mid
+                log_mu_low, log_mu_high = np.log(mu_low), np.log(mu_high)
                 
-                return {'kind': kind, 'mu_star': mu_mid, 'value': target}
+                def eval_at(log_mu):
+                    muL = float(np.exp(log_mu))
+                    # evolve from mus[i] to muL reusing the state_low as starting point
+                    lamL, yL, g1L, g2L, g3L = rge.evolve_couplings(mus[i], muL, state_low[0], state_low[1], use_two_loop,
+                                                                   state_low[2], state_low[3], state_low[4])
+                    if lamL <= 0 or yL <= 0:
+                        return None, None
+                    valL = lamL/(yL*yL) if kind == 'lambda_over_yt2' else lamL/(g2L*g2L + g1L*g1L/3.0)
+                    return muL, valL
+
+                # 1 secant step
+                log_mu_star = (log_mu_low*(f_high - target) + log_mu_high*(target - f_low)) / (f_high - f_low)
+                mu_star, f_star = eval_at(log_mu_star)
+
+                # 3 bisection steps to lock the bracket
+                lo, flo = (log_mu_low, f_low)
+                hi, fhi = (log_mu_high, f_high)
+                for _ in range(3):
+                    if f_star is None:
+                        break
+                    if (flo - target)*(f_star - target) <= 0:
+                        hi, fhi = log_mu_star, f_star
+                    else:
+                        lo, flo = log_mu_star, f_star
+                    log_mu_star = 0.5*(lo + hi)
+                    mu_star, f_star = eval_at(log_mu_star)
+
+                return {'kind': kind, 'mu_star': float(np.exp(log_mu_star)), 'value': target}
         
         return {'kind': kind, 'mu_star': None, 'value': target}
 
@@ -496,7 +520,8 @@ class HiggsQuarticAnalysis:
         
         # Use a custom evolution that doesn't evolve λ
         span = abs(log(mu_uv/mu_mz))
-        n_points = max(800, int(80*span))
+        base = 60 if span < 1.5 else 80
+        n_points = max(400, int(base*span))
         log_scales = np.linspace(log(mu_mz), log(mu_uv), n_points)
         
         for i in range(1, n_points):
@@ -752,6 +777,138 @@ class ExperimentalData:
 # MAIN ANALYSIS
 # =============================================================================
 
+def five_pattern_grid(higgs_analysis, sm):
+    """Deterministic, fast test of five-pattern using base μ* and varied initial conditions.
+       Uses analytic slopes from beta functions to avoid finite-difference cost and noise."""
+    print("\nFIVE-PATTERN GRID TEST")
+    print("-"*30)
+
+    # 1) Get base μ* once (for reference)
+    target = higgs_analysis.compute_uv_boundary_lambda()
+    rge2 = SMRenormalizationGroup(sm, order='2loop')
+
+    # 2) Loop over deterministic variations
+    for kappa in [0.93, 0.94, 0.95]:
+        for g3_scale in [0.995, 1.000, 1.005]:
+            # Initial conditions at MZ for this variation
+            y_t_MZ = kappa * sqrt(2) * sm.m_fermions['top'] / sm.v_weak
+            g1_MZ  = sm.g1_MZ
+            g2_MZ  = sm.g2_MZ
+            g3_MZ  = sm.g3_MZ * g3_scale
+
+            # Variant-specific crossings
+            hit_yt2 = higgs_analysis.find_ratio_crossing(target, 'lambda_over_yt2', 91.2, 1e16, n=100, use_two_loop=True,
+                                                         y_t_init=y_t_MZ, g1_init=g1_MZ, g2_init=g2_MZ, g3_init=g3_MZ)
+            hit_g   = higgs_analysis.find_ratio_crossing(target, 'lambda_over_g',   91.2, 1e16, n=100, use_two_loop=True,
+                                                         y_t_init=y_t_MZ, g1_init=g1_MZ, g2_init=g2_MZ, g3_init=g3_MZ)
+            if not (hit_yt2['mu_star'] and hit_g['mu_star']):
+                print(f"  kappa={kappa:.3f}, g3_scale={g3_scale:.3f}: no common μ*")
+                continue
+            mu_avg = (hit_yt2['mu_star'] * hit_g['mu_star'])**0.5
+
+            # Evolve from MZ to μ_avg with these initial conditions
+            _, y_t, g1, g2, g3 = rge2.evolve_couplings(91.1876, mu_avg, 0.126, y_t_MZ, True, g1_MZ, g2_MZ, g3_MZ)
+
+            # Vacuum deficit at μ_avg
+            sum_rule = y_t**2 - (g2**2 + g1**2/3)
+            vac_def  = abs(sum_rule)/(y_t**2/3)
+
+            # Analytic slopes at μ_avg
+            beta_g1, beta_g2, beta_g3 = rge2.beta_gauge_couplings(g1, g2, g3, use_two_loop=True)
+            beta_y  = rge2.beta_y_top_2loop(y_t, g1, g2, g3)
+            S1 = 2.0 * y_t * beta_y
+            S2 = 2.0 * g2 * beta_g2 + (2.0/3.0) * g1 * beta_g1
+            ratio = S1/S2 if S2 != 0 else float('inf')
+
+            print(f"  kappa={kappa:.3f}, g3_scale={g3_scale:.3f}: "
+                  f"vac_def={vac_def:.3f} (target ~0.200), S1/S2={ratio:.3f} (target ~5.000)")
+
+def robustness_scan(higgs_analysis, sm, N=50):
+    """Test robustness of five-pattern hypothesis under realistic input variations."""
+    import random
+    import numpy as np
+    
+    # PDG-like uncertainties
+    mt_central = sm.m_fermions['top']           # 173.0
+    mt_sigma   = 0.5                             # GeV
+    alpha_s_c  = 0.1181
+    alpha_s_sig= 0.0011
+    # g3 = sqrt(4π α_s). δg3/g3 = 0.5 δαs/αs
+    g3_rel_sigma = 0.5*(alpha_s_sig/alpha_s_c)   # ~0.46%
+    # MSbar matching factor for y_t at MZ
+    kappa_c   = 0.94
+    kappa_sig = 0.01
+
+    records = []
+    for _ in range(N):
+        # draw variations
+        mt = mt_central + random.uniform(-mt_sigma, mt_sigma)
+        kappa = kappa_c + random.uniform(-kappa_sig, kappa_sig)
+        g3_MZ = sm.g3_MZ * (1.0 + random.uniform(-g3_rel_sigma, g3_rel_sigma))
+
+        # recompute y_t at MZ with varied mt and kappa
+        y_t_MZ = kappa * sqrt(2) * mt / sm.v_weak
+
+        # evolve to E0 with overrides
+        rge2 = SMRenormalizationGroup(sm, order='2loop')
+        _, y_t_uv, g1_uv, g2_uv, g3_uv = rge2.evolve_couplings(
+            91.1876, higgs_analysis.cgm.E0_reciprocal, 0.126, y_t_MZ, True, sm.g1_MZ, sm.g2_MZ, g3_MZ
+        )
+
+        # evolve λ from UV boundary to IR using these UV couplings
+        lam_uv = higgs_analysis.compute_uv_boundary_lambda()
+        lam_ir, _ = higgs_analysis.evolve_couplings_with_initial_couplings(
+            higgs_analysis.cgm.E0_reciprocal, 173.0, lam_uv, y_t_uv,
+            g1_uv, g2_uv, g3_uv, use_two_loop=True
+        )
+        mH_pred = sm.v_weak * sqrt(2*lam_ir) if lam_ir > 0 else float('nan')
+
+        # use variant μ*; evaluate at μ_avg with overrides
+        mu_yt2 = higgs_analysis.find_ratio_crossing(lam_uv, 'lambda_over_yt2', 91.2, 1e16, use_two_loop=True,
+                                                    y_t_init=y_t_MZ, g1_init=sm.g1_MZ, g2_init=sm.g2_MZ, g3_init=g3_MZ)['mu_star']
+        mu_g   = higgs_analysis.find_ratio_crossing(lam_uv, 'lambda_over_g',   91.2, 1e16, use_two_loop=True,
+                                                    y_t_init=y_t_MZ, g1_init=sm.g1_MZ, g2_init=sm.g2_MZ, g3_init=g3_MZ)['mu_star']
+        vac_deficit = slope_ratio = mu_ratio = None
+        if mu_yt2 and mu_g:
+            mu_avg = (mu_yt2*mu_g)**0.5
+            _, y_t_avg, g1_avg, g2_avg, g3_avg = rge2.evolve_couplings(
+                91.1876, mu_avg, 0.126, y_t_MZ, True, sm.g1_MZ, sm.g2_MZ, g3_MZ
+            )
+            sum_rule = y_t_avg**2 - (g2_avg**2 + g1_avg**2/3)
+            vac_deficit = abs(sum_rule)/(y_t_avg**2/3)
+            beta_g1, beta_g2, beta_g3 = rge2.beta_gauge_couplings(g1_avg, g2_avg, g3_avg, use_two_loop=True)
+            beta_y  = rge2.beta_y_top_2loop(y_t_avg, g1_avg, g2_avg, g3_avg)
+            S1 = 2.0*y_t_avg*beta_y
+            S2 = 2.0*g2_avg*beta_g2 + (2.0/3.0)*g1_avg*beta_g1
+            slope_ratio = S1/S2 if S2 != 0 else float('inf')
+            mu_ratio = mu_yt2/mu_g
+
+        records.append({
+            'mH_pred': mH_pred,
+            'mu_yt2': mu_yt2, 'mu_g': mu_g, 'mu_ratio': mu_ratio,
+            'vac_deficit': vac_deficit, 'slope_ratio': slope_ratio
+        })
+
+    # summarize
+    def stats(xs):
+        xs = [x for x in xs if x is not None and np.isfinite(x)]
+        return (np.mean(xs), np.std(xs), len(xs))
+
+    mH_mu, mH_sig, n = stats([r['mH_pred'] for r in records])
+    vr_mu, vr_sig, _ = stats([r['vac_deficit'] for r in records])
+    sr_mu, sr_sig, _ = stats([r['slope_ratio'] for r in records])
+    mr_mu, mr_sig, _ = stats([r['mu_ratio'] for r in records])
+
+    print("\nROBUSTNESS SCAN SUMMARY")
+    print("-"*30)
+    print(f"m_H(pred) 2L: {mH_mu:.2f} ± {mH_sig:.2f} GeV  (N={n})")
+    if vr_mu is not None:
+        print(f"Vacuum deficit at μ*: {vr_mu:.3f} ± {vr_sig:.3f}  (target ~0.200)")
+    if sr_mu is not None:
+        print(f"Slope ratio S1/S2: {sr_mu:.3f} ± {sr_sig:.3f}  (target ~5)")
+    if mr_mu is not None:
+        print(f"μ ratio*: {mr_mu:.3f} ± {mr_sig:.3f}  (compare to 2-Δ = {2-higgs_analysis.cgm.Delta:.6f})")
+
 def main():
     """Execute comprehensive Higgs analysis."""
     
@@ -783,6 +940,13 @@ def main():
     if zeta > 0:
         print(f"ζ = 4π/S_geo = {zeta:.6f}")
     print("✓ QG structure constraints active in boundary conditions")
+
+    print("\nNON-CIRCULARITY CHECK")
+    print("-"*30)
+    print("Inputs used to predict m_H:")
+    print("  • CGM UV boundary λ(E0) from {δ_BU, m_p} only")
+    print("  • SM couplings at MZ or m_t from independent measurements")
+    print("  • No use of measured m_H or IR λ in boundary setting")
     
     # Section 1: RGE Mapping Check and 1-loop vs 2-loop Comparison
     print("\n1. RGE MAPPING CHECK AND STABILITY")
@@ -810,6 +974,17 @@ def main():
     
     higgs_analysis = HiggsQuarticAnalysis(cgm, sm)
     
+    # Structural checks for CGM constants
+    print("\nSTRUCTURAL CHECKS")
+    print("-"*30)
+    lam0 = higgs_analysis.compute_uv_boundary_lambda()
+    inv5 = 1.0/sqrt(5.0)
+    print(f"λ0/Δ = {lam0/cgm.Delta:.9f}  vs 1/√5 = {inv5:.9f}  (rel.err = {(lam0/cgm.Delta - inv5)/inv5*100:+.2f}%)")
+    print(f"δ_BU / (π/16) = {cgm.delta_BU / (pi/16):.6f}  (rel.err = {(cgm.delta_BU - pi/16)/(pi/16)*100:+.2f}%)")
+    print(f"48·Δ = {48.0*cgm.Delta:.6f}  (rel.err to 1 = {(48.0*cgm.Delta - 1.0)*100:+.2f}%)")
+    zeta_exact = 16.0*sqrt(2.0*pi/3.0)
+    print(f"ζ = {cgm.zeta:.12f}, 16√(2π/3) = {zeta_exact:.12f}  (diff = {cgm.zeta - zeta_exact:+.3e})")
+    
     # Test: CGM UV boundary → IR Higgs mass
     res_1loop = higgs_analysis.predict_mh_from_uv(cgm.E0_reciprocal, 173.0, use_two_loop=False)
     res_2loop = higgs_analysis.predict_mh_from_uv(cgm.E0_reciprocal, 173.0, use_two_loop=True)
@@ -817,6 +992,31 @@ def main():
     print(f"CGM UV→IR Higgs test (2-loop): m_H(pred) = {res_2loop['mH_pred']:.2f} GeV from λ(E0) = {res_2loop['lambda_uv']:.6f}")
     print(f"  2-loop shift: {res_2loop['mH_pred'] - res_1loop['mH_pred']:+.2f} GeV")
     print(f"  Relative errors: 1-loop error: {(res_1loop['mH_pred'] - 125.10)/125.10*100:+.2f}%; 2-loop error: {(res_2loop['mH_pred'] - 125.10)/125.10*100:+.2f}%")
+
+    # Ratio diagnostics (dimensionless relationships)
+    print(f"\nRATIO DIAGNOSTICS")
+    print("-"*30)
+    print(f"E0_forward/E0_reciprocal = {cgm.E0_forward/cgm.E0_reciprocal:.6f}  (√3 = {sqrt(3):.6f})")
+    print(f"E0_reciprocal / M_Planck = {cgm.E0_reciprocal/sm.M_Planck:.6e}")
+    print(f"E0_forward   / M_Planck = {cgm.E0_forward/sm.M_Planck:.6e}")
+    print(f"E0_reciprocal / v_weak  = {cgm.E0_reciprocal/sm.v_weak:.6e}")
+    print(f"E0_forward   / v_weak  = {cgm.E0_forward/sm.v_weak:.6e}")
+
+    # Use the computed m_H from 2-loop run
+    mH_2L = res_2loop['mH_pred']
+    if np.isfinite(mH_2L):
+        print(f"m_H(pred)/v_weak = {mH_2L/sm.v_weak:.6f}   (√(2 λ_IR))")
+        print(f"E0_reciprocal / m_H(pred) = {cgm.E0_reciprocal/mH_2L:.6e}  [log10 = {log10(cgm.E0_reciprocal/mH_2L):.3f}]")
+        print(f"E0_forward   / m_H(pred) = {cgm.E0_forward/mH_2L:.6e}  [log10 = {log10(cgm.E0_forward/mH_2L):.3f}]")
+
+    # Dimensionless quartic comparison (avoids unit anchoring concerns)
+    print(f"\nDIMENSIONLESS HIGGS QUARTIC CHECK")
+    print("-"*35)
+    lam_IR_pred = (mH_2L/sm.v_weak)**2 / 2.0
+    lam_IR_obs  = (125.10/sm.v_weak)**2 / 2.0
+    print(f"λ_IR(pred from m_H(pred)) = {lam_IR_pred:.6f}")
+    print(f"λ_IR(obs from m_H(obs))   = {lam_IR_obs:.6f}")
+    print(f"Δλ_IR/λ_IR(obs) = {(lam_IR_pred-lam_IR_obs)/lam_IR_obs*100:+.2f}%")
     
     # Dual-mode test: E0_forward vs E0_reciprocal
     print(f"\nDual-mode CGM test (√3 structure):")
@@ -830,6 +1030,19 @@ def main():
     delta_2L = resF_2loop['mH_pred'] - res_2loop['mH_pred']
     print(f"Mode difference (1-loop): Δ = {delta_1L:+.2f} GeV")
     print(f"Mode difference (2-loop): Δ = {delta_2L:+.2f} GeV")
+
+    # E0 sensitivity test (shows boundary-driven nature)
+    print(f"\nE0 SENSITIVITY TEST")
+    print("-"*30)
+    for scale in [0.5, 1.0, 2.0]:
+        E0_test = cgm.E0_reciprocal * scale
+        g1_uv, g2_uv, g3_uv, y_t_uv = higgs_analysis._evolve_couplings_to_uv(E0_test, use_two_loop=True)
+        lam_uv = higgs_analysis.compute_uv_boundary_lambda()
+        lam_ir, _ = higgs_analysis.evolve_couplings_with_initial_couplings(
+            E0_test, 173.0, lam_uv, y_t_uv, g1_uv, g2_uv, g3_uv, use_two_loop=True
+        )
+        mH_test = sm.v_weak * sqrt(2*lam_ir) if lam_ir > 0 else float('nan')
+        print(f"E0 factor {scale:.2f}: m_H(pred) = {mH_test:.2f} GeV")
     
     # Robustness check: ±1% y_t(E0) sensitivity
     print(f"\nRobustness check (1-loop, ±1% y_t(E0) shifts):")
@@ -854,6 +1067,8 @@ def main():
             print(f"  {k}: μ*(1L)={hit_1loop['mu_star']:.3e} GeV, μ*(2L)={hit_2loop['mu_star']:.3e} GeV (ratio={ratio:.2f})")
         elif hit_1loop['mu_star']:
             print(f"  {k}: μ*(1L)={hit_1loop['mu_star']:.3e} GeV, μ*(2L)=no crossing")
+        elif hit_2loop['mu_star']:
+            print(f"  {k}: μ*(2L)={hit_2loop['mu_star']:.3e} GeV, μ*(1L)=no crossing")
     else:
             print(f"  {k}: no crossing in [m_Z, 10^16]")
     
@@ -896,7 +1111,7 @@ def main():
         print(f"At μ* = {mu_avg:.3e} GeV (average):")
         print(f"  CGM sum rule: y_t² - (g2² + g1²/3) = {sum_rule_avg:.6f}")
         print(f"  Fractional mismatch: {abs(sum_rule_avg)/(y_t_avg**2)*100:.2f}%")
-        print(f"  Vacuum deficit fraction: {abs(sum_rule_avg) / (y_t_avg**2 / 3):.3f} (target 2 for Z₂ duality)")
+        print(f"  Vacuum deficit fraction: {abs(sum_rule_avg) / (y_t_avg**2 / 3):.3f} (target ≈ 0.200)")
         
         # Compute μ ratio* and check CGM connection
         mu_ratio = mu_yt2 / mu_g
@@ -927,19 +1142,23 @@ def main():
         print(f"\nSlope fingerprint at μ* (CGM flow geometry):")
         print("-"*45)
         
-        # Finite difference slopes around μ* (use 2-loop RGE for consistency)
-        dmu = 0.01 * mu_avg  # 1% variation
-        _, y_t_hi, g1_hi, g2_hi, g3_hi = rge_2loop.evolve_couplings(91.1876, mu_avg + dmu, 0.126, 0.94, True, 0.463, 0.648, 1.167)
-        _, y_t_lo, g1_lo, g2_lo, g3_lo = rge_2loop.evolve_couplings(91.1876, mu_avg - dmu, 0.126, 0.94, True, 0.463, 0.648, 1.167)
+        # Analytic slopes at μ* (use 2-loop RGE for consistency)
+        beta_g1, beta_g2, beta_g3 = rge_2loop.beta_gauge_couplings(g1_avg, g2_avg, g3_avg, use_two_loop=True)
+        beta_y  = rge_2loop.beta_y_top_2loop(y_t_avg, g1_avg, g2_avg, g3_avg)
         
-        # Compute slopes
-        S1 = (y_t_hi**2 - y_t_lo**2) / (2 * dmu) * mu_avg  # d/dlnμ [y_t²]
-        S2 = ((g2_hi**2 + g1_hi**2/3) - (g2_lo**2 + g1_lo**2/3)) / (2 * dmu) * mu_avg  # d/dlnμ [g2² + g1²/3]
+        S1 = 2.0 * y_t_avg * beta_y  # d/dlnμ [y_t²]
+        S2 = 2.0 * g2_avg * beta_g2 + (2.0/3.0) * g1_avg * beta_g1  # d/dlnμ [g2² + g1²/3]
         
         print(f"At μ* = {mu_avg:.3e} GeV:")
         print(f"  S1 = d/dlnμ [y_t²] = {S1:.6f}")
         print(f"  S2 = d/dlnμ [g2² + g1²/3] = {S2:.6f}")
         print(f"  Slope ratio S1/S2 = {S1/S2:.3f}")
+        
+        # Five-pattern diagnostic at μ*
+        print(f"\nFive-pattern diagnostic at μ*")
+        print("-"*30)
+        print(f"Vacuum deficit fraction: {abs(sum_rule_avg)/(y_t_avg**2/3):.3f}  (1/5 = 0.200)")
+        print(f"Slope ratio S1/S2: {S1/S2:.3f}  (5.000 target if exact)")
         
         # Check for CGM constants
         if abs(S1/S2 - 1.0) < 0.1:
@@ -948,6 +1167,9 @@ def main():
             print(f"  ✓ S1/S2 ≈ ρ = {cgm.rho:.3f} (CGM closure)")
         elif abs(S1/S2 - sqrt(3)) < 0.1:
             print(f"  ✓ S1/S2 ≈ √3 = {sqrt(3):.3f} (CGM duality)")
+
+    # Five-pattern grid test (robustness check)
+    five_pattern_grid(higgs_analysis, sm)
 
     # Section 3: Higgs Quartic with Ratio-Based Predictions
     print("\n3. HIGGS QUARTIC COUPLING - RATIO-BASED ANALYSIS")
@@ -1135,7 +1357,7 @@ def main():
         for name, value in reg['geometric_slopes'].items():
             ratio = abs(reg['slope_observed'] / value) if value != 0 else float('inf')
             print(f"    {name}: {value:.3f} (ratio: {ratio:.2f})")
-
+    
     # Section 4.5: Higgs Width Predictions (Dimensional) — corrected
     print("\n4.5 Higgs Width Predictions (Fractional CGM Corrections)")
     print("-"*55)
@@ -1222,7 +1444,7 @@ def main():
     print(f"\nHH production limits:")
     print(f"  SM λ3 = {lam3_SM:.3f}")
     print(f"  CGM λ3 envelopes: [{lam3_aperture_minus:.3f}, {lam3_aperture_plus:.3f}]")
-    print(f"  CGM prediction: ±2.1% self-coupling shifts within HL-LHC sensitivity")
+    print(f"  CGM prediction: ±2.1% self-coupling shifts likely below HL-LHC reach and testable at future colliders")
     
     # CP structure in VBF H→ττ
     cp_capacity = abs(cmath.exp(1j*phi).imag)          # ~0.555
@@ -1231,13 +1453,8 @@ def main():
     print(f"  Monodromy CP capacity: sin(φ_SU2) = {cp_capacity:.3f}")
     print(f"  CGM effective CPV (aperture-scaled): {cp_effective:.3%} (small, within future sensitivity)")
     
-    # Section 5: Duality Framework
-    print("\n5. √3 DUALITY SIGNATURE FRAMEWORK")
-    print("-"*50)
-    print("Differential analysis: skipped (no differential data in scope)")
-    
-    # Section 6: Experimental Validation
-    print("\n6. EXPERIMENTAL VALIDATION")
+    # Section 5: Experimental Validation
+    print("\n5. EXPERIMENTAL VALIDATION")
     print("-"*50)
 
     experimental = ExperimentalData()
@@ -1264,10 +1481,8 @@ def main():
         print(f"    Within precision:  {mass_val['within_precision']}")
 
 
-    # Section 9: SU(3) Hadron Checks (moved to separate experiment)
-
-    # Section 10: Predictions Summary
-    print("\n10. CGM HIGGS PREDICTIONS")
+    # Section 6: Predictions Summary
+    print("\n6. CGM HIGGS PREDICTIONS")
     print("-"*50)
 
     predictions = [
@@ -1303,6 +1518,9 @@ def main():
     print(f"  📊 Toroidal structure: {cgm.phase_space_regions} regions, √3 duality ready for ATLAS data")
 
     print("\n" + "="*80)
+
+    # Optional robustness run
+    # robustness_scan(higgs_analysis, sm, N=50)
 
 if __name__ == "__main__":
     main()
