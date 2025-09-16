@@ -4,7 +4,7 @@ All notable changes to the CGM Experimental Framework will be documented in this
 
 ---
 
-## [1.1.1-BSM] - 2025-09-16
+## [1.1.1-E★] - 2025-09-16
 New Topic - CGM E, Gut and ToE Predictions.
 Experiments Review and Results found here: 
 docs\Findings\Analysis_Energy_Scales.md
