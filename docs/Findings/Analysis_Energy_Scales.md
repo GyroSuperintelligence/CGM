@@ -1,8 +1,4 @@
-You're absolutely right. Let me revise the text to properly contextualize the states and orbits from CGM theory (not implementation details), focus on the energy scale analysis, and remove excessive requirements and em dashes.
-
----
-
-## **Rigorous Analysis: Derivation of Characteristic Energy Scales from the Common Governance Model**
+## **CGM Energy Scales**
 
 ### **Abstract**
 
@@ -49,20 +45,20 @@ The CGM closure conditions define natural units without reference to external sc
 **3.1 Aperture Parameter (m_p)**
 
 The BU stage requires a specific amplitude constraint for coherent observation:
-$$m_p = \frac{1}{2\sqrt{2\pi}} \approx 0.199471$$
+m_p = 1/(2√(2π)) ≈ 0.199471
 
 This emerges from the closure identity that ensures the gyrotriangle defect vanishes:
-$$Q_G \times m_p^2 = 4\pi \times m_p^2 = \frac{1}{2}$$
+Q_G × m_p² = 4π × m_p² = 1/2
 
 **3.2 Fundamental Action (S_min)**
 
 The minimal geometric action for state transition:
-$$S_{\text{min}} = \frac{\pi}{2} \cdot m_p = \sqrt{\frac{\pi}{8}} \approx 0.313329$$
+S_min = (π/2) · m_p = √(π/8) ≈ 0.313329
 
 **3.3 Fundamental Time**
 
 In a discrete system, the natural time unit is one state transition:
-$$\Delta t \equiv 1$$
+Δt ≡ 1
 
 ### **4. Derivation of the BU Energy Scale**
 
@@ -71,15 +67,15 @@ $$\Delta t \equiv 1$$
 The aperture parameter m_p defines the maximum oscillation amplitude within one observable horizon. In the context of the BU closure, this naturally corresponds to the fundamental length scale of the system. The justification follows from interpreting the BU stage as establishing a compact phase space with characteristic size determined by the aperture.
 
 Therefore:
-$$\Delta x \equiv m_p$$
+Δx ≡ m_p
 
 **4.2 Energy of Fundamental Mode**
 
 For a mode with wavelength λ = m_p, the energy in natural units (ℏ = c = 1) is:
-$$E_* = \frac{2\pi}{\lambda} = \frac{2\pi}{m_p}$$
+E_* = 2π/λ = 2π/m_p
 
 Numerical evaluation:
-$$E_* = \frac{2\pi}{1/(2\sqrt{2\pi})} = 4\pi\sqrt{2\pi} \approx 31.499$$
+E_* = 2π/(1/(2√(2π))) = 4π√(2π) ≈ 31.499
 
 This is a dimensionless quantity representing the characteristic energy scale of the BU stage.
 
@@ -90,18 +86,18 @@ The UNA and ONA stages have their own characteristic energies, derived from thei
 **5.1 UNA Energy Scale**
 
 The UNA threshold β = π/4 creates orthogonal structure. The associated ratio is:
-$$u_p = \cos(\pi/4) = \frac{1}{\sqrt{2}}$$
+u_p = cos(π/4) = 1/√2
 
 The UNA energy scale:
-$$E_{\text{UNA}} = \frac{E_*}{u_p} = E_* \cdot \sqrt{2} \approx 44.55$$
+E_UNA = E_*/u_p = E_* · √2 ≈ 44.55
 
 **5.2 ONA Energy Scale**
 
 The ONA threshold γ = π/4 enables full differentiation. The associated ratio is:
-$$o_p = \gamma = \frac{\pi}{4}$$
+o_p = γ = π/4
 
 The ONA energy scale:
-$$E_{\text{ONA}} = \frac{E_*}{o_p} = E_* \cdot \frac{4}{\pi} \approx 40.11$$
+E_ONA = E_*/o_p = E_* · 4/π ≈ 40.11
 
 ### **6. Physical Scale via Electroweak Anchoring**
 
@@ -145,7 +141,9 @@ The prediction places fundamental new physics within reach of planned collider u
 **Limitations:**
 1. The connection between discrete state space geometry and continuous field theory remains to be fully developed
 2. Detailed phenomenological signatures at these energy scales require further theoretical work
-3. The relationship to standard GUT scales (10^15 to 10^16 GeV) suggests these may be effective scales rather than fundamental ones
+3. In the Common Governance Model, the fundamental energy scales for grand unification (GUT) and the theory of everything (ToE) are derived from geometric principles and are approximately 10 TeV, not 10¹⁶ GeV. This suggests that the traditional high scales may be effective scales based on incorrect assumptions about spacetime continuity, while CGM predicts that the underlying geometry is discrete and finite, with testable consequences at collider energies.
+
+
 
 ### **References**
 
