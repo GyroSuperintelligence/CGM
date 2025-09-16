@@ -16,6 +16,7 @@ import mpmath as mp
 from typing import Dict, Any, Tuple, List, Optional
 import sys
 import os
+
 # Set high precision for mpmath to match proto-units analysis
 mp.mp.dps = 50
 
@@ -37,7 +38,9 @@ class TWClosureTester:
         self.s_p = mp.pi / 2  # CS threshold (Common Source)
         self.u_p = mp.mpf(1) / mp.sqrt(2)  # UNA threshold (light speed related)
         self.o_p = mp.pi / 4  # ONA threshold (sound speed related)
-        self.m_p = mp.mpf(1) / (2 * mp.sqrt(2 * mp.pi))  # BU threshold (closure amplitude)
+        self.m_p = mp.mpf(1) / (
+            2 * mp.sqrt(2 * mp.pi)
+        )  # BU threshold (closure amplitude)
 
         # Speed of light
         self.c = 1.0  # Using natural units
@@ -61,13 +64,13 @@ class TWClosureTester:
 
         Formula: tan(ω/2) = sin(θ) * sinh²(η/2) / (cosh²(η/2) + cos(θ) * sinh²(η/2))
         where β = tanh(η)
-        
+
         Now uses mpmath for high precision to match proto-units analysis
         """
         # Convert inputs to mpmath if they aren't already
         beta_vel = mp.mpf(beta_vel)
         theta = mp.mpf(theta)
-        
+
         if abs(beta_vel) >= 1.0:
             raise ValueError("beta_vel must be < 1 (subluminal)")
 
@@ -166,7 +169,9 @@ class TWClosureTester:
             print("Testing Thomas-Wigner Consistency Band")
             print("=" * 45)
             print(f"UNA threshold (u_p): {float(self.u_p):.6f} (light speed related)")
-            print(f"ONA threshold (o_p): {float(self.o_p):.6f} (pi/4, sound speed related)")
+            print(
+                f"ONA threshold (o_p): {float(self.o_p):.6f} (pi/4, sound speed related)"
+            )
             print(f"BU threshold (m_p):  {float(self.m_p):.6f}")
             print()
 
@@ -193,8 +198,12 @@ class TWClosureTester:
             print(f"  β* = {float(nearest_beta):.6f} (vs u_p = {float(self.u_p):.6f})")
             print(f"  θ* = {float(nearest_theta):.6f} (vs o_p = {float(self.o_p):.6f})")
             print()
-            print(f"Derived sound-speed ratio: β_sound = {float(beta_sound):.6f}  (c_s/c)")
-            print(f"Anatomical speed ratio: β_sound/u_p = {float(beta_sound)/float(self.u_p):.6f}")
+            print(
+                f"Derived sound-speed ratio: β_sound = {float(beta_sound):.6f}  (c_s/c)"
+            )
+            print(
+                f"Anatomical speed ratio: β_sound/u_p = {float(beta_sound)/float(self.u_p):.6f}"
+            )
             print()
             print(
                 "Note: β_sound is defined by w(β_sound, pi/4)=m_p; it is NOT a material wave speed."
@@ -272,7 +281,9 @@ class TWClosureTester:
         if verbose:
             print(f"\nTotal holonomy (8-leg loop): {total_rotation:.6f} rad")
             print(f"Signed total holonomy:       {signed_total:+.6f} rad")
-            print(f"Nonzero holonomy detected (monodromy): φ₈ = {total_rotation:.6f} rad")
+            print(
+                f"Nonzero holonomy detected (monodromy): φ₈ = {total_rotation:.6f} rad"
+            )
             print(f"This equals the BU dual-pole monodromy δ_BU; value is invariant.")
             print(f"Memory accumulation:         {deviation:.6e}")
             print(f"Signed memory:               {signed_deviation:.6e}")
@@ -356,7 +367,7 @@ class TWClosureTester:
         δ_BU := 2·ω(ONA ↔ BU) ≈ 0.98·m_p
 
         This is a named invariant that should be stable across seeds/perturbations.
-        
+
         Physical Meaning:
         - δ_BU represents the "memory" that accumulates when traversing the path:
           ONA → BU+ → BU- → ONA
@@ -390,11 +401,15 @@ class TWClosureTester:
             print(f"  BU threshold m_p = {float(self.m_p):.10f} rad")
             print(f"  Ratio δ_BU/m_p = {ratio_to_mp:.10f}")
             print(f"  Deviation from 1.0: {deviation_from_mp:.4%}")
-            print(f"  Physical interpretation: {ratio_to_mp*100:.2f}% closure, {100-ratio_to_mp*100:.2f}% aperture")
+            print(
+                f"  Physical interpretation: {ratio_to_mp*100:.2f}% closure, {100-ratio_to_mp*100:.2f}% aperture"
+            )
 
             if deviation_from_mp < 0.05:  # Within 5%
                 print(f"  ✅ δ_BU is STABLE: Candidate CGM constant")
-                print(f"     This connects to the fundamental 97.9% closure / 2.1% aperture principle")
+                print(
+                    f"     This connects to the fundamental 97.9% closure / 2.1% aperture principle"
+                )
             else:
                 print(f"  ⚠️  δ_BU needs refinement")
 
@@ -462,7 +477,9 @@ class TWClosureTester:
             print(
                 f"   ONA threshold: {float(self.o_p):.6f} radians = {np.degrees(float(self.o_p)):.2f}°"
             )
-            print(f"   Difference:    {abs(float(theta_for_m_p) - float(self.o_p)):.6f} radians")
+            print(
+                f"   Difference:    {abs(float(theta_for_m_p) - float(self.o_p)):.6f} radians"
+            )
         results["una_fixed_theta"] = {
             "theta": theta_for_m_p,
             "ona_threshold": self.o_p,
@@ -592,7 +609,9 @@ class TWClosureTester:
             print(f"  Forward ordering: {total_rotation_forward:.6f} rad")
             print(f"  Reverse ordering: {total_rotation_reverse:.6f} rad")
             print(f"  Used ordering: {ordering_used}")
-            print(f"Toroidal holonomy (4-leg) = {total_rotation:.6f} rad (system-level memory)")
+            print(
+                f"Toroidal holonomy (4-leg) = {total_rotation:.6f} rad (system-level memory)"
+            )
             print(f"Memory accumulation: {rotation_deviation:.6e}")
             print()
 
@@ -606,11 +625,15 @@ class TWClosureTester:
                 print("   The emergence thresholds create a closed geometric structure")
             else:
                 print("🎯 TOROIDAL MONODROMY DETECTED: Geometric memory accumulation")
-                print("   This represents the system's topological memory, not an error")
+                print(
+                    "   This represents the system's topological memory, not an error"
+                )
 
             # DIAGNOSTIC: Analyze the monodromy pattern
             print("\n🔍 TOROIDAL MONODROMY DIAGNOSTIC:")
-            print(f"   System-level memory: {total_rotation:.6f} rad (geometric invariant)")
+            print(
+                f"   System-level memory: {total_rotation:.6f} rad (geometric invariant)"
+            )
             print(
                 f"   Memory accumulation: {total_rotation:.6f} rad (topological signature)"
             )
@@ -824,7 +847,9 @@ class TWClosureTester:
             print(f"  Std:  {curvature_result['F_std']:.6f}")
             print(f"  Median: {curvature_result['F_median']:.6f}")
             print(f"  Samples: {curvature_result['samples']}")
-            print("  Note: This is a small-rectangle approximation; exact SU(2)/SO(3) composition needed for precise sign/scale")
+            print(
+                "  Note: This is a small-rectangle approximation; exact SU(2)/SO(3) composition needed for precise sign/scale"
+            )
 
             # Print BU pole asymmetry results
             bu_asym = results["bu_pole_asymmetry"]

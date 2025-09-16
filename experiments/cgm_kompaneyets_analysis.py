@@ -94,6 +94,7 @@ try:
 except ImportError:
     HEALPY_AVAILABLE = False
 
+
 @dataclass
 class PhysicalConstants:
     """Physical constants used in Kompaneyets calculations."""

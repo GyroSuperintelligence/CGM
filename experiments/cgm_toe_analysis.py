@@ -38,7 +38,10 @@ from dataclasses import dataclass
 import math
 
 # Import CGM base framework
-from cgm_quantum_energy_analysis import CGMUnits, fmt  # pyright: ignore[reportAttributeAccessIssue, reportMissingImports]
+from cgm_quantum_energy_analysis import (  # pyright: ignore[reportMissingImports]
+    CGMUnits,
+    fmt,
+)  # pyright: ignore[reportAttributeAccessIssue, reportMissingImports]
 
 
 @dataclass

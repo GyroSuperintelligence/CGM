@@ -18,11 +18,11 @@ from typing import Dict, Any, List, Tuple
 import sys
 import os
 
-# Using relative imports
-from .functions.gyrovector_ops import GyroVectorSpace
-from .functions.gyrogeometry import ThomasWignerRotation
-from .functions.dimensions import DimensionalCalibrator, DimVec
-from .tw_closure_test import TWClosureTester
+# Using absolute imports
+from functions.gyrovector_ops import GyroVectorSpace
+from functions.gyrogeometry import ThomasWignerRotation
+from functions.dimensions import DimensionalCalibrator, DimVec
+from tw_closure_test import TWClosureTester
 
 
 def compute_ladder_based_kappa(
