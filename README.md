@@ -38,8 +38,8 @@ Recent developments have extended CGM to define quantum gravity as the geometric
 
 | Version | Focus Area | Documentation | Implementation |
 |---------|------------|---------------|----------------|
-| **1.1.2** | ⚡ Energy Scale Unification | [Analysis](docs\Findings\Analysis_Energy_Scales.md) | [Code](experiments\cgm_energy_analysis.py) |
-| **1.1.0** | 📏 4pi Unification through Alignment | [Analysis](docs/Findings/Analysis_4pi_Alignment.md) | []() |
+| **1.1.2** | ⚡ Energy Scale Unification | [Analysis](docs/Findings/Analysis_Energy_Scales.md) | [Code](/experiments/cgm_energy_analysis.py) |
+| **1.1.0** | 📏 4pi Unification through Alignment | [Analysis](/docs/Findings/Analysis_4pi_Alignment.md) | []() |
 | **1.1.0** | 🎯 Fine-Structure Constant | [Analysis](docs/Findings/Analysis_Fine_Structure.md) | [Code](experiments/cgm_alpha_analysis.py) |
 | **1.0.9** | ⚛️ Proto-Units Framework | [Analysis](docs/Findings/Analysis_CGM_Units.md) | [Code](experiments/cgm_proto_units_analysis.py) |
 | **1.0.8** | 🌌 Quantum Gravity | [Analysis](docs/Findings/Analysis_Quantum_Gravity.md) | [Code](experiments/cgm_quantum_gravity_analysis.py) |
