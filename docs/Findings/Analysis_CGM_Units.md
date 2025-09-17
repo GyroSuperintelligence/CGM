@@ -3,7 +3,7 @@
 
 ## Abstract
 
-The Common Governance Model (CGM) proto-units framework presents a revolutionary approach to fundamental physics, defining **Quantum Gravity as the geometric invariant Q_G = 4π** rather than as a quantized field theory. This comprehensive analysis examines CGM's complete theoretical structure, mathematical foundations, and empirical validations, revealing how Q_G automatically induces quantum operator algebra in spacetime while deriving fundamental dimensionless constants and coupling strengths from pure geometric principles. Beginning from the single axiom "The Source is Common," the framework demonstrates how four recursive stages of geometric evolution establish the fundamental structure of three-dimensional space with six degrees of freedom. The framework achieves remarkable internal consistency through hierarchical monodromy structures, predicts the fine-structure constant to 0.0316% accuracy, and validates cross-scale patterns from quantum commutators to cosmic structure. By calibrating its geometrically-derived ratios against measured constants, the resulting unit system predicts an energy scale of E₀ = 2.36×10¹⁸ GeV and reveals a characteristic √3 ratio between forward and reciprocal modes. We assess CGM's potential as a complete Theory of Everything, examining its geometric unification of quantum mechanics and gravity through observation-based principles that achieve machine-precision internal consistency across three fundamental bridge equations connecting geometry to measured physical constants.
+The Common Governance Model (CGM) proto-units framework presents a revolutionary approach to fundamental physics, defining **Quantum Gravity as the geometric invariant Q_G = 4π** rather than as a quantized field theory. This comprehensive analysis examines CGM's complete theoretical structure, mathematical foundations, and empirical validations, revealing how Q_G automatically induces quantum operator algebra in spacetime while deriving fundamental dimensionless constants and coupling strengths from pure geometric principles. Beginning from the single axiom "The Source is Common," the framework demonstrates how four recursive stages of geometric evolution establish the fundamental structure of three-dimensional space with six degrees of freedom. The framework achieves remarkable internal consistency through hierarchical monodromy structures, predicts the fine-structure constant to 0.0316% accuracy, and validates cross-scale patterns from quantum commutators to cosmic structure. By calibrating dimensionless geometric ratios against a chosen physical anchor (e.g., setting the CS energy to the Planck energy), the framework yields concrete numbers without introducing any new base units. With E_CS anchored, the model fixes stage ratios such as E_GUT^UV/E_CS ≈ 0.1915 and E_BU/E_CS = 1/(4π^2). We assess CGM's potential as a complete Theory of Everything, examining its geometric unification of quantum mechanics and gravity through observation-based principles that achieve machine-precision internal consistency across three fundamental bridge equations connecting geometry to measured physical constants.
 
 ## 1. Introduction: Quantum Gravity as Geometric Observation
 
@@ -20,6 +20,11 @@ This definition automatically induces quantum structure in spacetime through the
 The framework achieves several theoretical breakthroughs: the identification of Q_G = 4π as a fundamental survey invariant governing coherent observation, the derivation of gravitational coupling ζ = 23.16 from geometric principles rather than empirical measurement, and the prediction of a characteristic energy scale E₀ = 2.36×10¹⁸ GeV with an exact √3 duality ratio between complementary physical modes. These results emerge from geometric necessity through a system of bridge equations that connect dimensionless invariants to measurable constants, thereby setting the absolute scale of the system.
 
 The recursive structure implies that time emerges from phase coherence, consistent with the framework's view of reality as self-governing alignment through geometric necessity. The framework extends classical polygonal methods for deriving π into a comprehensive system for deriving physical scale relationships. While traditional approaches combine empirically measured constants to form natural units, CGM derives dimensionless coupling strengths and scale ratios from the requirements of coherent observation, which are then anchored to the SI system through measured values like G.
+
+**Unit policy (CGM):**
+- No new base units. We work in SI or (optionally) Planck units.
+- All CGM results are first given as dimensionless identities and ratios.
+- To get numbers, choose one anchor (e.g., E_CS = Planck energy) and propagate via the ratios.
 
 ## 2. Historical Context and Mathematical Foundations
 
@@ -142,6 +147,8 @@ The framework defines three action scales [dimensionless]:
 
 These quantities emerge from the recursive structure and determine energy scale relationships through the action bridge. The ratio S_rec/S_min = 3 generates the exact √3 energy ratio between forward and reciprocal modes.
 
+Note on ζ: ζ = 4π / S_geo is a dimensionless normalization that organizes CGM geometry. It is not used to define new base units or to predict G absolutely. When we want numbers in SI, we take c, ℏ, and G from measurement and apply the CGM dimensionless ratios.
+
 ## 5. Hierarchical Monodromy Structure: The Complete Memory Architecture
 
 ### 5.1 Complete Monodromy Inventory
@@ -220,8 +227,8 @@ The **8.1% kinematic offset** represents the structural fingerprint mapping UNA/
 **Angular quantities [radians]**: α = π/2, β = π/4, γ = π/4 (geometric thresholds)
 **Dimensionless amplitudes**: m_p = 0.199471 (aperture parameter), all action ratios S_min, S_rec, S_geo
 **Geometric invariants**: Q_G = 4π [steradians] (complete solid angle), L_horizon [dimensionless length scale]
-**Physical scales**: E₀ [GeV], T₀ [s], L₀ [m], M₀ [kg]
-**Bridge parameters**: κ [J⋅s] (action scale factor), ζ [dimensionless] (gravitational coupling)
+**Dimensional constants (taken from experiment)**: c, ℏ, G (we do not redefine units).
+**Reporting policy**: CGM outputs are dimensionless (Q_G, m_p, stage ratios). Dimensional numbers are obtained only after choosing a physical anchor (e.g., E_CS = Planck energy).
 
 ### 6.2 Key Relationships and Physical Meaning
 
@@ -239,68 +246,27 @@ The **8.1% kinematic offset** represents the structural fingerprint mapping UNA/
 
 The 2019 SI redefinition fixed seven fundamental constants, including h = 6.62607015×10⁻³⁴ J⋅s exactly [6]. The gravitational constant G = 6.674×10⁻¹¹ m³/(kg⋅s²) remains measured with relative uncertainty ~2×10⁻⁵, representing the largest uncertainty among fundamental constants [10]. This analysis uses CODATA 2018 values with CODATA 2022 providing updated measurements [11].
 
-### 7.2 Bridge System Metrology
+### 7.2 Dimensional anchoring policy
 
-The CGM bridge equations use G as the sole empirical anchor to set absolute scales. The action bridge S_min × κ = ℏ connects dimensionless geometric action to the fixed Planck constant, where κ = 3.36571×10⁻³⁴ J⋅s carries the dimensional conversion. The speed bridge c = Q_G × (L₀/T₀) relates the fixed speed of light to geometric ratios. The gravity bridge G = ζ × L₀³/(M₀T₀²) anchors the scale system to measured G through the geometrically-determined coupling ζ.
+CGM does not introduce new base units. All predictions are first derived as dimensionless ratios. To obtain numeric scales, choose a single anchor (commonly E_CS = E_Planck) and propagate via:
 
-This metrological approach derives coupling strengths from geometric principles rather than empirical measurement, using dimensional consistency to connect geometric invariants to measurable constants.
+E_stage = (S_stage / S_CS) × E_CS   and   E_GUT = (S_GUT / S_CS) × E_CS.
 
-## 8. The Bridge System: Mathematical Framework and Physical Units
+No independent T0 or L0 are defined by CGM; use c to convert between time and length if needed.
 
-### 8.1 Three-Bridge Calibration System
+## 8. Dimensional outputs from a single anchor
 
-CGM establishes physical scales through three fundamental bridges using Q_G:
+Pick E_CS and compute:
+- E_UNA/E_CS = 2/(π√2) ≈ 0.450158
+- E_ONA/E_CS = 1/2
+- E_BU/E_CS  = 1/(4π^2) ≈ 0.025330
+- E_GUT/E_CS = S_GUT/S_CS ≈ 0.191518
 
-1. **Action Bridge**: S_min × κ = ℏ
-   - S_min = (π/2)m_p ≈ 0.313329 (minimal coherent action)
-   - κ = 3.36571×10⁻³⁴ J⋅s (action scale factor)
-   - Connects dimensionless geometric action to the fixed Planck constant
+Example (anchor): if E_CS = 1.2209×10^19 GeV (Planck energy),
+E_GUT^UV ≈ 2.34×10^18 GeV and E_BU^UV ≈ 3.09×10^17 GeV.
 
-2. **Speed Bridge**: c = Q_G × (L₀/T₀) = 4π × (L₀/T₀)
-   - Interprets c as "survey closure rate" - geometric completeness propagation
-   - L₀/T₀ = c/(4π) = 2.3865×10⁷ m/s
-   - Links the fixed speed of light to geometric length-time ratios
-
-3. **Gravity Bridge**: G = ζ × L₀³/(M₀T₀²)
-   - ζ = Q_G/S_geo = 23.15524 (gravitational coupling from pure geometry)
-   - S_geo = m_p × π × √3/2 ≈ 0.542701 (geometric mean action)
-   - Connects measured gravitational constant to geometric scales
-
-The bridge system maintains dimensional consistency while deriving scales from geometric invariants. Each bridge represents a fundamental constraint linking geometric structure to measurable physics.
-
-### 8.2 Einstein-Hilbert Quantization Confirmation
-
-Independent derivation through Einstein-Hilbert action quantization confirms:
-
-**ζ = (σ K ξ)/(ν S_geo) = (1)(12π)(1)/(3)(S_geo) = 4π/S_geo ≈ 23.155**
-
-where:
-- ν = 3 (rotational curvature quanta at BU, dim SO(3) = 3)
-- σ = 1 (canonical curvature normalization)
-- ξ = 1 (unit 4-cell convention)
-- K = 12π (de Sitter curvature × horizon completeness)
-
-### 8.3 Physical Scale Predictions
-
-Using measured G as anchor, the framework predicts:
-
-- **Time Scale**: T₀ = 8.916×10⁻⁴³ s = **16.54 × T_Planck**
-- **Length Scale**: L₀ = 2.127×10⁻³⁵ m = **1.316 × L_Planck**
-- **Energy Scale**: E₀ = 3.775×10⁸ J = **2.356×10¹⁸ GeV**
-- **Mass Scale**: M₀ = 4.2×10⁻⁹ kg
-
-These represent theoretical predictions emerging from geometric structure and the empirical anchor G. The uncertainty in G (~2×10⁻⁵) propagates to ~1×10⁻⁵ relative uncertainty in derived scales through T₀ ∝ √G.
-
-Verification: Speed of light and gravitational constant recovered to machine precision (relative errors < 10⁻¹⁵).
-
-### 8.4 Einstein Gauge Formulation
-
-In dimensionless Einstein gauge with normalized energy Ē = 1:
-- c̄² = 1/(Q_G × m_p²) = 2.000 [dimensionless] (exactly)
-- m̄ = Ē/c̄² = 0.500 [dimensionless] (enforcing E=mc²)
-- p̄ = m̄c̄ = 0.7071 [dimensionless]
-
-This gauge demonstrates how the closure identity Q_G × m_p² = 1/2 establishes mass-energy equivalence as a geometric necessity rather than an empirical law.
+IR mapping is then set by the optical invariant:
+E_i^UV × E_i^IR = (E_CS × 246 GeV)/(4π^2).
 
 ## 9. The Proto-Units Analysis and Polygon Recursion
 
@@ -338,38 +304,23 @@ The analysis validates exact geometric relationships [dimensionless unless noted
 - S_geo = m_p × π × √3/2 = 0.542701
 
 **Energy and Speed Relationships**:
-- E_CGM = S_min/m_p = π/2 = 1.5708
-- c_CGM = L_horizon/m_p = 4π = 12.566
+- These relationships demonstrate internal consistency and provide multiple pathways for extracting π from CGM observables
 
 These relationships demonstrate internal consistency and provide multiple pathways for extracting π from CGM observables, confirming the geometric framework's mathematical coherence.
 
 ## 10. Dual-Mode Structure and Physical Predictions
 
-### 10.1 The √3 Energy Ratio
+### 10.1 The √3 ratio (dimensionless)
 
-The framework yields an exact √3 ratio between forward and reciprocal modes:
+The model predicts a strict dimensionless relation: E_forward / E_reciprocal = √3.
+No absolute energies are assigned here; numbers appear only after an external anchor is chosen.
 
-**E₀(forward)/E₀(reciprocal) = √3 = 1.7321 [dimensionless]**
+### 10.2 Stage ratios relative to the CS anchor
 
-This ratio emerges from the action ratio S_rec/S_min = 3 and persists regardless of parameter choices. The √3 signature is exact within the model and suggests fundamental duality distinguishing physical processes:
+With E_CS chosen, all UV scales follow from:
+E_UNA/E_CS ≈ 0.450158, E_ONA/E_CS = 0.5, E_BU/E_CS ≈ 0.025330, E_GUT/E_CS ≈ 0.191518.
 
-**Forward mode**: E₀ = 2.356×10¹⁸ GeV (higher energy regime)
-**Reciprocal mode**: E₀ = 1.360×10¹⁸ GeV (lower energy regime)
-
-### 10.2 Scale Relationships and Phenomenological Context
-
-The analysis yields specific relationships to established reference scales:
-
-**Planck Scale Ratios**:
-- T₀/T_Planck = 16.54 [dimensionless]
-- L₀/L_Planck = 1.316 [dimensionless]
-- E₀/E_Planck = 0.1930 [dimensionless]
-
-**Energy Scale Context**:
-- E₀/E_GUT ≈ 118 (assuming E_GUT ~ 2×10¹⁶ GeV)
-- E₀/E_weak ≈ 9.6×10¹⁵ (E_weak ~ 246 GeV)
-
-These energy scales are far above current experimental reach. Direct validation would require capabilities beyond foreseeable accelerator technology, though indirect cosmological signatures might provide testable consequences.
+These are unit-independent and reflect geometric structure; only E_CS sets the overall scale.
 
 ### 10.3 UV/IR Mixing Mechanism
 
@@ -414,8 +365,8 @@ Table 1: Complete validation metrics
 | | ζ | 23.155 [dimensionless] | Geometry-derived ✓ |
 | **Geometric Invariants** | Q_G × m_p² | 0.5000 [dimensionless] | Exact closure ✓ |
 | | √3 ratio | 1.7321 [dimensionless] | Model-exact ✓ |
-| **Scale Predictions** | E₀ forward | 2.356×10¹⁸ [GeV] | Prediction |
-| | T₀/T_Planck | 16.54 [dimensionless] | Prediction |
+| **Stage Ratios** | E_GUT/E_CS | 0.191518 | Derived ✓ |
+|                  | E_BU/E_CS  | 0.025330 | Derived ✓ |
 | **Aperture Balance** | Closure percentage | 97.93% | Corrected value ✓ |
 | | Aperture percentage | 2.07% | Corrected value ✓ |
 

@@ -1,6 +1,14 @@
 # Changelog
 
 All notable changes to the CGM Experimental Framework will be documented in this file.
+---
+
+## [1.1.2-GuT] - 2025-09-17
+Corrections:
+docs\Findings\Analysis_Energy_Scales.md
+experiments\cgm_energy_analysis.py
+experiments\cgm_proto_units_analysis.py
+experiments\cgm_proto_units_helpers_.py
 
 ---
 

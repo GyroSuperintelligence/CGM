@@ -8,9 +8,9 @@ Common Governance Model (CGM) three-bridge calibration, and proves the associate
 
 Part A — ζ derivation from Einstein–Hilbert action quantization
   A1. Derive ζ from S_EH = (c^3/16πG) ∫ R √(-g) d^4x in a homogeneous CGM 4-cell
-  A2. Prove that, under CGM speed and gravity bridges, S_EH/(E0 T0) = (σ·K·ξ)/(4ζ)
+  A2. Prove that, under CGM speed and gravity bridges, S_EH/(E0 T0) = (σ·K·ξ)/ζ
   A3. Impose the action quantization S_EH = κ · ν · S_geometric to obtain:
-      ζ = (σ · K · ξ) / (4 · ν · S_geometric)
+      ζ = (σ · K · ξ) / (ν · S_geometric)
 
 Part B — Fix ν, σ, ξ by CGM first principles (no ad hoc factors)
   B1. ν = 3: The quantized curvature quanta equal dim so(3) = 3 (rotational sector);
@@ -35,11 +35,11 @@ Part D — √3 energy ratio is necessary
   D2. Therefore E0(fwd)/E0(rec) = √(S_rec/S_fwd) = √3 (exact). Proof included.
 
 Part E — Fixing K by CGM horizon normalization
-  E1. ζ = (σ K ξ) / (4 ν S_geo). With (ν,σ,ξ) = (3,1,1) and S_geo above:
-      ζ = K / (12 · S_geo).
-  E2. CGM horizon normalization (c = 4π L0/T0) fixes the geometric constant so that
-      K = 12π is the unique choice preserving (i) de Sitter normalization R=12/L^2
-      in the static limit and (ii) 4π horizon invariance in the CGM cell.
+  E1. ζ = (σ K ξ) / (ν S_geo). With (ν,σ,ξ) = (3,1,1) and S_geo above:
+      ζ = K / (3 · S_geo).
+  E2. CGM horizon normalization (c = 4π L0/T0) plus de Sitter curvature scale (R L^2 = 12)
+      sets the composite geometric constant to K = 12π by convention, so that
+      ζ = (12π)/(3 S_geo) = 4π/S_geo = Q_G/S_geo, aligning with the lean core.
   E3. Numeric check reproduces ζ ≈ 23.15524.
 
 Outputs:
@@ -52,8 +52,6 @@ Dependencies: sympy, mpmath
 
 from __future__ import annotations
 
-import math
-from dataclasses import dataclass
 from typing import Tuple, Dict, Any, Union
 
 import sympy as sp
@@ -253,7 +251,7 @@ def numeric_zeta_evaluation():
     Returns numerical ζ and checks against targeted ~23.15524.
     """
     Sgeo = compute_S_geometric()  # m_p π √3/2
-    K_value = 12 * sp.pi  # CGM horizon normalization
+    K_value = 12 * sp.pi  # CGM horizon + de Sitter normalization
     zeta_expr = sp.simplify((1 * K_value * 1) / (3 * Sgeo))
     zeta_num = float(zeta_expr.evalf(mp.dps))
     return zeta_expr, zeta_num
@@ -325,8 +323,9 @@ def show_gauge_audit():
         "        without altering the three-bridge relations or ξ=1. This is a choice of convention."
     )
     print(
-        "        We fix K uniquely by (i) RL^2=12 and (ii) Q_G=4π (horizon completeness)."
+        "        We fix K by two normalizations: (i) RL^2=12 (de Sitter) and (ii) Q_G=4π (horizon completeness),"
     )
+    print("        which together select K = 12π and reproduce ζ = 4π/S_geo.")
 
 
 def absorb_topology_into_K(K_in: sp.Expr, topo_factor: sp.Expr) -> sp.Expr:
@@ -398,7 +397,7 @@ def main():
     print("  • Constant-curvature CGM 4-cell in normal coordinates")
     print("  • Quantization condition: S_EH = κ · ν · S_geometric")
     print("\nConventions and Normalizations:")
-    print("  • Unit 4-cell: ξ = 1 (V4 = L₀³ T₀)")
+    print("  • Unit 4-cell: ξ = 1 (V₄ = L₀³ T₀)")
     print("  • Curvature normalization: σ = 1 (canonical, no double-counting)")
     print("  • Time coordinate: x⁰ = t gauge (L³T volume element)")
     print("  • Topology factors absorbed into K to preserve ξ = 1")

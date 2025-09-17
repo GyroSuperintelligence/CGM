@@ -1,154 +1,302 @@
-## **CGM Energy Scales**
+# Energy Scale Structure in the Common Governance Model: A Geometric Approach to Unification
 
-### **Abstract**
+## Abstract
 
-This document presents a formal derivation of characteristic energy scales emergent from the Common Governance Model (CGM), an axiomatic framework based on gyrogroup algebra. The model predicts that recursive geometric evolution through four stages (CS, UNA, ONA, BU) necessarily generates a finite state space with specific structural properties. By establishing fundamental units from the model's closure conditions, particularly the aperture parameter m_p = 1/(2√(2π)), we calculate energy scales for each evolutionary stage. The results yield testable predictions for a Theory of Everything (ToE) scale at approximately 10.97 TeV and a Grand Unification (GUT) scale at approximately 9.87 TeV, positioning these fundamental thresholds within reach of next-generation particle colliders.
+We present a systematic analysis of energy scales emerging from the Common Governance Model (CGM), a geometric framework that derives physical scales from fundamental structural principles. The framework establishes a hierarchy of energy scales through four stages (CS, UNA, ONA, BU) characterized by specific geometric thresholds. A central result is the optical conjugacy relation E_i^UV × E_i^IR = (E_CS × E_EW)/(4π)² that connects ultraviolet and infrared physics through a single invariant. We demonstrate how this geometric structure yields testable predictions including neutrino masses of approximately 0.06 eV through 48² quantization, proton lifetime of order 10^43 years, and a characteristic electromagnetic duality angle of 48°. The analysis employs standard renormalization group methods to verify consistency with gauge coupling evolution while maintaining clear distinction between dimensionless geometric ratios and dimensionful physical scales.
 
-### **1. Introduction and Theoretical Context**
+## 1. Introduction
 
-The Common Governance Model (CGM) posits that spacetime and physical laws emerge from a single axiom, "The Source is Common" (CS), through a sequence of recursive geometric stages [1]. This process is formally described using gyrogroup structures, where non-associativity is governed by systematic gyration operators following Abraham Ungar's formalism [2].
+The unification of fundamental forces remains a central challenge in theoretical physics. While the Standard Model successfully describes electromagnetic, weak, and strong interactions up to energies of order 10² GeV, the incorporation of gravity and the explanation of hierarchical structures require physics beyond current frameworks. Grand Unified Theories (GUTs) suggest unification at scales of approximately 10^16 GeV, while quantum gravity effects are expected near the Planck scale of 10^19 GeV.
 
-The model demonstrates that exactly three spatial dimensions with six degrees of freedom emerge through this recursive process. The evolution proceeds through four stages:
-- **CS (Common Source)**: Unobservable origin with inherent chirality
-- **UNA (Unity Non-Absolute)**: First observable structure, three rotational degrees of freedom
-- **ONA (Opposition Non-Absolute)**: Full differentiation, six total degrees of freedom
-- **BU (Balance Universal)**: Stable closure with preserved memory
+The Common Governance Model (CGM) provides an alternative approach based on geometric principles rather than field-theoretic unification. The framework posits that energy scales emerge from a recursive geometric structure characterized by four stages, each with specific threshold values derived from fundamental angular relationships. This analysis examines the energy scale predictions of CGM and their consistency with observed physics.
 
-Crucially, the CGM predicts that this recursive structure, when fully explored, generates a finite discrete state space. The exact number of states and their organization into equivalence classes (orbits) emerges from the geometric constraints rather than being imposed externally.
+## 2. Theoretical Framework
 
-### **2. The Finite State Space from CGM Theory**
+### 2.1 Stage Structure and Thresholds
 
-**2.1 Origin of the Discrete States**
+The CGM framework identifies four stages of geometric evolution, each characterized by a threshold parameter:
 
-The CGM framework requires that physical observables emerge from recursive application of gyrogroup operations. Starting from an archetypal configuration representing the CS stage and applying all possible transformations consistent with the geometric constraints, one obtains a finite set of distinguishable configurations. Each configuration represents a unique way the six degrees of freedom can be arranged while respecting the closure conditions.
+- **CS (Common Source)**: s_p = π/2 [dimensionless]
+- **UNA (Unity Non-Absolute)**: u_p = cos(π/4) = 1/√2 [dimensionless]
+- **ONA (Opposition Non-Absolute)**: o_p = π/4 [dimensionless]
+- **BU (Balance Universal)**: m_p = 1/(2√(2π)) ≈ 0.1995 [dimensionless]
 
-Empirical exploration of this state space, using the precise thresholds α = π/2, β = π/4, γ = π/4, yields exactly **788,986 unique states**. This number is not arbitrary but emerges from the interplay between:
-- The closure condition Q_G × m_p² = 1/2
-- The angular thresholds that partition phase space
-- The requirement that all states remain within the observable horizon
+The parameter m_p serves as the fundamental aperture parameter, governing the relationship between different stages.
 
-**2.2 Phenomenological Organization**
+### 2.2 Action Mapping
 
-The states naturally organize into equivalence classes based on mutual reachability through allowed transformations. Two states belong to the same orbit if there exists a sequence of operations connecting them. This organization yields exactly **256 distinct orbits**, a number that emerges from the structure rather than being imposed.
+From these thresholds, we derive stage actions through the mapping:
 
-The significance of these numbers:
-- **788,986 states**: The complete ontology of distinguishable configurations
-- **256 orbits**: The number of phenomenologically distinct classes
-- **Diameter 6**: Maximum number of transformations needed to connect any two states
+```
+S_CS = s_p / m_p ≈ 7.875
+S_UNA = u_p / m_p ≈ 3.545
+S_ONA = o_p / m_p ≈ 3.937
+S_BU = m_p ≈ 0.199
+```
 
-These properties are intrinsic to the geometric structure defined by CGM and provide the foundation for deriving physical scales.
+All actions are dimensionless. The BU stage serves as a fixed point where S_BU = m_p, while other stages scale inversely with m_p.
 
-### **3. Fundamental Units from Closure Conditions**
+### 2.3 GUT Action Construction
 
-The CGM closure conditions define natural units without reference to external scales.
+The GUT action emerges from treating UNA and ONA as parallel constraints with CS memory:
 
-**3.1 Aperture Parameter (m_p)**
+```
+1/S_GUT = 1/S_UNA + 1/S_ONA + η/S_CS
+```
 
-The BU stage requires a specific amplitude constraint for coherent observation:
-m_p = 1/(2√(2π)) ≈ 0.199471
+where η represents the CS memory weight. For η = 1, we obtain S_GUT ≈ 1.508, yielding S_GUT/S_CS ≈ 0.192.
 
-This emerges from the closure identity that ensures the gyrotriangle defect vanishes:
-Q_G × m_p² = 4π × m_p² = 1/2
+## 3. Energy Scale Derivation
 
-**3.2 Fundamental Action (S_min)**
+### 3.1 Dimensionless Energy Ratios
 
-The minimal geometric action for state transition:
-S_min = (π/2) · m_p = √(π/8) ≈ 0.313329
+Before introducing dimensional scales, the framework yields the following dimensionless energy ratios:
 
-**3.3 Fundamental Time**
+```
+E_UNA/E_CS = 0.450158
+E_ONA/E_CS = 0.500000
+E_BU/E_CS = 0.025330
+E_GUT/E_CS = 0.191518
+```
 
-In a discrete system, the natural time unit is one state transition:
-Δt ≡ 1
+These ratios are geometric invariants independent of the choice of units.
 
-### **4. Derivation of the BU Energy Scale**
+### 3.2 UV Energy Ladder
 
-**4.1 Fundamental Length Scale**
+To obtain physical energy scales, we anchor the CS stage to the Planck scale:
 
-The aperture parameter m_p defines the maximum oscillation amplitude within one observable horizon. In the context of the BU closure, this naturally corresponds to the fundamental length scale of the system. The justification follows from interpreting the BU stage as establishing a compact phase space with characteristic size determined by the aperture.
+```
+E_CS = 1.22 × 10^19 GeV (Planck scale)
+```
 
-Therefore:
-Δx ≡ m_p
+This yields:
+- E_UNA = 5.50 × 10^18 GeV
+- E_ONA = 6.10 × 10^18 GeV
+- E_GUT = 2.34 × 10^18 GeV
+- E_BU = 3.09 × 10^17 GeV
 
-**4.2 Energy of Fundamental Mode**
+### 3.3 Optical Conjugacy and IR Scales
 
-For a mode with wavelength λ = m_p, the energy in natural units (ℏ = c = 1) is:
-E_* = 2π/λ = 2π/m_p
+The framework's central result is the optical conjugacy relation:
 
-Numerical evaluation:
-E_* = 2π/(1/(2√(2π))) = 4π√(2π) ≈ 31.499
+```
+E_i^UV × E_i^IR = (E_CS × E_EW)/(4π²)
+```
 
-This is a dimensionless quantity representing the characteristic energy scale of the BU stage.
+where E_EW = 246 GeV is the electroweak scale. This invariant holds for all stages i ∈ {CS, UNA, ONA, BU, GUT}, yielding:
 
-### **5. Energy Scales of Earlier Stages**
+```
+Invariant K = 7.61 × 10^19 GeV²
+```
 
-The UNA and ONA stages have their own characteristic energies, derived from their geometric thresholds.
+The IR energy scales follow:
+- E_CS^IR = 6.23 GeV
+- E_UNA^IR = 13.8 GeV
+- E_ONA^IR = 12.5 GeV
+- E_BU^IR = 246 GeV (fixed at EW scale)
+- E_GUT^IR = 32.5 GeV
 
-**5.1 UNA Energy Scale**
+## 4. Physical Predictions
 
-The UNA threshold β = π/4 creates orthogonal structure. The associated ratio is:
-u_p = cos(π/4) = 1/√2
+### 4.1 Neutrino Masses
 
-The UNA energy scale:
-E_UNA = E_*/u_p = E_* · √2 ≈ 44.55
+Through 48² quantization of the GUT scale:
 
-**5.2 ONA Energy Scale**
+```
+M_R = E_GUT / 48² = 1.01 × 10^15 GeV
+```
 
-The ONA threshold γ = π/4 enables full differentiation. The associated ratio is:
-o_p = γ = π/4
+The type-I seesaw mechanism yields:
 
-The ONA energy scale:
-E_ONA = E_*/o_p = E_* · 4/π ≈ 40.11
+```
+m_ν = y² v² / M_R
+```
 
-### **6. Physical Scale via Electroweak Anchoring**
+For Yukawa coupling y ≈ 1, this gives m_ν ≈ 0.06 eV, consistent with observed neutrino oscillation data.
 
-To convert dimensionless energies to physical units, we use the Higgs vacuum expectation value v ≈ 246.22 GeV. This choice is motivated by identifying the BU stage with electroweak symmetry breaking, where the stable vacuum emerges. This anchoring serves purely for unit conversion, not for fitting model parameters.
+### 4.2 Proton Lifetime
 
-Physical energy scales:
-- **BU Scale**: E* ≈ 31.50 × 246.22 GeV ≈ **7.76 TeV**
-- **ONA Scale**: E_ONA ≈ 40.11 × 246.22 GeV ≈ **9.87 TeV**
-- **UNA Scale**: E_UNA ≈ 44.55 × 246.22 GeV ≈ **10.97 TeV**
+Using the geometric GUT scale E_GUT = 2.34 × 10^18 GeV and coupling α_GUT^-1 ≈ 42, the estimated proton lifetime through dimension-6 operators is:
 
-### **7. Predictions and Falsifiability**
+```
+τ_p ≈ 8.6 × 10^43 years
+```
 
-**Primary Predictions:**
-1. New physics threshold between 8 and 11 TeV
-2. Specific energy ratios independent of anchoring:
-   - E_UNA/E_ONA = (π√2)/4 ≈ 1.1107
-   - E_ONA/E* = 4/π ≈ 1.2732
-   - E_UNA/E* = √2 ≈ 1.4142
+This prediction greatly exceeds current experimental lower bounds (~10^34 years), 
+implying that proton decay is effectively unobservable in present or near-future experiments. 
+The result is therefore consistent with the absence of proton decay events to date.
 
-**Falsification Criteria:**
-- If no new thresholds or deviations in coupling running are observed up to 12 TeV, this specific energy scale prediction is falsified
-- The dimensionless ratios provide additional constraints that must be satisfied if new physics is found
+### 4.3 Electromagnetic Duality Angle
 
-### **8. Discussion**
+The ratio of ONA to UNA actions yields:
 
-This analysis demonstrates that CGM's geometric structure naturally generates a hierarchy of energy scales in the 8 to 11 TeV range. These scales emerge from:
-1. The finite state space (788,986 states in 256 orbits) dictated by closure conditions
-2. The geometric thresholds (π/2, π/4, π/4) required for recursive completion
-3. The aperture parameter m_p ensuring observational coherence
+```
+θ = arctan(S_ONA/S_UNA) = 48.0°
+```
 
-The prediction places fundamental new physics within reach of planned collider upgrades, specifically the High-Energy LHC (27 TeV center-of-mass energy) or Future Circular Collider designs.
+This angle characterizes the electromagnetic duality rotation in the framework.
 
-### **9. Limitations and Assumptions**
+## 4.4 The Non-Observability of Sterile Neutrinos
 
-**Key Assumptions:**
-1. The interpretation Δx ≡ m_p follows from treating the aperture as the fundamental length scale
-2. Natural units (ℏ = c = 1) are used in deriving E = 2π/λ
-3. The Higgs VEV provides appropriate anchoring for the BU stage
-4. The energy modulation by stage thresholds (u_p, o_p) correctly captures the hierarchy
+### 4.4.1 Theoretical Basis
 
-**Limitations:**
-1. The connection between discrete state space geometry and continuous field theory remains to be fully developed
-2. Detailed phenomenological signatures at these energy scales require further theoretical work
-3. In the Common Governance Model, the fundamental energy scales for grand unification (GUT) and the theory of everything (ToE) are derived from geometric principles and are approximately 10 TeV, not 10¹⁶ GeV. This suggests that the traditional high scales may be effective scales based on incorrect assumptions about spacetime continuity, while CGM predicts that the underlying geometry is discrete and finite, with testable consequences at collider energies.
+Within the CGM framework, sterile neutrinos with Majorana masses M_R ≈ 10^15 GeV belong fundamentally to the CS (Common Source) domain. CS itself is three-fold, as chirality requires a minimum of three reference points to establish non-commutativity. This three-fold structure at CS manifests as the three sterile neutrino families.
 
+The CS domain is unobservable by principle. As the UV focus of the optical conjugacy relation, CS cannot manifest directly in observations, which occur at the BU (IR) focus. The sterile neutrinos therefore exist entirely within the unobservable CS domain, never appearing at UNA, ONA, or BU stages.
 
+### 4.4.2 Direct versus Indirect Observability
 
-### **References**
+The framework makes a precise distinction:
 
-[1] Common Governance Model theoretical framework, establishing recursive stages CS, UNA, ONA, BU from the single axiom "The Source is Common"
+**Direct observation impossible**: Sterile neutrinos cannot be detected as propagating particles at any stage or energy scale. They remain forever confined to the unobservable CS focus.
 
-[2] A. A. Ungar, "Analytic Hyperbolic Geometry and Albert Einstein's Special Theory of Relativity", World Scientific (2008)
+**Indirect effects observable**: Their presence manifests only through:
+- Generation of light neutrino masses via the seesaw mechanism
+- Potential gravitational imprints from a primordial sterile neutrino background
+- The effective Weinberg operator (LH)(LH)/M_R appearing at low energies
 
-[3] Empirical validation of the 788,986-state ontology through exhaustive exploration of the geometric state space under CGM constraints
+The computed active-sterile mixing angles (θ₂ ≈ 10^-14, θ₃ ≈ 10^-13) confirm this extreme decoupling, preserving CS hiddenness.
+
+### 4.4.3 Resolution of the Chirality Question
+
+The apparent tension between CS left-bias and right-handed sterile neutrinos resolves through understanding the two-focus structure:
+
+- **CS left-bias**: Determines the order of stage evolution (CS→UNA→ONA→BU) and which focus becomes observable (BU)
+- **Right-handed neutrinos**: Are SU(2)_R states residing at the CS focus, consistent with CS hosting the unobservable complement to observable left-handed states
+- **Three-fold CS**: The three sterile families reflect the fundamental three-fold nature of CS required for chirality
+
+The CS left-bias does not mean all particles at CS are left-handed. Rather, it ensures that right-handed states at CS remain unobservable while left-handed states at BU become observable.
+
+### 4.4.4 Cosmological Implications
+
+The framework hypothesizes a primordial sterile neutrino background residing at the CS focus. This background:
+- Predates the cosmic microwave background
+- Interacts with the observable sector only gravitationally
+- Cannot be directly detected by any experiment
+- May influence large-scale structure formation through gravitational effects alone
+
+We hypothesise that no future cosmological probe (CMB-S4, 21cm, structure surveys) will ever see sterile features. Only indirect gravitational constraints (e.g. effective N_eff) are consistent.
+
+### 4.4.5 Experimental Predictions and Falsification
+
+This principle yields unambiguous predictions:
+
+1. **Null results guaranteed**: All direct searches for sterile neutrinos must yield null results, regardless of energy scale or experimental technique.
+
+2. **Falsification criterion**: Any direct observation of sterile neutrinos as propagating particles would immediately falsify the CGM framework.
+
+3. **Indirect signatures only**: Sterile neutrino effects can only appear through intermediate mechanisms, never through direct detection.
+
+The continuing null results from experiments worldwide support this geometric principle. These non-observations constitute positive evidence for the structural confinement of sterile neutrinos to the unobservable CS focus. 
+
+## 5. Gauge Structure and Symmetry Breaking
+
+### 5.1 Gauge Group
+
+The framework suggests a left-right symmetric gauge structure:
+
+```
+G = SU(3)_c × SU(2)_L × SU(2)_R × U(1)_χ
+```
+
+### 5.2 Breaking Chain
+
+Symmetry breaking proceeds through:
+
+```
+G → SU(3)_c × SU(2)_L × U(1)_Y → SU(3)_c × U(1)_em
+```
+
+with breaking scales v_R ≈ M_R ≈ 10^15 GeV and v_EW = 246 GeV.
+
+### 5.3 Charge Quantization
+
+Electric charge emerges through:
+
+```
+Q = T_3L + T_3R + (B-L)/2
+```
+
+yielding the standard spectrum Q ∈ {-1, 0, -1/3, +2/3}.
+
+## 6. Consistency Checks
+
+### 6.1 Gauge Coupling Evolution
+
+One-loop renormalization group analysis shows:
+- α_1 = α_2 at μ ≈ 10^13 GeV
+- α_2 = α_3 at μ ≈ 10^17 GeV
+
+The geometric GUT scale E_GUT = 2.34 × 10^18 GeV lies above these crossing points, consistent with non-supersymmetric GUT expectations.
+
+### 6.2 Anomaly Cancellation
+
+All gauge anomalies cancel per generation:
+- [SU(3)]² U(1)_(B-L) = 0
+- [SU(2)_L]² U(1)_(B-L) = 0
+- [SU(2)_R]² U(1)_(B-L) = 0
+- [U(1)_(B-L)]³ = 0
+
+### 6.3 Involution Property
+
+The optical conjugacy satisfies an involution property—applying the transformation twice returns the original energy:
+
+```
+(E^UV → E^IR) → E^UV
+```
+
+with numerical verification showing errors < 10^-15.
+
+## 7. Discussion
+
+### 7.1 Interpretation of Results
+
+The optical conjugacy relation E_i^UV × E_i^IR = const/(4π²) suggests a fundamental duality between UV and IR physics. The factor (4π²)^-1 ≈ 0.0253 provides a natural explanation for the apparent weakness of gravity at low energies through geometric dilution.
+
+The 48² quantization factor appearing in neutrino mass generation suggests a deeper connection between the framework's geometric structure and particle physics. The exact factor 48 appears in multiple contexts, including the duality angle and state space dimensions.
+
+### 7.2 Comparison with Standard Approaches
+
+Unlike conventional GUTs that require fine-tuning or supersymmetry for gauge coupling unification, the CGM framework derives scales from geometric principles. The predicted neutrino masses and proton lifetime fall within experimentally viable ranges without additional parameter adjustment.
+
+### 7.3 Limitations and Open Questions
+
+Several aspects require further investigation:
+
+1. The derivation of fermion mass hierarchies beyond neutrinos
+2. The connection to cosmological observables
+
+## 8. Conclusions
+
+The CGM energy scale analysis demonstrates that a geometric framework based on four fundamental stages can yield a consistent hierarchy of physical scales. The optical conjugacy relation provides a unifying principle connecting UV and IR physics through a single invariant. Key predictions including neutrino masses of order 0.06 eV and proton lifetime of order 10^43 years fall within experimentally viable ranges.
+
+The framework's strength lies in deriving energy ratios from geometric principles rather than empirical fitting. While questions remain regarding the fundamental origin of certain quantization factors, the internal consistency and testable predictions warrant further investigation of this geometric approach to unification.
+
+## Appendix: Assumptions and Methodology
+
+### A.1 Fundamental Assumptions
+
+1. **Geometric Origin**: Energy scales emerge from geometric relationships rather than dynamical mechanisms
+2. **Four-Stage Structure**: The CS, UNA, ONA, BU hierarchy is fundamental
+3. **Aperture Parameter**: m_p = 1/(2√(2π)) is treated as a fundamental constant
+4. **Anchoring**: The CS stage is identified with the Planck scale
+5. **Electroweak Scale**: E_EW = 246 GeV is taken from experimental measurement
+
+### A.2 Calculational Methods
+
+1. **Action Derivation**: Actions computed as threshold/m_p ratios (except BU)
+2. **Energy Scaling**: Energies proportional to actions with single scale factor
+3. **Optical Projection**: IR energies derived through E^IR = K/E^UV
+4. **Seesaw Mechanism**: Standard type-I seesaw formula for neutrino masses
+5. **RG Evolution**: One-loop beta functions for gauge coupling running
+
+### A.3 Numerical Precision
+
+All calculations maintain at least 10 significant figures internally, with results reported to appropriate precision based on input uncertainties. The involution property verification achieves machine precision (errors < 10^-15).
+
+### A.4 Unit Conventions
+
+- Energy scales reported in GeV
+- Dimensionless quantities explicitly noted
+- Natural units (ℏ = c = 1) implicit in particle physics calculations
+- Steradians specified where relevant for solid angle factors
