@@ -38,6 +38,7 @@ Recent developments have extended CGM to define quantum gravity as the geometric
 
 | Version | Focus Area | Documentation | Implementation |
 |---------|------------|---------------|----------------|
+| **1.1.2** | ⚡ Energy Scale Unification | [Analysis](docs\Findings\Analysis_Energy_Scales.md) | [Code](experiments\cgm_energy_analysis.py) |
 | **1.1.0** | 📏 4pi Unification through Alignment | [Analysis](docs/Findings/Analysis_4pi_Alignment.md) | []() |
 | **1.1.0** | 🎯 Fine-Structure Constant | [Analysis](docs/Findings/Analysis_Fine_Structure.md) | [Code](experiments/cgm_alpha_analysis.py) |
 | **1.0.9** | ⚛️ Proto-Units Framework | [Analysis](docs/Findings/Analysis_CGM_Units.md) | [Code](experiments/cgm_proto_units_analysis.py) |
@@ -54,13 +55,15 @@ Recent developments have extended CGM to define quantum gravity as the geometric
 - ✅ Derived α = 1/137.036 from pure geometry (0.043 ppb accuracy)
 - ✅ Defined quantum gravity as Q_G = 4π (complete solid angle)
 - ✅ Predicted gravitational coupling ζ = 23.155 from first principles
-- ✅ Established 97.93% closure with 2.07% observational aperture
+- ✅ Established optical conjugacy law: E^UV × E^IR = (E_CS × E_EW)/(4π)²
+- ✅ Predicted neutrino masses ~0.06 eV via 48² quantization
 
 ### Empirical Validations
 - ✅ CMB multipole enhancement at ℓ = 37 and harmonics (p = 0.0039)
 - ✅ P₂/C₄ harmonic anti-alignment in Planck data (p = 0.005)
 - ✅ Cross-observable phase coherence (R = 0.743)
 - ✅ Machine-precision internal consistency (<10⁻¹⁶ errors)
+- ✅ Sterile neutrino non-observability consistent with null experimental results
 
 ### Active Development
 - 🔬 Standard Model particle spectrum derivation

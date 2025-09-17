@@ -7,6 +7,8 @@ All notable changes to the CGM Experimental Framework will be documented in this
 Corrections:
 docs\Findings\Analysis_Energy_Scales.md
 experiments\cgm_energy_analysis.py
+
+docs\Findings\Analysis_CGM_Units.md
 experiments\cgm_proto_units_analysis.py
 experiments\cgm_proto_units_helpers_.py
 
