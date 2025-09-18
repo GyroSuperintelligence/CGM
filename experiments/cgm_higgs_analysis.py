@@ -34,9 +34,10 @@ class CGMInvariants:
     delta_BU: float = 0.195342176580  # BU dual-pole monodromy
     phi_SU2: float = 0.587901  # SU(2) commutator holonomy
 
-    # Energy scales (GeV)
-    E0_forward: float = 2.36e18  # Forward mode energy
-    E0_reciprocal: float = 1.36e18  # Reciprocal mode energy
+    # Energy scales (GeV) - anchored to Planck energy
+    E_CS: float = 1.22089e19  # CS energy (Planck energy)
+    E_forward: float = 2.36e18  # Forward mode energy
+    E_reciprocal: float = 1.36e18  # Reciprocal mode energy
 
     # Derived quantities (computed in __post_init__)
     S_min: float = field(init=False)  # Minimum surface area
@@ -395,7 +396,7 @@ class HiggsQuarticAnalysis:
     def predict_mh_from_uv(
         self, mu_uv: float, mu_ir: float = 173.0, use_two_loop: bool = False
     ) -> Dict[str, Any]:
-        """Predict Higgs mass from CGM UV boundary by evolving λ(E0) → μ_IR."""
+        """Predict Higgs mass from CGM UV boundary by evolving λ(CS) → μ_IR."""
         g1_uv, g2_uv, g3_uv, y_t_uv = self._evolve_couplings_to_uv(
             mu_uv, use_two_loop=use_two_loop
         )
@@ -588,7 +589,7 @@ class HiggsQuarticAnalysis:
 
         # How much RGE evolution has occurred (logarithmic scale factor)
         log_scale_factor = log(mu_intermediate / 91.1876) / log(
-            self.cgm.E0_reciprocal / 91.1876
+            self.cgm.E_reciprocal / 91.1876
         )
 
         return {
@@ -1092,11 +1093,11 @@ def robustness_scan(higgs_analysis, sm, N=50):
         # recompute y_t at MZ with varied mt and kappa
         y_t_MZ = kappa * sqrt(2) * mt / sm.v_weak
 
-        # evolve to E0 with overrides
+        # evolve to CS scale with overrides
         rge2 = SMRenormalizationGroup(sm, order="2loop")
         _, y_t_uv, g1_uv, g2_uv, g3_uv = rge2.evolve_couplings(
             91.1876,
-            higgs_analysis.cgm.E0_reciprocal,
+            higgs_analysis.cgm.E_reciprocal,
             0.126,
             y_t_MZ,
             True,
@@ -1108,7 +1109,7 @@ def robustness_scan(higgs_analysis, sm, N=50):
         # evolve λ from UV boundary to IR using these UV couplings
         lam_uv = higgs_analysis.compute_uv_boundary_lambda()
         lam_ir, _ = higgs_analysis.evolve_couplings_with_initial_couplings(
-            higgs_analysis.cgm.E0_reciprocal,
+            higgs_analysis.cgm.E_reciprocal,
             173.0,
             lam_uv,
             y_t_uv,
@@ -1230,7 +1231,7 @@ def main():
     print("\nNON-CIRCULARITY CHECK")
     print("-" * 30)
     print("Inputs used to predict m_H:")
-    print("  • CGM UV boundary λ(E0) from {δ_BU, m_p} only")
+    print("  • CGM UV boundary λ(CS) from {δ_BU, m_p} only")
     print("  • SM couplings at MZ or m_t from independent measurements")
     print("  • No use of measured m_H or IR λ in boundary setting")
 
@@ -1282,16 +1283,16 @@ def main():
 
     # Test: CGM UV boundary → IR Higgs mass
     res_1loop = higgs_analysis.predict_mh_from_uv(
-        cgm.E0_reciprocal, 173.0, use_two_loop=False
+        cgm.E_reciprocal, 173.0, use_two_loop=False
     )
     res_2loop = higgs_analysis.predict_mh_from_uv(
-        cgm.E0_reciprocal, 173.0, use_two_loop=True
+        cgm.E_reciprocal, 173.0, use_two_loop=True
     )
     print(
-        f"CGM UV→IR Higgs test (1-loop): m_H(pred) = {res_1loop['mH_pred']:.2f} GeV from λ(E0) = {res_1loop['lambda_uv']:.6f}"
+        f"CGM UV→IR Higgs test (1-loop): m_H(pred) = {res_1loop['mH_pred']:.2f} GeV from λ(CS) = {res_1loop['lambda_uv']:.6f}"
     )
     print(
-        f"CGM UV→IR Higgs test (2-loop): m_H(pred) = {res_2loop['mH_pred']:.2f} GeV from λ(E0) = {res_2loop['lambda_uv']:.6f}"
+        f"CGM UV→IR Higgs test (2-loop): m_H(pred) = {res_2loop['mH_pred']:.2f} GeV from λ(CS) = {res_2loop['lambda_uv']:.6f}"
     )
     print(f"  2-loop shift: {res_2loop['mH_pred'] - res_1loop['mH_pred']:+.2f} GeV")
     print(
@@ -1302,22 +1303,22 @@ def main():
     print(f"\nRATIO DIAGNOSTICS")
     print("-" * 30)
     print(
-        f"E0_forward/E0_reciprocal = {cgm.E0_forward/cgm.E0_reciprocal:.6f}  (√3 = {sqrt(3):.6f})"
+        f"E_forward/E_reciprocal = {cgm.E_forward/cgm.E_reciprocal:.6f}  (√3 = {sqrt(3):.6f})"
     )
-    print(f"E0_reciprocal / M_Planck = {cgm.E0_reciprocal/sm.M_Planck:.6e}")
-    print(f"E0_forward   / M_Planck = {cgm.E0_forward/sm.M_Planck:.6e}")
-    print(f"E0_reciprocal / v_weak  = {cgm.E0_reciprocal/sm.v_weak:.6e}")
-    print(f"E0_forward   / v_weak  = {cgm.E0_forward/sm.v_weak:.6e}")
+    print(f"E_reciprocal / M_Planck = {cgm.E_reciprocal/sm.M_Planck:.6e}")
+    print(f"E_forward   / M_Planck = {cgm.E_forward/sm.M_Planck:.6e}")
+    print(f"E_reciprocal / v_weak  = {cgm.E_reciprocal/sm.v_weak:.6e}")
+    print(f"E_forward   / v_weak  = {cgm.E_forward/sm.v_weak:.6e}")
 
     # Use the computed m_H from 2-loop run
     mH_2L = res_2loop["mH_pred"]
     if np.isfinite(mH_2L):
         print(f"m_H(pred)/v_weak = {mH_2L/sm.v_weak:.6f}   (√(2 λ_IR))")
         print(
-            f"E0_reciprocal / m_H(pred) = {cgm.E0_reciprocal/mH_2L:.6e}  [log10 = {log10(cgm.E0_reciprocal/mH_2L):.3f}]"
+            f"E_reciprocal / m_H(pred) = {cgm.E_reciprocal/mH_2L:.6e}  [log10 = {log10(cgm.E_reciprocal/mH_2L):.3f}]"
         )
         print(
-            f"E0_forward   / m_H(pred) = {cgm.E0_forward/mH_2L:.6e}  [log10 = {log10(cgm.E0_forward/mH_2L):.3f}]"
+            f"E_forward   / m_H(pred) = {cgm.E_forward/mH_2L:.6e}  [log10 = {log10(cgm.E_forward/mH_2L):.3f}]"
         )
 
     # Dimensionless quartic comparison (avoids unit anchoring concerns)
@@ -1329,19 +1330,19 @@ def main():
     print(f"λ_IR(obs from m_H(obs))   = {lam_IR_obs:.6f}")
     print(f"Δλ_IR/λ_IR(obs) = {(lam_IR_pred-lam_IR_obs)/lam_IR_obs*100:+.2f}%")
 
-    # Dual-mode test: E0_forward vs E0_reciprocal
+    # Dual-mode test: E_forward vs E_reciprocal
     print(f"\nDual-mode CGM test (√3 structure):")
     resF_1loop = higgs_analysis.predict_mh_from_uv(
-        cgm.E0_forward, 173.0, use_two_loop=False
+        cgm.E_forward, 173.0, use_two_loop=False
     )
     resF_2loop = higgs_analysis.predict_mh_from_uv(
-        cgm.E0_forward, 173.0, use_two_loop=True
+        cgm.E_forward, 173.0, use_two_loop=True
     )
     print(
-        f"E0_forward (1-loop): m_H(pred) = {resF_1loop['mH_pred']:.2f} GeV from λ(E0) = {resF_1loop['lambda_uv']:.6f}"
+        f"E_forward (1-loop): m_H(pred) = {resF_1loop['mH_pred']:.2f} GeV from λ(CS) = {resF_1loop['lambda_uv']:.6f}"
     )
     print(
-        f"E0_forward (2-loop): m_H(pred) = {resF_2loop['mH_pred']:.2f} GeV from λ(E0) = {resF_2loop['lambda_uv']:.6f}"
+        f"E_forward (2-loop): m_H(pred) = {resF_2loop['mH_pred']:.2f} GeV from λ(CS) = {resF_2loop['lambda_uv']:.6f}"
     )
 
     # Compare forward vs reciprocal modes
@@ -1350,29 +1351,29 @@ def main():
     print(f"Mode difference (1-loop): Δ = {delta_1L:+.2f} GeV")
     print(f"Mode difference (2-loop): Δ = {delta_2L:+.2f} GeV")
 
-    # E0 sensitivity test (shows boundary-driven nature)
-    print(f"\nE0 SENSITIVITY TEST")
+    # E_reciprocal sensitivity test (shows boundary-driven nature)
+    print(f"\nE_reciprocal SENSITIVITY TEST")
     print("-" * 30)
     for scale in [0.5, 1.0, 2.0]:
-        E0_test = cgm.E0_reciprocal * scale
+        E_test = cgm.E_reciprocal * scale
         g1_uv, g2_uv, g3_uv, y_t_uv = higgs_analysis._evolve_couplings_to_uv(
-            E0_test, use_two_loop=True
+            E_test, use_two_loop=True
         )
         lam_uv = higgs_analysis.compute_uv_boundary_lambda()
         lam_ir, _ = higgs_analysis.evolve_couplings_with_initial_couplings(
-            E0_test, 173.0, lam_uv, y_t_uv, g1_uv, g2_uv, g3_uv, use_two_loop=True
+            E_test, 173.0, lam_uv, y_t_uv, g1_uv, g2_uv, g3_uv, use_two_loop=True
         )
         mH_test = sm.v_weak * sqrt(2 * lam_ir) if lam_ir > 0 else float("nan")
-        print(f"E0 factor {scale:.2f}: m_H(pred) = {mH_test:.2f} GeV")
+        print(f"E_reciprocal factor {scale:.2f}: m_H(pred) = {mH_test:.2f} GeV")
 
-    # Robustness check: ±1% y_t(E0) sensitivity
-    print(f"\nRobustness check (1-loop, ±1% y_t(E0) shifts):")
+    # Robustness check: ±1% y_t(CS) sensitivity
+    print(f"\nRobustness check (1-loop, ±1% y_t(CS) shifts):")
     for eps in [-0.01, 0.0, +0.01]:
         g1, g2, g3, y = higgs_analysis._evolve_couplings_to_uv(
-            cgm.E0_reciprocal, use_two_loop=False
+            cgm.E_reciprocal, use_two_loop=False
         )
         res = higgs_analysis.evolve_couplings_with_initial_couplings(
-            cgm.E0_reciprocal,
+            cgm.E_reciprocal,
             173.0,
             higgs_analysis.compute_uv_boundary_lambda(),
             y * (1 + eps),
@@ -1382,7 +1383,7 @@ def main():
             use_two_loop=False,
         )
         mH = sm.v_weak * (2 * res[0]) ** 0.5 if res[0] > 0 else float("nan")
-        print(f"  m_H(pred) with y_t(E0)*(1{eps:+.0%}) = {mH:.2f} GeV")
+        print(f"  m_H(pred) with y_t(CS)*(1{eps:+.0%}) = {mH:.2f} GeV")
 
     # Ratio crossing scans (CGM invariant target)
     cgm_uv = higgs_analysis.compute_uv_boundary_lambda()

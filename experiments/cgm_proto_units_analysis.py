@@ -2,18 +2,16 @@
 """
 Common Governance Model (CGM) – Dimensionless Core + Anchor-Based Energies
 
-What's changed (Decisive):
-- Deleted the "proto-units" concept (E0, T0, L0, M0) and the 3-bridge calibration
-  (no κ, no c = 4π·L0/T0, no G = ζ·L0^3/(M0 T0^2)).
-- Kept only dimensionless invariants (Q_G, m_p, stage actions/ratios).
-- Added an anchor-based output: choose ONE physical anchor (default: E_CS = Planck energy)
-  and propagate via dimensionless ratios. This yields concrete UV stage energies and
-  IR conjugates without inventing new units.
+This script implements the CGM framework using only dimensionless geometric invariants
+and a single physical anchor. The framework derives energy scales from geometric
+principles without introducing new base units.
 
-Retained:
-- Polygon recursion for π (pure geometry, no trig).
-- Optional fine-structure constant hook (if your tw_closure_test is present).
-- Compact, SI-consistent printing (only anchored energies use units).
+Key Features:
+- Dimensionless geometric invariants (Q_G, m_p, stage actions/ratios)
+- Single anchor approach: choose one physical scale (e.g., E_CS = Planck energy)
+- Optical conjugacy relation for UV/IR energy mapping
+- Polygon recursion for π derivation (pure geometry, no trig)
+- Optional fine-structure constant calculation
 
 Author: Basil Korompilias & AI Assistants
 """

@@ -45,7 +45,7 @@ class CGMInvariants:
     # CGM constants
     zeta: float = field(init=False)  # Gravitational coupling
     lambda_0_formal: float = field(init=False)  # Formal identity: Δ/√5
-    lambda_E0_physical: float = field(init=False)  # Physics: δ_BU⁴/(4m_p²)
+    lambda_CS_physical: float = field(init=False)  # Physics: δ_BU⁴/(4m_p²)
 
     # Exact identities and near-equalities from 4π alignment hypotheses
     delta_over_pi16: float = field(init=False)  # δ_BU / (π/16)
@@ -63,7 +63,7 @@ class CGMInvariants:
         # 48Δ = 1 exactly, λ₀/Δ = 1/√5 exactly
         object.__setattr__(self, "Delta", 1 / 48)  # EXACT: 48Δ = 1
         object.__setattr__(self, "lambda_0_formal", (1 / 48) / sqrt(5))  # EXACT: λ₀/Δ = 1/√5
-        object.__setattr__(self, "lambda_E0_physical", self.delta_BU**4 / (4 * self.m_p**2))  # Physics
+        object.__setattr__(self, "lambda_CS_physical", self.delta_BU**4 / (4 * self.m_p**2))  # Physics
 
         # Other derived invariants (keeping m_p as foundational)
         object.__setattr__(self, "rho", self.delta_BU / self.m_p)
@@ -89,7 +89,7 @@ class CGMInvariants:
         
         # Quantify the tension from enforcing λ₀/Δ = 1/√5
         object.__setattr__(
-            self, "residual_lambda", (self.lambda_0_formal - self.lambda_E0_physical) / self.lambda_E0_physical
+            self, "residual_lambda", (self.lambda_0_formal - self.lambda_CS_physical) / self.lambda_CS_physical
         )
     
 
@@ -98,8 +98,9 @@ class CGMInvariants:
 class PhysicalScales:
     """Physical scales from CGM bridge equations."""
 
-    # Bridge-derived scales [GeV unless noted]
-    E0_reciprocal: float = 1.36e18  # Reciprocal mode energy
+    # Energy scales [GeV unless noted] - anchored to Planck energy
+    E_CS: float = 1.22089e19  # CS energy (Planck energy)
+    E_reciprocal: float = 1.36e18  # Reciprocal mode energy
     v_weak: float = 246.21965  # Electroweak VEV
     M_Planck: float = 1.22089e19  # Planck mass
     m_H: float = 125.20  # Higgs mass (PDG 2025: 125.20 ± 0.11 GeV)
@@ -260,8 +261,8 @@ class UnificationAnalysis:
 
     def predict_unification_scale(self) -> Dict[str, float]:
         """Calculate geometric unification scale."""
-        # Primary unification at reciprocal E0 with aperture correction
-        M_unify = self.scales.E0_reciprocal * (1 - self.cgm.Delta)
+        # Primary unification at reciprocal energy with aperture correction
+        M_unify = self.scales.E_reciprocal * (1 - self.cgm.Delta)
 
         # CGM coherent coupling from geometric invariants
         g_unify = sqrt(self.cgm.K_QG / (2 * pi))
@@ -771,9 +772,9 @@ class HiggsFirstFramework:
 
 
     def cgm_boundary_conditions(self) -> Dict[str, Any]:
-        """Set CGM boundary conditions at E0 - no external anchors."""
-        # λ(E0) from CGM geometry
-        lambda_E0 = self.cgm.lambda_E0_physical
+        """Set CGM boundary conditions at CS scale - no external anchors."""
+        # λ(CS) from CGM geometry
+        lambda_CS = self.cgm.lambda_CS_physical
 
         # Unified coupling at E0
         g_unified = sqrt(self.g_unified_sq)
@@ -785,20 +786,20 @@ class HiggsFirstFramework:
         y_t_E0 = sqrt(g_unified**2 + g_unified**2 / 3)  # Approximate
 
         return {
-            "lambda_E0": lambda_E0,
+            "lambda_CS": lambda_CS,
             "g_unified": g_unified,
-            "y_t_E0": y_t_E0,
+            "y_t_CS": y_t_E0,
             "mu_star": mu_star,
-            "insight": "CGM boundary conditions at E0 - no external anchors",
+            "insight": "CGM boundary conditions at CS scale - no external anchors",
         }
 
     def solve_electroweak_sector_anchor_minimal(self) -> Dict[str, Any]:
         """Solve EW sector self-consistently using only CGM constraints."""
         # Get boundary conditions
         bc = self.cgm_boundary_conditions()
-        lambda_E0 = bc["lambda_E0"]
+        lambda_CS = bc["lambda_CS"]
         g_unified = bc["g_unified"]
-        y_t_E0 = bc["y_t_E0"]
+        y_t_CS = bc["y_t_CS"]
 
         # Use λ_IR from Higgs analysis: λ_IR = m_H(pred)²/(2 v_weak²)
         v_weak_higgs = 246.21965  # GeV (from Higgs analysis)
@@ -838,17 +839,17 @@ class HiggsFirstFramework:
         bc = self.cgm_boundary_conditions()
         ew = self.solve_electroweak_sector_anchor_minimal()
 
-        # E0 scale (CGM unification) - use PhysicalScales to avoid drift
-        E0 = 1.36e18  # GeV (PhysicalScales.E0_reciprocal)
+        # CS scale (CGM unification) - use PhysicalScales to avoid drift
+        E_CS = 1.22089e19  # GeV (PhysicalScales.E_CS)
 
         # Dimensionless ratios
-        v_weak_over_E0 = ew["v_weak"] / E0
-        m_H_over_E0 = ew["m_H_pred"] / E0
+        v_weak_over_CS = ew["v_weak"] / E_CS
+        m_H_over_CS = ew["m_H_pred"] / E_CS
 
         return {
-            "v_weak_over_E0": v_weak_over_E0,
-            "m_H_over_E0": m_H_over_E0,
-            "E0_GeV": E0,
+            "v_weak_over_CS": v_weak_over_CS,
+            "m_H_over_CS": m_H_over_CS,
+            "E_CS_GeV": E_CS,
             "insight": "Anchor-free dimensionless CGM predictions",
         }
 
@@ -1049,8 +1050,8 @@ class BSMSummary:
         """Compile all key numerical predictions."""
         return {
             "energy_scales": {
-                "E0_reciprocal_GeV": self.scales.E0_reciprocal,
-                "E0_to_Planck_ratio": self.scales.E0_reciprocal / self.scales.M_Planck,
+                "E_reciprocal_GeV": self.scales.E_reciprocal,
+                "E_reciprocal_to_Planck_ratio": self.scales.E_reciprocal / self.scales.M_Planck,
                 "unification_scale_GeV": self.unification.predict_unification_scale()[
                     "M_unify"
                 ],

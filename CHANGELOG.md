@@ -1,6 +1,19 @@
 # Changelog
 
 All notable changes to the CGM Experimental Framework will be documented in this file.
+
+---
+
+## [1.1.2-BH] - 2025-09-18
+New Topic - Black Hole Universe.
+Experiments Review and Results found here: 
+docs\Findings\Analysis_BH_Universe.md
+experiments\cgm_bh_universe_analysis.py
+
+Updated Experiments and Analyses:
+docs\Findings\Analysis_BH_Aperture.md
+experiments\cgm_bh_aperture_analysis.py
+
 ---
 
 ## [1.1.2-GuT] - 2025-09-17
