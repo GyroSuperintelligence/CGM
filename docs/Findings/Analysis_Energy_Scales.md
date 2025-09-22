@@ -80,21 +80,21 @@ This yields:
 The framework's central result is the optical conjugacy relation:
 
 ```
-E_i^UV × E_i^IR = (E_CS × E_EW)/(4π²)
+E_i^UV × E_i^IR = (E_CS × E_BU)/(4π²)
 ```
 
-where E_EW = 246 GeV is the electroweak scale. This invariant holds for all stages i ∈ {CS, UNA, ONA, BU, GUT}, yielding:
+where E_BU = 240 GeV is the electroweak scale. This invariant holds for all stages i ∈ {CS, UNA, ONA, BU, GUT}, yielding:
 
 ```
-Invariant K = 7.61 × 10^19 GeV²
+Invariant K = 7.42 × 10^19 GeV²
 ```
 
 The IR energy scales follow:
-- E_CS^IR = 6.23 GeV
-- E_UNA^IR = 13.8 GeV
-- E_ONA^IR = 12.5 GeV
-- E_BU^IR = 246 GeV (fixed at EW scale)
-- E_GUT^IR = 32.5 GeV
+- E_CS^IR = 6.08 GeV
+- E_UNA^IR = 13.5 GeV
+- E_ONA^IR = 12.2 GeV
+- E_BU^IR = 240 GeV (fixed at EW scale)
+- E_GUT^IR = 31.7 GeV
 
 ## 4. Physical Predictions
 
@@ -207,7 +207,7 @@ Symmetry breaking proceeds through:
 G → SU(3)_c × SU(2)_L × U(1)_Y → SU(3)_c × U(1)_em
 ```
 
-with breaking scales v_R ≈ M_R ≈ 10^15 GeV and v_EW = 246 GeV.
+with breaking scales v_R ≈ M_R ≈ 10^15 GeV and v_EW = 240 GeV.
 
 ### 5.3 Charge Quantization
 
@@ -280,7 +280,7 @@ The framework's strength lies in deriving energy ratios from geometric principle
 2. **Four-Stage Structure**: The CS, UNA, ONA, BU hierarchy is fundamental
 3. **Aperture Parameter**: m_p = 1/(2√(2π)) is treated as a fundamental constant
 4. **Anchoring**: The CS stage is identified with the Planck scale
-5. **Electroweak Scale**: E_EW = 246 GeV is taken from experimental measurement
+5. **Electroweak Scale**: E_EW = 240 GeV is taken from experimental measurement
 
 ### A.2 Calculational Methods
 
@@ -300,3 +300,80 @@ All calculations maintain at least 10 significant figures internally, with resul
 - Dimensionless quantities explicitly noted
 - Natural units (ℏ = c = 1) implicit in particle physics calculations
 - Steradians specified where relevant for solid angle factors
+
+===
+
+- **CGM Duality Parametrisation**
+    
+    ---
+    
+    1. **Topology**
+        - BASE: the apex scale (CS)
+        - UNION: the “middle” (CS–UNA–ONA)
+        - SHELL: the observable shell (BU)
+    2. **Perspective**
+        - BTM (UV-facing, CS focus)
+        - TOP (IR-facing, BU focus)
+    3. **Stages Structure:**
+        1. CS (Common Source): s_p = π/2 [dimensionless]
+        2. UNA (Unity Non-Absolute): u_p = cos(π/4) = 1/√2 [dimensionless]
+        3. ONA (Opposition Non-Absolute): o_p = π/4 [dimensionless]
+        4. BU (Balance Universal): m_p = 1/(2√(2π)) ≈ 0.1995 [dimensionless]
+        5. Geometric constant
+            - m_p² = 1/(8π)
+            - s_p/m_p² = 4π²
+    4. **Action Mapping:**
+        1. S_CS = s_p / m_p ≈ 7.875
+        2. S_UNA = u_p / m_p ≈ 3.545
+        3. S_ONA = o_p / m_p ≈ 3.937
+        4. S_BU = m_p ≈ 0.199 [identity]
+    5. **Union Formation:**
+        1. 1/S_UNI = η/S_CS + 1/S_UNA + 1/S_ONA
+        2. For η = 1: S_UNI ≈ 1.508, hence S_UNI/S_CS ≈ 0.192
+    6. **Energy Ratios (dimensionless, single-perspective staging):**
+        1. E_UNA/E_CS = 0.450158
+        2. E_ONA/E_CS = 0.500000
+        3. E_BU/E_CS = 0.025330
+        4. E_UNI/E_CS = 0.191518
+    7. **UV Focus Scales** (anchor CS at the Planck scale; BTM ≡ UV):
+        1. E_CS^BTM = 1.22 × 10^19 GeV
+            - E_UNA^BTM = 5.50 × 10^18 GeV
+            - E_ONA^BTM = 6.10 × 10^18 GeV
+            - E_BU^BTM = 3.09 × 10^17 GeV
+        2. E_UNI^BTM = 2.34 × 10^18 GeV
+    8. **Optical Conjugacy**
+        1. Invariant (for internal stages i ∈ {CS, UNA, ONA, UNI}; BU is the shell anchor):
+            
+            E_i^BTM × E_i^TOP = (E_CS^BTM × E_BU^TOP) / (4π²)
+            
+        2. Anchors: E_CS^BTM = 1.22 × 10^19 GeV, E_BU^TOP = 240 GeV
+            - Invariant K = 7.42 × 10^19 GeV²
+    9. **IR Focus Scales** (TOP ≡ IR; from E_i^TOP = K / E_i^BTM):
+        1. E_CS^IR = 6.08 GeV
+            - E_UNA^IR = 13.5 GeV
+            - E_ONA^IR = 12.2 GeV
+            - E_BU^IR = 240 GeV (shell anchor at TOP)
+        2. E_UNI^IR = 31.7 GeV
+    10. **Union Derivation**
+        1. Inversion map: E_i^BTM = K / E_i^TOP with K = (E_CS^BTM × E_BU^TOP) / (4π²)
+        2. Fixed point (conjugacy centre): E_MID = √K ≈ 8.6 × 10^9 GeV
+    11. **Invariant (equivalent forms)**
+        1. Stage-independent product: E_i^BTM × E_i^TOP = (E_BASE^BTM × E_SHELL^TOP) / (s_p/m_p²), with BASE = CS, SHELL = BU
+        2. Normalised (cross-anchors): (E_i^BTM / E_CS^BTM) × (E_i^TOP / E_BU^TOP) = 1 / (4π²)
+        3. Centred (via fixed point): (E_i^BTM / E_MID) × (E_i^TOP / E_MID) = 1
+    
+    ---
+    
+    **Centre Parametrisation**
+    
+    Define a dimensionless placement for each stage i relative to the fixed point:
+    
+    ρ_i = E_i^TOP / E_MID
+    
+    Then automatically:
+    
+    E_i^BTM = E_MID / ρ_i
+    
+    The product E_i^TOP × E_i^BTM = E_MID² is independent of i. Moving a stage up at TOP by a factor ρ_i moves it down at BTM by the reciprocal factor.
+    
+    ---

@@ -213,7 +213,7 @@ def anchor_uv_energies(actions: Dict[str, Any], S_gut: Any,
     E["GUT"] = float(scale*float(S_gut))
     return E
 
-def bu_dual_project(uv: Dict[str, float], E_EW_GeV: float = 246.0) -> Dict[str, float]:
+def bu_dual_project(uv: Dict[str, float], E_EW_GeV: float = 240.0) -> Dict[str, float]:
     """
     IR energies via optical invariant:
     E_i^UV * E_i^IR = (E_CS * E_EW) / (4π^2)
@@ -313,12 +313,12 @@ def print_summary(iterations: List[PolygonIteration],
             print(f"   E_{k:<3} = {val:.6e} GeV")
 
     # 5) IR conjugates + invariant
-    print("\n5) IR energies via optical conjugacy (E^UV E^IR = (E_CS·246 GeV)/(4π²))")
+    print("\n5) IR energies via optical conjugacy (E^UV E^IR = (E_CS·240 GeV)/(4π²))")
     for k in ("CS","UNA","ONA","BU","GUT"):
         print(f"   E_{k:<3}^IR = {E_ir[k]:.6e} GeV")
     inv = optical_invariant_values(E_uv, E_ir)
-    expected = (E_uv["CS"]*246.0)/(float(4*mp.pi*mp.pi))
-    print(f"\n   invariant K = (E_CS·246)/(4π²) = {expected:.6e} GeV²")
+    expected = (E_uv["CS"]*240.0)/(float(4*mp.pi*mp.pi))
+    print(f"\n   invariant K = (E_CS·240)/(4π²) = {expected:.6e} GeV²")
     ok = True
     for k,v in inv.items():
         ok &= (abs(v-expected)/expected < 1e-12)
@@ -379,8 +379,8 @@ def main(target_precision: float = 1e-15,
         E_CS_anchor_GeV = planck_energy_GeV()
     E_uv = anchor_uv_energies(acts, S_gut, E_CS_anchor_GeV)
 
-    # Phase 5: IR via optical conjugacy (EW = 246 GeV)
-    E_ir = bu_dual_project(E_uv, E_EW_GeV=246.0)
+    # Phase 5: IR via optical conjugacy (EW = 240 GeV)
+    E_ir = bu_dual_project(E_uv, E_EW_GeV=240.0)
 
     # Print summary
     print_summary(iters, core, acts, S_gut, E_CS_anchor_GeV, E_uv, E_ir)

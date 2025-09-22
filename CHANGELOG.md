@@ -4,6 +4,27 @@ All notable changes to the CGM Experimental Framework will be documented in this
 
 ---
 
+## [1.1.3-Massive] - 2025-09-21
+New Topic - Higgs and Fermion Mass Analysis
+Experiments found here: 
+experiments\cgm_higgs_analysis.py
+
+---
+
+## [1.1.3-CGM] - 2025-09-19
+
+New Topic - Universal Correction Operator
+Experiments Review and Results found here: 
+docs\Findings\Analysis_Universal_Corrections.md
+experiments\cgm_corrections_analysis_1.py
+experiments\cgm_corrections_analysis_2.py
+
+Revisions:
+docs\Findings\Analysis_CGM_Units.md
+docs\Findings\Analysis_Alignment.md
+
+---
+
 ## [1.1.2-BH] - 2025-09-18
 New Topic - Black Hole Universe.
 Experiments Review and Results found here: 
@@ -81,7 +102,7 @@ docs\Findings\Analysis_Motion.md
 ## [1.1.1-Alignment] - 2025-09-05
 
 Experiments Review and Results found here: 
-docs\Findings\Analysis_4pi_Alignment.md
+docs\Findings\Analysis_Alignment.md
 
 ---
 

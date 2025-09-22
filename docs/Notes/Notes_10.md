@@ -236,10 +236,10 @@ $$
 So the **IR ladder is determined by EW and the action ratios** (UNA/ONA optics), with **no extra anchor**:
 
 * $E_{\text{BU}}^{\text{IR}}=E_{\text{EW}}$ (since $S_{\text{CS}}/(4\pi^2 S_{\text{BU}})=1$)
-* $E_{\text{CS}}^{\text{IR}}=\dfrac{E_{\text{EW}}}{4\pi^2}\approx 6.23\text{ GeV}$
+* $E_{\text{CS}}^{\text{IR}}=\dfrac{E_{\text{EW}}}{4\pi^2}\approx 6.08\text{ GeV}$
 * $E_{\text{UNA}}^{\text{IR}}=\dfrac{E_{\text{EW}}}{4\pi^2}\,\dfrac{S_{\text{CS}}}{S_{\text{UNA}}} =E_{\text{EW}}\,\dfrac{1}{4\pi^2}\,\dfrac{s_p}{u_p} =E_{\text{EW}}\cdot \dfrac{1}{4\pi^2}\cdot \dfrac{\pi/2}{1/\sqrt2} =E_{\text{EW}}\cdot \frac{1}{4\pi^2}\cdot \frac{\pi\sqrt2}{2}
   $
-  (and similarly for ONA with $o_p$). These match your \~13.8 GeV and \~12.5 GeV outputs.
+  (and similarly for ONA with $o_p$). These match your \~13.5 GeV and \~12.2 GeV outputs.
 
 Also note the “magnification swap” (a pure dual effect):
 
@@ -257,7 +257,7 @@ $$
 You can compute IR directly from geometry (makes the “both anchors work together” explicit):
 
 ```python
-def bu_dual_project(uv_energies, E_EW=246.0, S_CS=None, S_dict=None):
+def bu_dual_project(uv_energies, E_EW=240.0, S_CS=None, S_dict=None):
     # Option A (explicit invariant with both anchors)
     C = (uv_energies['CS'] * E_EW) / (4*math.pi**2)  # since E_CS^UV = E_CS anchor
     return {k: C / v for k, v in uv_energies.items()}
@@ -477,7 +477,7 @@ Minimal left–right chain that matches your code and neutrino block:
 
 Δ_R in (1, 1, 3, +2) breaks SU(2)_R × U(1)_χ → U(1)_Y at v_R ≈ your M_R (you already compute this scale, either plain GUT or GUT/48²).
 
-H in (1, 2, 2, 0) breaks SU(2)_L × U(1)_Y → U(1)_{em} at v = 246 GeV and gives quark/lepton Dirac masses.
+H in (1, 2, 2, 0) breaks SU(2)_L × U(1)_Y → U(1)_{em} at v = 240 GeV and gives quark/lepton Dirac masses.
 This is enough to justify your seesaw use without invoking SO(10).
 
 Matter assignments and anomaly sanity.

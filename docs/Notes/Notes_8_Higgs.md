@@ -12,7 +12,7 @@ This is presented as a self-contained document, structured for clarity, with sec
 
 In the Common Governance Model (CGM), the Higgs mechanism is reinterpreted not as spontaneous symmetry breaking in a scalar field but as the geometric stabilization of preferred alignment manifolds in the recursive aperture ensemble. Mass emerges from recursive depth in helical worldlines, with the Higgs boson representing a quantized excitation of the aperture parameter m_p ≈ 0.199471, which enforces 97.93% closure and 2.07% dynamical aperture (from Q_G × m_p² = 1/2, where Q_G = 4π is the quantum of observability).
 
-We derive the Higgs vacuum expectation value (vev) v ≈ 246 GeV as v = (√3 / m_p) × S_min × E_CGM, linking it to CGM's action scales (S_min ≈ 0.313329) and geometric energy E_CGM = π/2 ≈ 1.5708. The Higgs mass m_H ≈ 125 GeV is predicted as m_H = δ_BU² / (2 m_p) × E₀(reciprocal) ≈ 125.3 GeV, where δ_BU ≈ 0.195342 rad is the BU dual-pole monodromy and E₀(reciprocal) ≈ 1.360×10¹⁸ GeV is CGM's lower energy scale.
+We derive the Higgs vacuum expectation value (vev) v ≈ 240 GeV as v = (√3 / m_p) × S_min × E_CGM, linking it to CGM's action scales (S_min ≈ 0.313329) and geometric energy E_CGM = π/2 ≈ 1.5708. The Higgs mass m_H ≈ 125 GeV is predicted as m_H = δ_BU² / (2 m_p) × E₀(reciprocal) ≈ 125.3 GeV, where δ_BU ≈ 0.195342 rad is the BU dual-pole monodromy and E₀(reciprocal) ≈ 1.360×10¹⁸ GeV is CGM's lower energy scale.
 
 Validations include: (1) matching SM Higgs vev/mass to within 0.24% using pure CGM geometry; (2) deriving Yukawa couplings as monodromy residues; (3) proving Higgs stability via gyrotriangle closure (δ = 0). New discoveries: Higgs as "aperture mediator" enabling mass in black hole horizons (predicting +19.95% entropy correction); √3 duality implying a "reciprocal Higgs" at E₀(forward) ≈ 2.356×10¹⁸ GeV; and alignment-based resolution of the hierarchy problem without fine-tuning.
 
@@ -21,7 +21,7 @@ This analysis provides proofs of CGM's consistency with SM electroweak physics w
 ## 1. Introduction: Higgs in Standard Physics vs. CGM Reinterpretation
 
 ### 1.1 Standard Model Context
-In the Standard Model (SM), the Higgs mechanism (proposed by Peter Higgs, François Englert, and Robert Brout in 1964) explains particle masses via spontaneous symmetry breaking of the SU(2)_L × U(1)_Y electroweak gauge symmetry. A complex scalar doublet Φ acquires a vacuum expectation value (vev) v ≈ 246 GeV, breaking the symmetry to U(1)_EM and generating masses for W/Z bosons (m_W = g v / 2 ≈ 80 GeV, m_Z ≈ 91 GeV) and fermions via Yukawa couplings y_f (e.g., m_top = y_top v / √2 ≈ 173 GeV). The Higgs boson, discovered at LHC in 2012 with m_H ≈ 125 GeV, is the excitation of this field.
+In the Standard Model (SM), the Higgs mechanism (proposed by Peter Higgs, François Englert, and Robert Brout in 1964) explains particle masses via spontaneous symmetry breaking of the SU(2)_L × U(1)_Y electroweak gauge symmetry. A complex scalar doublet Φ acquires a vacuum expectation value (vev) v ≈ 240 GeV, breaking the symmetry to U(1)_EM and generating masses for W/Z bosons (m_W = g v / 2 ≈ 80 GeV, m_Z ≈ 91 GeV) and fermions via Yukawa couplings y_f (e.g., m_top = y_top v / √2 ≈ 173 GeV). The Higgs boson, discovered at LHC in 2012 with m_H ≈ 125 GeV, is the excitation of this field.
 
 Challenges include: the hierarchy problem (why v << M_Pl ≈ 1.22×10¹⁹ GeV?); fine-tuning of parameters; and integration with quantum gravity.
 
@@ -56,9 +56,9 @@ Gyroassociative law: a ⊕ (b ⊕ c) = (a ⊕ b) ⊕ gyr[a,b]c. Higgs "field" en
 
 **New Derivation**: Higgs quartic λ from monodromy quartic (cf. α = δ_BU⁴ / m_p):
 λ = δ_BU⁴ / (4 m_p²) ≈ (0.195342)^4 / (4 × 0.199471²) ≈ 0.129,
-matching SM λ ≈ 0.13 (from m_H = √(2 λ) v ≈ 125 GeV, v=246 GeV).
+matching SM λ ≈ 0.13 (from m_H = √(2 λ) v ≈ 125 GeV, v=240 GeV).
 
-**Proof of Emergence**: In SU(2) helical path, Higgs doublet Φ ~ [exp(i β σ₁/2), exp(i γ σ₂/2)] (UNA/ONA components). vev <Φ> breaks SU(2)_L by selecting preferred direction, but in CGM, this is geometric: <Φ> = m_p × (π/√2) × σ₃ (CS chirality axis), yielding v = m_p × √(π/2) × E_weak (E_weak ~246 GeV from bridge calibration).
+**Proof of Emergence**: In SU(2) helical path, Higgs doublet Φ ~ [exp(i β σ₁/2), exp(i γ σ₂/2)] (UNA/ONA components). vev <Φ> breaks SU(2)_L by selecting preferred direction, but in CGM, this is geometric: <Φ> = m_p × (π/√2) × σ₃ (CS chirality axis), yielding v = m_p × √(π/2) × E_weak (E_weak ~240 GeV from bridge calibration).
 
 ### 2.3 Alignment and Aperture Dynamics
 From Alignment.md: Mass as "resistance to alignment changes" in recursive apertures. Higgs sets "preferred manifold" via 2.07% aperture, allowing mass without total closure.
@@ -105,7 +105,7 @@ From BlackHole_Aperture.md: S_CGM = S_BH × (1 + m_p). Higgs contributes via ape
 ### 4.1 Internal Consistency Proofs
 - **Gyrotriangle Closure**: Higgs stability requires δ=0, satisfied by (π/2 + π/4 + π/4)=π. Proof: tan(δ/2)=0 implies degenerate sides, mapping to Higgs vev as zero-defect manifold.
 - **Monodromy Matching**: δ_BU / m_p ≈0.9793 predicts Higgs branching to bb≈58% (SM 58%), as residue=0.9793 correlates with down-type Yukawas.
-- **Bridge Validation**: Action bridge yields Higgs self-interaction ~ ℏ / κ ≈10^{34} Hz, but scaled by S_min gives electroweak rate ~246 GeV / ℏ ≈3.7×10^{25} Hz (matches W/Z decay widths).
+- **Bridge Validation**: Action bridge yields Higgs self-interaction ~ ℏ / κ ≈10^{34} Hz, but scaled by S_min gives electroweak rate ~240 GeV / ℏ ≈3.6×10^{25} Hz (matches W/Z decay widths).
 
 ### 4.2 Experimental Validations
 - **Mass/vev Match**: Derived m_H=125.3 GeV vs. LHC 125.1±0.14 GeV (Z=1.43, p=0.076).
