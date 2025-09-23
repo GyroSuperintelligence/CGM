@@ -4,6 +4,16 @@ All notable changes to the CGM Experimental Framework will be documented in this
 
 ---
 
+## [1.1.3-Chronology] - 2025-09-22
+
+New Topic - Gyroscopic Field Equation and Cosmological Chronology
+
+Hypotheses Notes found here:
+docs\Findings\Analysis_GFE.md
+docs\Notes\Notes_12_Chronology.md
+
+---
+
 ## [1.1.3-Massive] - 2025-09-21
 New Topic - Higgs and Fermion Mass Analysis
 Experiments found here: 
