@@ -4,6 +4,15 @@ All notable changes to the CGM Experimental Framework will be documented in this
 
 ---
 
+## [1.1.3-Geometry] - 2025-09-23
+
+New Topic - Geometry Coherence
+Experiments Review and Results found here: 
+experiments\cgm_coherence_analysis.py
+docs\Findings\Analysis_Geometric_Coherence.md
+
+---
+
 ## [1.1.3-Chronology] - 2025-09-22
 
 New Topic - Gyroscopic Field Equation and Cosmological Chronology
